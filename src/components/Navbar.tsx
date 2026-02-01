@@ -99,12 +99,25 @@ export default function Navbar() {
 
     return (
         <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
-            <Link href="/" className={styles.brand}>
+            {/* Mobile menu button - LEFT SIDE */}
+            <button
+                onClick={() => setShowMobileNav(!showMobileNav)}
+                className="md:hidden p-2 text-[#1C1C1C] order-1"
+                aria-label="Toggle navigation"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+
+            {/* Brand - CENTER-LEFT */}
+            <Link href="/" className={`${styles.brand} order-2`}>
                 <Image src="/logo-image.png" alt="Sareine Logo" width={40} height={40} className={styles.logo} />
                 SAREINE
             </Link>
 
-            <div className={`${styles.navLinks} hidden md:flex`}>
+            {/* Desktop Navigation Links */}
+            <div className={`${styles.navLinks} hidden md:flex order-3`}>
                 <div
                     className={styles.navLink}
                     onMouseEnter={() => setShowHomeDropdown(true)}
@@ -183,41 +196,105 @@ export default function Navbar() {
                 )}
             </div>
 
-            {/* Mobile menu button */}
-            <button
-                onClick={() => setShowMobileNav(!showMobileNav)}
-                className="md:hidden p-2 text-[#1C1C1C]"
-                aria-label="Toggle navigation"
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
-
             {/* Mobile nav overlay */}
             {showMobileNav && (
-                <div className="absolute top-full left-0 w-full bg-white border-t border-[#E5E5E5] z-40 shadow-md md:hidden">
-                    <div className="flex flex-col p-4 gap-3">
-                        <Link href="/" className="text-[#1C1C1C] font-medium">Home</Link>
-                        <Link href="/natural-balm" className="text-[#1C1C1C] font-medium">Natural Balm</Link>
-                        {isNaturalBalm ? (
-                            <>
-                                <Link href="/natural-balm#formula" className="text-[#1C1C1C] font-medium" onClick={(e) => handleAnchorClick(e, '/natural-balm#formula')}>The Formula</Link>
-                                <Link href="/natural-balm#features" className="text-[#1C1C1C] font-medium" onClick={(e) => handleAnchorClick(e, '/natural-balm#features')}>Features</Link>
-                                <Link href="/natural-balm#variants" className="text-[#1C1C1C] font-medium" onClick={(e) => handleAnchorClick(e, '/natural-balm#variants')}>our collections</Link>
-                            </>
-                        ) : (
-                            <>
-                                <Link href="/#features" className="text-[#1C1C1C] font-medium" onClick={(e) => handleAnchorClick(e, '/#features')}>Features</Link>
-                                <Link href="/#ingredients" className="text-[#1C1C1C] font-medium" onClick={(e) => handleAnchorClick(e, '/#ingredients')}>Ingredients</Link>
-                                <Link href="/#contact" className="text-[#1C1C1C] font-medium" onClick={(e) => handleAnchorClick(e, '/#contact')}>Contact</Link>
-                            </>
-                        )}
+                <>
+                    {/* Backdrop overlay */}
+                    <div
+                        className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 md:hidden"
+                        onClick={() => setShowMobileNav(false)}
+                    />
+
+                    {/* Menu panel */}
+                    <div className={styles.mobileMenu}>
+                        <div className={styles.mobileMenuContent}>
+                            <Link
+                                href="/"
+                                className={styles.mobileMenuItem}
+                                onClick={() => setShowMobileNav(false)}
+                            >
+                                Home
+                            </Link>
+                            <Link
+                                href="/natural-balm"
+                                className={styles.mobileMenuItem}
+                                onClick={() => setShowMobileNav(false)}
+                            >
+                                Natural Balm
+                            </Link>
+                            {isNaturalBalm ? (
+                                <>
+                                    <Link
+                                        href="/natural-balm#formula"
+                                        className={styles.mobileMenuItem}
+                                        onClick={(e) => {
+                                            handleAnchorClick(e, '/natural-balm#formula');
+                                            setShowMobileNav(false);
+                                        }}
+                                    >
+                                        The Formula
+                                    </Link>
+                                    <Link
+                                        href="/natural-balm#features"
+                                        className={styles.mobileMenuItem}
+                                        onClick={(e) => {
+                                            handleAnchorClick(e, '/natural-balm#features');
+                                            setShowMobileNav(false);
+                                        }}
+                                    >
+                                        Features
+                                    </Link>
+                                    <Link
+                                        href="/natural-balm#variants"
+                                        className={styles.mobileMenuItem}
+                                        onClick={(e) => {
+                                            handleAnchorClick(e, '/natural-balm#variants');
+                                            setShowMobileNav(false);
+                                        }}
+                                    >
+                                        Our Collections
+                                    </Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Link
+                                        href="/#features"
+                                        className={styles.mobileMenuItem}
+                                        onClick={(e) => {
+                                            handleAnchorClick(e, '/#features');
+                                            setShowMobileNav(false);
+                                        }}
+                                    >
+                                        Features
+                                    </Link>
+                                    <Link
+                                        href="/#ingredients"
+                                        className={styles.mobileMenuItem}
+                                        onClick={(e) => {
+                                            handleAnchorClick(e, '/#ingredients');
+                                            setShowMobileNav(false);
+                                        }}
+                                    >
+                                        Ingredients
+                                    </Link>
+                                    <Link
+                                        href="/#contact"
+                                        className={styles.mobileMenuItem}
+                                        onClick={(e) => {
+                                            handleAnchorClick(e, '/#contact');
+                                            setShowMobileNav(false);
+                                        }}
+                                    >
+                                        Contact
+                                    </Link>
+                                </>
+                            )}
+                        </div>
                     </div>
-                </div>
+                </>
             )}
 
-            <div className={styles.actions}>
+            <div className={`${styles.actions} order-4`}>
                 {/* Auth Section */}
                 <div className="relative" ref={menuRef}>
                     {user ? (
@@ -278,7 +355,7 @@ export default function Navbar() {
                     )}
                 </button>
 
-                <a href="#contact" className={styles.preOrderBtn} onClick={(e) => handleAnchorClick(e, '/#contact')}>
+                <a href="#contact" className={`${styles.preOrderBtn} hidden md:inline-flex`} onClick={(e) => handleAnchorClick(e, '/#contact')}>
                     Pre-Order
                 </a>
             </div>
