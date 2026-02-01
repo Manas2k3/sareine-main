@@ -157,8 +157,8 @@
     }
 
     .ctaButton {
-        left: 50%;
-        transform: translateX(-50%);
+        left: clamp(var(--space-6), 10vw, var(--space-10));
+        transform: none;
         bottom: 8%;
         font-size: clamp(0.875rem, 2.5vw, 1rem);
         padding: var(--space-2) var(--space-4);
