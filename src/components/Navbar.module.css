@@ -21,13 +21,25 @@
 }
 
 .brand {
-    font-family: var(--font-serif);
-    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
-    /* responsive brand size */
-    font-weight: 500;
+    font-family: var(--font-sans);
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    font-weight: 600;
     color: var(--color-text);
     text-decoration: none;
-    letter-spacing: -0.02em;
+    letter-spacing: 0.15em;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    text-transform: uppercase;
+}
+
+.logo {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    border-radius: var(--radius-sm);
+    /* Logo placed a bit above visually */
+    transform: translateY(-3px);
 }
 
 .navLinks {
@@ -110,10 +122,10 @@
     position: absolute;
     top: calc(100% + 12px);
     left: 0;
-    background: rgba(255,255,255,0.98);
+    background: rgba(255, 255, 255, 0.98);
     border-radius: 12px;
     padding: 12px;
-    box-shadow: 0 24px 60px rgba(10,10,10,0.12);
+    box-shadow: 0 24px 60px rgba(10, 10, 10, 0.12);
     z-index: 60;
     min-width: 520px;
 }
@@ -144,7 +156,7 @@
 
 .dropdownItem:hover .dropdownImage {
     transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 14px 40px rgba(10,10,10,0.12);
+    box-shadow: 0 14px 40px rgba(10, 10, 10, 0.12);
 }
 
 /* Mobile: prevent overflow, safe areas */
@@ -153,6 +165,7 @@
         flex-wrap: wrap;
         gap: var(--space-2);
     }
+
     .actions {
         flex-wrap: wrap;
         gap: var(--space-2);
@@ -167,9 +180,11 @@
         padding-top: var(--space-3);
         padding-bottom: var(--space-3);
     }
+
     .brand {
         font-size: clamp(1.1rem, 4.5vw, 1.35rem);
     }
+
     .preOrderBtn {
         padding: var(--space-1) var(--space-3);
         font-size: 0.75rem;

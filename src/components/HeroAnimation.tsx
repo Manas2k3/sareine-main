@@ -21,7 +21,7 @@ export default function HeroAnimation() {
 
       <div className={styles.overlayContainer}>
         <div className={styles.textGroup}>
-          <p className={styles.tagline}>Sareine</p>
+          <p className={styles.tagline}>SAREINE</p>
           <h1 className={styles.headline}>Pure Hydration<br />from Nature</h1>
         </div>
 

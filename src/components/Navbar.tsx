@@ -100,10 +100,11 @@ export default function Navbar() {
     return (
         <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
             <Link href="/" className={styles.brand}>
-                Sareine
+                <Image src="/logo-image.png" alt="Sareine Logo" width={40} height={40} className={styles.logo} />
+                SAREINE
             </Link>
 
-            <div className={`${styles.navLinks} hidden md:flex`}> 
+            <div className={`${styles.navLinks} hidden md:flex`}>
                 <div
                     className={styles.navLink}
                     onMouseEnter={() => setShowHomeDropdown(true)}
@@ -155,7 +156,7 @@ export default function Navbar() {
                 </div>
 
                 {/* Desktop links vary depending on the current page */}
-                    {isNaturalBalm ? (
+                {isNaturalBalm ? (
                     <>
                         <Link href="/natural-balm#formula" className={styles.navLink} onClick={(e) => handleAnchorClick(e, '/natural-balm#formula')}>
                             The Formula
