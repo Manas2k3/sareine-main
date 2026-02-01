@@ -8,7 +8,9 @@ import Variants from "@/components/natural-lip-balm/Variants";
 
 export default function NaturalBalmPage() {
     return (
-        <main>
+        // Natural Balm needs a slightly larger anchor offset because the hero is sticky
+        // and we want linked sections to clear the navbar and hero correctly.
+        <main style={{ '--section-scroll-offset': '120px' } as React.CSSProperties}>
             <JarHero />
             <WhatItIs />
             <JarIngredients />

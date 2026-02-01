@@ -1,0 +1,96 @@
+/* Luxury Alignment Refinement */
+.section {
+    padding: var(--space-24) 0;
+    background-color: var(--color-white);
+    overflow: hidden;
+    /* Prevent spillover */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: var(--space-16);
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--color-text);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+}
+
+.steps {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+}
+
+@media (min-width: 768px) {
+    .steps {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-8);
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        /* Unified divider line, or per-item */
+        padding-top: var(--space-8);
+        border-top: none;
+        /* Resetting to do per-item for better control */
+    }
+}
+
+.step {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    /* Clean left align usually feels more premium for lists, but user asked for "Maintain centered section heading" (which we did) and "Lock all step text to a consistent vertical text column" */
+    text-align: left;
+    padding-top: var(--space-6);
+    border-top: 1px solid rgba(212, 175, 55, 0.3);
+    /* Gold muted divider */
+}
+
+@media (min-width: 768px) {
+    .step {
+        align-items: flex-start;
+        padding-top: var(--space-8);
+    }
+}
+
+.stepNumber {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    /* Smaller, more refined */
+    color: var(--color-gold);
+    margin-bottom: var(--space-4);
+    display: block;
+    font-variant-numeric: tabular-nums;
+}
+
+.textWrapper {
+    max-width: 280px;
+    /* Lock text column width */
+}
+
+.stepTitle {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text);
+    margin-bottom: var(--space-3);
+}
+
+.stepDesc {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    color: var(--color-text-light);
+    line-height: 1.7;
+    opacity: 0.9;
+}

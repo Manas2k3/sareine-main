@@ -1,0 +1,134 @@
+.contact {
+    background: linear-gradient(180deg,
+            var(--color-ivory) 0%,
+            var(--color-cream) 100%);
+    text-align: center;
+    overflow-x: hidden;
+    /* Anchor offset for contact */
+    scroll-margin-top: var(--section-scroll-offset, 88px);
+    padding: var(--space-10) 0;
+}
+
+.inner {
+    max-width: 600px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--space-3);
+    min-width: 0;
+}
+
+@media (max-width: 480px) {
+    .contact .container {
+        padding-left: calc(var(--space-3) + env(safe-area-inset-left, 0px));
+        padding-right: calc(var(--space-3) + env(safe-area-inset-right, 0px));
+    }
+    .inner {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .description {
+        max-width: 100%;
+    }
+    .title {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+    }
+}
+
+.subtitle {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-2);
+    display: block;
+}
+
+.title {
+    margin-bottom: var(--space-3);
+}
+
+.description {
+    font-size: 1.15rem;
+    /* Increased from 1.0625rem */
+    line-height: 1.8;
+    margin-bottom: var(--space-5);
+    max-width: 500px;
+    /* Slight increase in width */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    align-items: center;
+    margin-bottom: var(--space-6);
+}
+
+@media (min-width: 480px) {
+    .actions {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+}
+
+.dividerLine {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right,
+            transparent,
+            rgba(201, 169, 98, 0.3),
+            transparent);
+}
+
+.dividerText {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+}
+
+.emailLink {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    transition: color var(--transition-fast);
+}
+
+.emailLink:hover {
+    color: var(--color-gold);
+}
+
+.emailIcon {
+    width: 18px;
+    height: 18px;
+    color: var(--color-gold);
+}
+
+.footer {
+    margin-top: var(--space-8);
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(201, 169, 98, 0.15);
+}
+
+.footerText {
+    font-size: 0.8125rem;
+    color: var(--color-text-light);
+}
+
+.footerBrand {
+    font-family: var(--font-serif);
+    color: var(--color-text);
+}

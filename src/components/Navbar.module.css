@@ -1,0 +1,177 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: var(--space-4) var(--space-6);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+    transition: background-color 0.3s ease, padding 0.3s ease;
+}
+
+.scrolled {
+    background-color: rgba(242, 240, 235, 0.95);
+    /* Matches ivory with gloss */
+    backdrop-filter: blur(10px);
+    padding: var(--space-3) var(--space-6);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.brand {
+    font-family: var(--font-serif);
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    /* responsive brand size */
+    font-weight: 500;
+    color: var(--color-text);
+    text-decoration: none;
+    letter-spacing: -0.02em;
+}
+
+.navLinks {
+    display: none;
+    gap: var(--space-8);
+}
+
+.navLink {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    /* Increased from 0.875rem */
+    color: var(--color-text);
+    text-decoration: none;
+    text-transform: capitalize;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
+    position: relative;
+}
+
+.navLink:hover {
+    opacity: 1;
+}
+
+.navLink::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background-color: var(--color-gold);
+    transition: width 0.3s ease;
+}
+
+.navLink:hover::after {
+    width: 100%;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
+.preOrderBtn {
+    font-size: 0.9375rem;
+    /* Increased from 0.8125rem */
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: var(--space-2) var(--space-5);
+    /* Slightly more padding */
+    background-color: var(--color-text);
+    color: var(--color-ivory);
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.preOrderBtn:hover {
+    opacity: 0.9;
+}
+
+/* Bag Icon styled as simple text/icon for minimalism */
+.bagIcon {
+    width: 20px;
+    height: 20px;
+    color: var(--color-text);
+    cursor: pointer;
+}
+
+@media (min-width: 768px) {
+    .navLinks {
+        display: flex;
+    }
+}
+
+/* Dropdown card for editorial previews */
+.dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    left: 0;
+    background: rgba(255,255,255,0.98);
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 24px 60px rgba(10,10,10,0.12);
+    z-index: 60;
+    min-width: 520px;
+}
+
+.dropdownGrid {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+.dropdownItem {
+    display: block;
+    width: 160px;
+    height: auto;
+    border-radius: 10px;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.dropdownImage {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.dropdownItem:hover .dropdownImage {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 14px 40px rgba(10,10,10,0.12);
+}
+
+/* Mobile: prevent overflow, safe areas */
+@media (max-width: 767px) {
+    .navbar {
+        flex-wrap: wrap;
+        gap: var(--space-2);
+    }
+    .actions {
+        flex-wrap: wrap;
+        gap: var(--space-2);
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding-left: calc(var(--space-3) + env(safe-area-inset-left, 0px));
+        padding-right: calc(var(--space-3) + env(safe-area-inset-right, 0px));
+        padding-top: var(--space-3);
+        padding-bottom: var(--space-3);
+    }
+    .brand {
+        font-size: clamp(1.1rem, 4.5vw, 1.35rem);
+    }
+    .preOrderBtn {
+        padding: var(--space-1) var(--space-3);
+        font-size: 0.75rem;
+    }
+}

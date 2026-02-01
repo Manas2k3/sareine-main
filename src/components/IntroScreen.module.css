@@ -1,0 +1,134 @@
+.introOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    background-color: #FDF9F5;
+    /* Very light cream/peach tint matching the image */
+    background-image:
+        radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.8) 0%, transparent 40%),
+        radial-gradient(circle at 30% 70%, rgba(255, 240, 220, 0.5) 0%, transparent 40%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+}
+
+.introOverlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    /* Add a subtle texture/noise if desired, but clean is also good */
+}
+
+.logoWrap {
+    /* Further reduced space between logo and copy to tighten layout per request */
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 720px;
+    box-sizing: border-box;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 0.15s forwards;
+}
+
+.logo {
+    width: clamp(180px, 36vw, 520px) !important;
+    height: auto !important;
+    object-fit: contain;
+    filter: drop-shadow(0 6px 24px rgba(0,0,0,0.06));
+}
+
+.subtitle {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    letter-spacing: 0.32em;
+    color: #9b968f;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    opacity: 0;
+    animation: fadeIn 1s ease-out 0.5s forwards;
+}
+
+.enterButton {
+    background: transparent;
+    border: 1px solid #C9A962;
+    color: #C9A962;
+    padding: 12px 48px;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.28s ease;
+    opacity: 0;
+    animation: fadeIn 0.9s ease-out 0.75s forwards;
+    border-radius: 4px;
+}
+
+.enterButton:hover {
+    background-color: rgba(201, 169, 98, 0.08);
+    letter-spacing: 0.26em;
+    transform: translateY(-2px) scale(1.01);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content {
+    padding: 0 var(--space-4);
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+    .title {
+        font-size: clamp(1.5rem, 8vw, 2.5rem);
+    }
+
+    .enterButton {
+        padding: 10px 36px;
+    }
+}
+
+@media (max-width: 480px) {
+    .content {
+        padding-left: calc(var(--space-4) + env(safe-area-inset-left, 0px));
+        padding-right: calc(var(--space-4) + env(safe-area-inset-right, 0px));
+    }
+    .title {
+        font-size: clamp(1.35rem, 6vw, 2rem);
+    }
+    .subtitle {
+        font-size: 0.75rem;
+        letter-spacing: 0.2em;
+    }
+    .enterButton {
+        padding: 10px 28px;
+        font-size: 0.75rem;
+    }
+}

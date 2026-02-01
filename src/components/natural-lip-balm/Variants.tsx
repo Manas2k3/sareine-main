@@ -36,8 +36,11 @@ export default function Variants() {
                 ...doc.data()
             })) as Product[];
 
-            // Optional: Sort by price or name if needed
-            setProducts(productsData);
+            // Natural Balm tab: only the 3 core variants (exclude Limited Edition)
+            const naturalBalmOnly = productsData.filter(
+                (p) => p.slug !== 'limited-edition-natural-lip-balm' && !p.name?.toLowerCase().includes('limited edition')
+            );
+            setProducts(naturalBalmOnly);
             setLoading(false);
         }, (error) => {
             console.error("Error fetching products:", error);
@@ -52,7 +55,7 @@ export default function Variants() {
         return (
             <section className={styles.section}>
                 <div className={styles.container}>
-                    <p className="text-center text-[#8C8C8C]">Loading collection...</p>
+                    <p className={styles.loadingMessage}>Loading collection...</p>
                 </div>
             </section>
         );
@@ -68,7 +71,7 @@ export default function Variants() {
 
                 <div>
                     {products.length === 0 ? (
-                        <div className="text-center text-[#8C8C8C] py-20">
+                        <div className={styles.emptyMessage}>
                             <p>No products found in the collection.</p>
                         </div>
                     ) : (
@@ -96,7 +99,7 @@ export default function Variants() {
 
                                 <div className={styles.contentContainer}>
                                     <h3 className={styles.productName}>{product.name}</h3>
-                                    <div className="flex items-center gap-2 mb-2">
+                                    <div className={styles.priceRow}>
                                         <p className={styles.price}>₹{product.price} / {product.weight}</p>
                                         {product.inStock === false && (
                                             <span className="text-xs text-red-500 font-medium uppercase tracking-wide px-2 py-0.5 border border-red-200 bg-red-50">

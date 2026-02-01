@@ -6,7 +6,7 @@ import styles from './Navbar.module.css';
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
@@ -18,6 +18,54 @@ export default function Navbar() {
     const [showNaturalDropdown, setShowNaturalDropdown] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
+    const pathname = usePathname();
+    const isNaturalBalm = pathname?.startsWith('/natural-balm');
+
+    // Smooth-scroll to anchors. If the target is on the same page, prevent the
+    // default navigation and perform a smooth scroll. If the target is on a
+    // different page, navigate then smooth-scroll after navigation completes.
+    const handleAnchorClick = async (e: React.MouseEvent, href: string) => {
+        // Allow modifier keys to behave normally (open in new tab etc.)
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+        e.preventDefault();
+        try {
+            const url = new URL(href, window.location.origin);
+            const targetPath = url.pathname || '/';
+            const hash = url.hash ? url.hash.substring(1) : null;
+
+            if (!hash) {
+                // No hash, just navigate normally
+                await router.push(href);
+                return;
+            }
+
+            // If the target path is the current path, just scroll to the element
+            if (targetPath === pathname) {
+                const el = document.getElementById(hash);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    // fallback: still update the hash
+                    window.location.hash = hash;
+                }
+                return;
+            }
+
+            // Navigate to the target path (with hash), then smooth scroll when done
+            await router.push(href);
+
+            // Wait for the new content to render, then scroll to hash if present
+            requestAnimationFrame(() => {
+                const el = document.getElementById(hash as string);
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        } catch (err) {
+            // If URL parsing fails, fall back to router navigation
+            console.error('Anchor navigation error', err);
+            router.push(href);
+        }
+    };
 
     useEffect(() => {
         const handleScroll = () => {
@@ -92,13 +140,13 @@ export default function Navbar() {
                     {showNaturalDropdown && (
                         <div className={styles.dropdown} onMouseEnter={() => setShowNaturalDropdown(true)} onMouseLeave={() => setShowNaturalDropdown(false)}>
                             <div className={styles.dropdownGrid}>
-                                <Link href="/natural-balm#variants" className={styles.dropdownItem}>
+                                <Link href="/natural-balm#variants" className={styles.dropdownItem} onClick={(e) => handleAnchorClick(e, '/natural-balm#variants')}>
                                     <Image src="/Sareine Natural Rose Lip Balm.jpeg" alt="Rose Balm" width={240} height={240} className={styles.dropdownImage} />
                                 </Link>
-                                <Link href="/natural-balm#variants" className={styles.dropdownItem}>
+                                <Link href="/natural-balm#variants" className={styles.dropdownItem} onClick={(e) => handleAnchorClick(e, '/natural-balm#variants')}>
                                     <Image src="/Sareine Natural Beetroot Lip Balm.jpeg" alt="Beetroot Balm" width={240} height={240} className={styles.dropdownImage} />
                                 </Link>
-                                <Link href="/natural-balm#variants" className={styles.dropdownItem}>
+                                <Link href="/natural-balm#variants" className={styles.dropdownItem} onClick={(e) => handleAnchorClick(e, '/natural-balm#variants')}>
                                     <Image src="/Sareine Natural Pink Rose Lip Balm.jpeg" alt="Pink Rose Balm" width={240} height={240} className={styles.dropdownImage} />
                                 </Link>
                             </div>
@@ -106,15 +154,32 @@ export default function Navbar() {
                     )}
                 </div>
 
-                <Link href="/#features" className={styles.navLink}>
-                    Features
-                </Link>
-                <Link href="/#ingredients" className={styles.navLink}>
-                    Ingredients
-                </Link>
-                <Link href="/#contact" className={styles.navLink}>
-                    Contact
-                </Link>
+                {/* Desktop links vary depending on the current page */}
+                    {isNaturalBalm ? (
+                    <>
+                        <Link href="/natural-balm#formula" className={styles.navLink} onClick={(e) => handleAnchorClick(e, '/natural-balm#formula')}>
+                            The Formula
+                        </Link>
+                        <Link href="/natural-balm#features" className={styles.navLink} onClick={(e) => handleAnchorClick(e, '/natural-balm#features')}>
+                            Features
+                        </Link>
+                        <Link href="/natural-balm#variants" className={styles.navLink} onClick={(e) => handleAnchorClick(e, '/natural-balm#variants')}>
+                            our collections
+                        </Link>
+                    </>
+                ) : (
+                    <>
+                        <Link href="/#features" className={styles.navLink} onClick={(e) => handleAnchorClick(e, '/#features')}>
+                            Features
+                        </Link>
+                        <Link href="/#ingredients" className={styles.navLink} onClick={(e) => handleAnchorClick(e, '/#ingredients')}>
+                            Ingredients
+                        </Link>
+                        <Link href="/#contact" className={styles.navLink} onClick={(e) => handleAnchorClick(e, '/#contact')}>
+                            Contact
+                        </Link>
+                    </>
+                )}
             </div>
 
             {/* Mobile menu button */}
@@ -134,9 +199,19 @@ export default function Navbar() {
                     <div className="flex flex-col p-4 gap-3">
                         <Link href="/" className="text-[#1C1C1C] font-medium">Home</Link>
                         <Link href="/natural-balm" className="text-[#1C1C1C] font-medium">Natural Balm</Link>
-                        <Link href="/#features" className="text-[#1C1C1C] font-medium">Features</Link>
-                        <Link href="/#ingredients" className="text-[#1C1C1C] font-medium">Ingredients</Link>
-                        <Link href="/#contact" className="text-[#1C1C1C] font-medium">Contact</Link>
+                        {isNaturalBalm ? (
+                            <>
+                                <Link href="/natural-balm#formula" className="text-[#1C1C1C] font-medium" onClick={(e) => handleAnchorClick(e, '/natural-balm#formula')}>The Formula</Link>
+                                <Link href="/natural-balm#features" className="text-[#1C1C1C] font-medium" onClick={(e) => handleAnchorClick(e, '/natural-balm#features')}>Features</Link>
+                                <Link href="/natural-balm#variants" className="text-[#1C1C1C] font-medium" onClick={(e) => handleAnchorClick(e, '/natural-balm#variants')}>our collections</Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link href="/#features" className="text-[#1C1C1C] font-medium" onClick={(e) => handleAnchorClick(e, '/#features')}>Features</Link>
+                                <Link href="/#ingredients" className="text-[#1C1C1C] font-medium" onClick={(e) => handleAnchorClick(e, '/#ingredients')}>Ingredients</Link>
+                                <Link href="/#contact" className="text-[#1C1C1C] font-medium" onClick={(e) => handleAnchorClick(e, '/#contact')}>Contact</Link>
+                            </>
+                        )}
                     </div>
                 </div>
             )}
@@ -202,7 +277,7 @@ export default function Navbar() {
                     )}
                 </button>
 
-                <a href="#contact" className={styles.preOrderBtn}>
+                <a href="#contact" className={styles.preOrderBtn} onClick={(e) => handleAnchorClick(e, '/#contact')}>
                     Pre-Order
                 </a>
             </div>

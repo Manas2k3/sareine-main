@@ -1,0 +1,95 @@
+.features {
+    background-color: var(--color-ivory);
+    overflow-x: hidden;
+    /* Anchor offset so navbar-linked sections clear any fixed header */
+    scroll-margin-top: var(--section-scroll-offset, 88px);
+    padding: var(--space-10) 0;
+}
+
+@media (max-width: 480px) {
+    .features .container {
+        padding-left: calc(var(--space-3) + env(safe-area-inset-left, 0px));
+        padding-right: calc(var(--space-3) + env(safe-area-inset-right, 0px));
+    }
+    .featureTitle {
+        font-size: clamp(1.2rem, 4.5vw, 1.5rem);
+    }
+    .featureDescription {
+        max-width: 100%;
+    }
+}
+
+.header {
+    text-align: center;
+    margin-bottom: var(--space-6);
+}
+
+.subtitle {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-2);
+    display: block;
+}
+
+.title {
+    margin-bottom: var(--space-2);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+}
+
+@media (min-width: 768px) {
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-8);
+    }
+}
+
+.feature {
+    text-align: center;
+    padding: var(--space-4);
+}
+
+.icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto var(--space-3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg,
+            var(--color-cream) 0%,
+            var(--color-ivory) 100%);
+    border: 1px solid rgba(201, 169, 98, 0.2);
+}
+
+.iconSvg {
+    width: 28px;
+    height: 28px;
+    color: var(--color-gold);
+}
+
+.featureTitle {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    /* Increased from 1.25rem */
+    margin-bottom: var(--space-2);
+    color: var(--color-text);
+}
+
+.featureDescription {
+    font-size: 1.15rem;
+    /* Increased further */
+    line-height: 1.6;
+    color: var(--color-text-light);
+    max-width: 320px;
+    /* Increased max-width for better flow */
+    margin: 0 auto;
+}

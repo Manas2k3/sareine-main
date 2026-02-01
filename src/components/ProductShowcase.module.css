@@ -1,0 +1,531 @@
+.section {
+    padding: var(--space-8) 0 var(--space-10);
+    background-color: var(--color-ivory);
+    text-align: center;
+    /* Let pages set --section-scroll-offset to change anchor behavior (home vs natural-balm) */
+    scroll-margin-top: var(--section-scroll-offset, 88px);
+}
+
+.container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+    min-width: 0;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding-left: calc(var(--space-3) + env(safe-area-inset-left, 0px));
+        padding-right: calc(var(--space-3) + env(safe-area-inset-right, 0px));
+    }
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 0 calc(var(--space-6) + env(safe-area-inset-left, 0px));
+    }
+}
+
+.heroRow {
+    margin-bottom: var(--space-6);
+    width: 100%;
+    min-width: 0;
+}
+
+.heroCarouselCol {
+    flex: 1 1 100%;
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (min-width: 768px) {
+    .heroCarouselCol {
+        flex: 0 1 60%;
+        min-width: 280px;
+    }
+}
+
+.subtitle {
+    font-size: 0.875rem;
+    color: var(--color-gold);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: var(--space-4);
+    display: block;
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    color: var(--color-text);
+    margin-bottom: var(--space-12);
+    line-height: 1.08;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+    align-items: center;
+    justify-content: center;
+}
+
+@media (min-width: 768px) {
+    .grid {
+        flex-direction: row;
+        gap: var(--space-12);
+        text-align: left;
+    }
+}
+
+.imageCard {
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 450px;
+    aspect-ratio: 1/1;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    position: relative;
+    box-shadow: var(--shadow-xl);
+    transition: transform 0.5s ease;
+    min-width: 0;
+}
+
+.imageCard:hover {
+    transform: scale(1.02);
+}
+
+.productImage {
+    object-fit: cover;
+}
+
+.content {
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 400px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .content {
+        align-items: center;
+        text-align: center;
+        max-width: 100%;
+    }
+    .heroRow {
+        gap: var(--space-5) !important;
+    }
+}
+
+.productTitle {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 5vw, 2.25rem);
+    color: var(--color-text);
+    margin-bottom: var(--space-2);
+    line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.price {
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    color: var(--color-text-light);
+    margin-bottom: var(--space-6);
+    display: block;
+}
+
+.desc {
+    font-size: 1.0625rem;
+    color: var(--color-text-light);
+    margin-bottom: var(--space-10);
+    line-height: 1.7;
+}
+
+.linkBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4) var(--space-10);
+    background: var(--color-text);
+    color: var(--color-ivory);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.875rem;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    align-self: flex-start;
+    /* Left align on desktop */
+}
+
+/* Hero specific refinements */
+.heroContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-4);
+}
+
+.priceRow {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    margin-bottom: var(--space-2);
+}
+
+.tagline {
+    font-style: italic;
+    color: var(--color-text-light);
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.ctaWrap {
+    margin-top: var(--space-6);
+}
+
+.primaryBtn {
+    padding: 0.9rem 2.25rem;
+    border-radius: 999px;
+    background: var(--color-text);
+    color: var(--color-ivory);
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    display: inline-block;
+}
+
+.primaryBtn:hover,
+.primaryBtn:focus {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.09);
+    outline: none;
+}
+
+@media (max-width: 768px) {
+    .primaryBtn {
+        width: 100%;
+        padding: 0.85rem 1rem;
+    }
+}
+
+/* Benefits styling */
+.benefitsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-top: var(--space-4);
+}
+
+.benefitCard {
+    background: transparent;
+    border-radius: 6px;
+    padding: 0.6rem 0.6rem;
+    min-height: auto;
+    display: flex;
+    align-items: center;
+    transition: transform 220ms ease;
+    flex-direction: column;
+    text-align: center;
+}
+
+.benefitCard p { margin: 0; font-weight: 600; color: var(--color-text); }
+
+.benefitIcon { width: 72px; height: 72px; border-radius: 999px; display:flex; align-items:center; justify-content:center; margin-bottom: 0.85rem; background: transparent; border: 1px solid rgba(0,0,0,0.04); }
+.benefitIcon svg { display:block; opacity: 0.9; }
+
+/* Center heading and subtitle for the benefits band to match editorial style */
+.benefitsSection > div > h2 { text-align: center; font-size: clamp(1.5rem, 3.6vw, 2.25rem); margin-bottom: var(--space-6); }
+.benefitsSection > div > p { text-align: center; max-width: 680px; margin-left: auto; margin-right: auto; }
+
+/* Make benefits grid feel airy and editorial (3 columns on desktop) */
+.benefitsGrid { grid-template-columns: repeat(3, 1fr); gap: 2.25rem; display: grid; }
+
+@media (max-width: 900px) {
+    .benefitsGrid { grid-template-columns: 1fr; gap: 1.25rem; }
+    .benefitCard { min-height: auto; padding: 1rem; }
+    .benefitsSection > div > h2 { margin-bottom: var(--space-4); }
+}
+
+/* How to use */
+.howToWrap { max-width: 720px; margin: 0 auto; }
+.howToList { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; }
+.howToStep { display: flex; gap: 0.75rem; align-items: flex-start; }
+.howToStepNumber { width: 36px; height: 36px; border-radius: 999px; background: var(--color-ivory); color: var(--color-text); display:flex; align-items:center; justify-content:center; font-weight:700; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+.howToStepText { line-height: 1.6; color: var(--color-text-light); }
+
+/* Add separators and refined step styling */
+.howToStep { padding: 1rem 0; border-bottom: 1px solid rgba(20,20,20,0.03); }
+.howToStep:last-child { border-bottom: none; }
+.howToStepNumber { width: 44px; height: 44px; border-radius: 999px; background: var(--color-ivory); color: var(--color-text); font-weight:800; }
+.howToStepText { max-width: 680px; }
+.howToList { gap: 0.85rem; }
+
+/* Ingredients (Luxury Blend) — golden badges: section reserved below */
+
+/* Section spacing: tightened so .section padding above is the single source */
+
+/* Benefits section band */
+.benefitsSection { background: linear-gradient(180deg, rgba(250,248,246,1), rgba(245,243,241,1)); padding: var(--space-6) 0; }
+.benefitsInner {
+    max-width: 1100px;
+    width: 100%;
+    margin: 0 auto;
+    padding: var(--space-4);
+    min-width: 0;
+}
+
+@media (max-width: 480px) {
+    .benefitsInner { padding: var(--space-3) var(--space-3); }
+}
+
+@media (min-width: 768px) {
+    .benefitsInner { padding: var(--space-5) var(--space-6); }
+}
+
+@media (min-width: 900px) {
+    .benefitsSection { padding: var(--space-8) 0; }
+}
+
+/* Small polish */
+.benefitCard:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(12,12,12,0.06); }
+
+@media (max-width: 768px) {
+    .benefitCard { min-height: 80px; padding: 1rem; }
+    .howToStep { padding: 0.75rem 0; }
+}
+
+
+@media (max-width: 768px) {
+    .linkBtn {
+        align-self: center;
+        /* Center align on mobile */
+    }
+}
+
+.linkBtn:hover {
+    background: var(--color-gold);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(201, 169, 98, 0.3);
+}
+
+/* Carousel styles */
+.carousel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.carouselTrack {
+    display: flex;
+    transition: transform 360ms cubic-bezier(.22,.9,.32,1);
+    will-change: transform;
+}
+
+.carouselSlide {
+    min-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+}
+
+.dots {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    margin-top: 12px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(0,0,0,0.12);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.dotActive {
+    background: var(--color-text);
+}
+
+/* Make sure carousel images are responsive inside the imageCard */
+.carousel .imageCard {
+    aspect-ratio: 1/1;
+    max-width: 520px;
+}
+
+/* === Editorial overrides: luxury, minimal, icon-led layout === */
+
+/* Eyebrow label for sections */
+.eyebrow {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--color-gold);
+    margin-bottom: 0.5rem;
+}
+
+/* Toning down heavy shadows globally for this component */
+.imageCard { box-shadow: 0 6px 18px rgba(12,12,12,0.03) !important; }
+.primaryBtn { box-shadow: none !important; }
+
+/* Benefits: icon-led, centered, no cards */
+.benefitsSection { background: transparent !important; padding: var(--space-12) 0 !important; }
+.benefitsGrid { grid-template-columns: repeat(3, 1fr) !important; gap: 2.5rem !important; }
+.benefitCard { padding: 0 !important; background: transparent !important; box-shadow: none !important; }
+.benefitIcon { width: 64px; height: 64px; border-radius: 999px; display:flex; align-items:center; justify-content:center; margin-bottom: 1rem; border: 1px solid rgba(200,178,137,0.25); }
+.benefitIcon svg { stroke: #c8b289; stroke-width: 1.2; fill: none; }
+.featureTitle { font-size: 1.0625rem; font-weight: 600; color: var(--color-text); margin: 0; line-height: 1.3; }
+.benefitsSection > div > h2 { text-align: center; font-size: clamp(1.5rem, 3.2vw, 2.25rem); margin-bottom: var(--space-4); }
+.benefitsSection > div > p { text-align: center; max-width: 720px; margin-left: auto; margin-right: auto; color: var(--color-text-light); }
+
+@media (max-width: 900px) {
+    .benefitsGrid { grid-template-columns: 1fr !important; gap: 1.25rem !important; }
+    .benefitIcon { margin-bottom: 0.75rem; }
+}
+
+/* How to Use: ritual steps with refined numbers and subtle dividers */
+.howToSection { padding: var(--space-4) 0 var(--space-6); }
+.howToWrap { max-width: 640px; margin: 0 auto; padding: 0 1rem; }
+.howToList { gap: 0.75rem !important; display: grid; }
+
+/* Lock the number column and the text column using a grid so the text column aligns perfectly */
+.howToStep {
+    display: grid;
+    grid-template-columns: 64px 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding: 0.875rem 0;
+}
+
+/* Divider applied to the text column only so lines align across steps */
+.howToStep:not(:last-child) .howToStepText { border-bottom: 1px solid rgba(16,16,16,0.035); padding-bottom: 0.875rem; }
+.howToStep:last-child .howToStepText { padding-bottom: 0; border-bottom: none; }
+
+.howToStepNumber { width: 56px; height: 56px; border-radius: 999px; background: transparent; color: #c8b289; display:flex; align-items:center; justify-content:center; font-weight:800; border: 1px solid rgba(200,178,137,0.35); font-size: 0.95rem; }
+.howToStepText {
+    line-height: 1.85;
+    color: var(--color-text-light);
+    max-width: 560px;
+    min-width: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+@media (max-width: 900px) {
+    .howToStep { grid-template-columns: 52px 1fr; }
+    .howToStepNumber { width: 48px; height: 48px; }
+    .howToWrap { max-width: 100%; padding: 0 var(--space-4); }
+    .howToStepText { max-width: 100%; }
+}
+
+@media (max-width: 480px) {
+    .howToStep { grid-template-columns: 44px 1fr; gap: 0.75rem; }
+    .howToStepNumber { width: 40px; height: 40px; font-size: 0.85rem; }
+    .howToWrap { padding: 0 calc(var(--space-3) + env(safe-area-inset-left, 0px)); }
+}
+
+/* Ingredients (Luxury Blend): golden badges */
+.ingredientsSection {
+    padding: var(--space-6) 0 var(--space-8);
+    margin-bottom: 0;
+    text-align: center;
+    background: linear-gradient(180deg, transparent 0%, rgba(249, 247, 244, 0.6) 50%, transparent 100%);
+}
+
+.ingredientsInner {
+    max-width: 900px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+    min-width: 0;
+}
+
+@media (max-width: 480px) {
+    .ingredientsInner {
+        padding-left: calc(var(--space-3) + env(safe-area-inset-left, 0px));
+        padding-right: calc(var(--space-3) + env(safe-area-inset-right, 0px));
+    }
+}
+
+@media (min-width: 768px) {
+    .ingredientsInner { padding: 0 var(--space-6); }
+}
+
+.ingredientsSection .eyebrow {
+    margin-bottom: var(--space-2);
+}
+
+.ingredientsTitle {
+    font-family: var(--font-serif);
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    color: var(--color-text);
+    margin: 0 0 var(--space-3);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+}
+
+.ingredientsSubtitle {
+    color: var(--color-text-light);
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 520px;
+    margin: 0 auto var(--space-6);
+}
+
+.ingredientsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-3);
+    margin: 0 auto;
+    max-width: 860px;
+}
+
+.ingredientBadge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(201, 169, 98, 0.45);
+    background: linear-gradient(135deg, rgba(201, 169, 98, 0.12) 0%, rgba(201, 169, 98, 0.06) 100%);
+    color: var(--color-text);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ingredientBadge:hover {
+    border-color: var(--color-gold);
+    background: linear-gradient(135deg, rgba(201, 169, 98, 0.18) 0%, rgba(201, 169, 98, 0.1) 100%);
+    box-shadow: 0 2px 12px rgba(201, 169, 98, 0.15);
+}
+
+@media (max-width: 640px) {
+    .ingredientsGrid { gap: var(--space-2); padding: 0 var(--space-2); }
+    .ingredientBadge { padding: var(--space-1) var(--space-3); font-size: 0.875rem; }
+}
+
+/* Ensure the CTA keeps a premium, centered placement */
+.ctaWrap { display: flex; justify-content: center; }
