@@ -122,21 +122,40 @@
         position: relative;
         height: auto;
         min-height: 100vh;
+        padding-top: 80px;
+    }
+
+    .canvasWrapper {
+        display: flex;
+        align-items: flex-end;
+        padding-bottom: 10vh;
     }
 
     .textGroup {
-        left: 50%;
-        transform: translate(-50%, -50%);
+        top: 80px;
+        left: 0;
+        right: 0;
+        transform: none;
         text-align: center;
         width: 100%;
-        padding: 0 calc(var(--space-4) + env(safe-area-inset-left, 0px));
+        max-width: 100%;
+        padding: var(--space-6) var(--space-4) var(--space-4);
+        box-sizing: border-box;
+    }
+
+    .tagline {
+        font-size: clamp(0.9rem, 3vw, 1.25rem);
+        margin-bottom: var(--space-2);
+    }
+
+    .headline {
+        font-size: clamp(1.75rem, 6.5vw, 2.5rem);
+        line-height: 1.2;
     }
 
     .ctaButton {
         left: 50%;
         transform: translateX(-50%);
-        bottom: 12%;
+        bottom: 10%;
     }
-
-    /* On mobile we might disable the complex scroll animation logic or simplify it */
 }

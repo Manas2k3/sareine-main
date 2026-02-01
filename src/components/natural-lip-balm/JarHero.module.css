@@ -118,29 +118,42 @@
         min-height: 100dvh;
     }
 
+    .stickyContainer {
+        padding-top: 80px;
+    }
+
+    .canvasWrapper {
+        display: flex;
+        align-items: flex-end;
+        padding-bottom: 8vh;
+    }
+
     .textGroup {
-        left: 50%;
-        transform: translate(-50%, -50%);
+        top: 80px;
+        left: 0;
+        right: 0;
+        transform: none;
         text-align: center;
         width: 100%;
-        padding: 0 calc(var(--space-4) + env(safe-area-inset-left, 0px));
-        top: 38%;
         max-width: 100%;
+        padding: var(--space-6) var(--space-4) var(--space-3);
         box-sizing: border-box;
     }
 
     .tagline {
         margin-bottom: var(--space-2);
-        font-size: clamp(1.1rem, 4vw, 1.5rem);
+        font-size: clamp(0.9rem, 3vw, 1.2rem);
     }
 
     .headline {
         margin-bottom: var(--space-3);
-        font-size: clamp(1.75rem, 8vw, 2.5rem);
+        font-size: clamp(1.75rem, 6.5vw, 2.5rem);
+        line-height: 1.2;
     }
 
     .price {
-        margin-bottom: var(--space-5);
+        margin-bottom: var(--space-4);
+        font-size: 1.125rem;
     }
 
     .ctaButton {
