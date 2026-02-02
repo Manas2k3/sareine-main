@@ -2,6 +2,7 @@
 
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
+import SearchBar from './SearchBar';
 import styles from './Navbar.module.css';
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
@@ -14,6 +15,7 @@ export default function Navbar() {
     const { user, signOut } = useAuth();
     const [showProfileMenu, setShowProfileMenu] = useState(false);
     const [showMobileNav, setShowMobileNav] = useState(false);
+    const [showMobileSearch, setShowMobileSearch] = useState(false);
     const [showHomeDropdown, setShowHomeDropdown] = useState(false);
     const [showNaturalDropdown, setShowNaturalDropdown] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
@@ -116,8 +118,13 @@ export default function Navbar() {
                 SAREINE
             </Link>
 
+            {/* Desktop Search Bar */}
+            <div className="hidden md:flex order-3 flex-1 max-w-[500px] mx-6">
+                <SearchBar />
+            </div>
+
             {/* Desktop Navigation Links */}
-            <div className={`${styles.navLinks} hidden md:flex order-3`}>
+            <div className={`${styles.navLinks} hidden md:flex order-4`}>
                 <div
                     className={styles.navLink}
                     onMouseEnter={() => setShowHomeDropdown(true)}
@@ -294,7 +301,19 @@ export default function Navbar() {
                 </>
             )}
 
-            <div className={`${styles.actions} order-4`}>
+
+            <div className={`${styles.actions} order-5`}>
+                {/* Mobile Search Icon */}
+                <button
+                    onClick={() => setShowMobileSearch(true)}
+                    className="md:hidden text-[#1C1C1C] hover:text-[#D4AF37] transition-colors p-2"
+                    aria-label="Search products"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles.bagIcon}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                    </svg>
+                </button>
+
                 {/* Auth Section */}
                 <div className="relative" ref={menuRef}>
                     {user ? (
@@ -359,6 +378,11 @@ export default function Navbar() {
                     Pre-Order
                 </a>
             </div>
+
+            {/* Mobile Search Overlay */}
+            {showMobileSearch && (
+                <SearchBar isMobile onClose={() => setShowMobileSearch(false)} />
+            )}
         </nav>
     );
 }
