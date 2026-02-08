@@ -7,6 +7,7 @@ import { CartProvider } from "@/context/CartContext";
 import { IntroProvider } from "@/context/IntroContext";
 import CartDrawer from "@/components/CartDrawer";
 import { RouteTransitionProvider } from "@/components/motion/RouteTransitionProvider";
+import { Suspense } from "react";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -59,11 +60,13 @@ export default function RootLayout({
         <AuthProvider>
           <CartProvider>
             <IntroProvider>
-              <RouteTransitionProvider>
-                <Navbar />
-                <CartDrawer />
-                {children}
-              </RouteTransitionProvider>
+              <Suspense fallback={null}>
+                <RouteTransitionProvider>
+                  <Navbar />
+                  <CartDrawer />
+                  {children}
+                </RouteTransitionProvider>
+              </Suspense>
             </IntroProvider>
           </CartProvider>
         </AuthProvider>

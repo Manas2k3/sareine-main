@@ -1,9 +1,10 @@
 "use client";
 
-import { CSSProperties, HTMLAttributes, ReactNode } from "react";
+import { CSSProperties, HTMLAttributes, ReactNode, ElementType } from "react";
 import { useRevealOnScroll } from "@/lib/motion/useRevealOnScroll";
 
-type RevealElement = keyof JSX.IntrinsicElements;
+// Use React's ElementType so `as` can be either a string tag ("div") or a component.
+type RevealElement = ElementType;
 type RevealVariant = "section" | "image" | "lift";
 
 interface RevealProps extends HTMLAttributes<HTMLElement> {
