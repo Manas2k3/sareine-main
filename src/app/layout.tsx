@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from "next";
-import { Playfair_Display, Inter } from "next/font/google";
+import { Cormorant_Garamond, Manrope } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { IntroProvider } from "@/context/IntroContext";
 import CartDrawer from "@/components/CartDrawer";
+import { RouteTransitionProvider } from "@/components/motion/RouteTransitionProvider";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -14,16 +15,18 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-editorial",
   subsets: ["latin"],
   display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
-const inter = Inter({
-  variable: "--font-inter",
+const manrope = Manrope({
+  variable: "--font-body",
   subsets: ["latin"],
   display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -35,6 +38,14 @@ export const metadata: Metadata = {
     description: "Experience the pinnacle of luxury lip care with exotic botanicals.",
     type: "website",
   },
+  // Use the project logo placed in /public as the site's favicon
+  // Next.js will include these in the <head>. Using a JPG is fine for modern browsers;
+  // for broader compatibility you can convert to .ico or provide multiple sizes.
+  icons: {
+    icon: '/logo.jpg',
+    shortcut: '/logo.jpg',
+    apple: '/logo.jpg',
+  },
 };
 
 export default function RootLayout({
@@ -44,13 +55,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${playfair.variable} ${inter.variable}`}>
+      <body className={`${cormorant.variable} ${manrope.variable}`}>
         <AuthProvider>
           <CartProvider>
             <IntroProvider>
-              <Navbar />
-              <CartDrawer />
-              {children}
+              <RouteTransitionProvider>
+                <Navbar />
+                <CartDrawer />
+                {children}
+              </RouteTransitionProvider>
             </IntroProvider>
           </CartProvider>
         </AuthProvider>

@@ -1,26 +1,31 @@
 import styles from './Contact.module.css';
+import Reveal from '@/components/motion/Reveal';
+import EditorialHeading from '@/components/motion/EditorialHeading';
 
 export default function Contact() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <section className={styles.contact} id="contact" aria-labelledby="contact-title">
+        <Reveal as="section" variant="section" className={styles.contact} id="contact" aria-labelledby="contact-title">
             <div className="container">
                 <div className={styles.inner}>
                     <span className={styles.subtitle}>Join the Waitlist</span>
-                    <h2 id="contact-title" className={styles.title}>
-                        Be Among the First
-                    </h2>
+                    <EditorialHeading
+                        as="h2"
+                        id="contact-title"
+                        className={styles.title}
+                        lines={["Be Among", "the First"]}
+                    />
                     <p className={styles.description}>
                         Only 2,000 pieces available worldwide. Secure your Limited Edition
                         Natural Lip Balm before they're gone forever.
                     </p>
 
-                    <div className={styles.actions}>
+                    <Reveal as="div" variant="lift" className={styles.actions}>
                         <a href="#" className="btn btn-primary" role="button">
                             Pre-order Now — ₹2,999
                         </a>
-                    </div>
+                    </Reveal>
 
                     <div className={styles.divider}>
                         <div className={styles.dividerLine}></div>
@@ -43,6 +48,6 @@ export default function Contact() {
                     </footer>
                 </div>
             </div>
-        </section>
+        </Reveal>
     );
 }

@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { db } from "@/lib/firebase/firebase";
-import { doc, onSnapshot, updateDoc, setDoc, getDoc, arrayUnion } from "firebase/firestore";
+import { doc, onSnapshot, setDoc, getDoc } from "firebase/firestore";
 
 export interface CartItem {
     id: string; // Product ID
@@ -14,9 +14,17 @@ export interface CartItem {
     slug: string;
 }
 
+interface CartProductInput {
+    id: string;
+    name: string;
+    price: number;
+    image: string;
+    slug: string;
+}
+
 interface CartContextType {
     cart: CartItem[];
-    addToCart: (product: any) => Promise<void>;
+    addToCart: (product: CartProductInput) => Promise<void>;
     removeFromCart: (productId: string) => Promise<void>;
     decreaseQuantity: (productId: string) => Promise<void>;
     clearCart: () => Promise<void>;
@@ -65,6 +73,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
                             // If doc exists but no cart, explicit empty
                             setCart([]);
                         }
+                    } else {
+                        setCart([]);
                     }
                 });
 
@@ -98,7 +108,17 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
                             });
 
                             // Update Cloud
-                            await updateDoc(userCartRef, { cart: newCart });
+                            await setDoc(
+                                userCartRef,
+                                {
+                                    uid: user.uid,
+                                    email: user.email ?? null,
+                                    displayName: user.displayName ?? null,
+                                    photoURL: user.photoURL ?? null,
+                                    cart: newCart,
+                                },
+                                { merge: true }
+                            );
 
                             // Clear Local
                             localStorage.removeItem('sareine_cart');
@@ -142,14 +162,24 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         if (!user) return;
         const userRef = doc(db, "users", user.uid);
         try {
-            await updateDoc(userRef, { cart: newCart });
+            await setDoc(
+                userRef,
+                {
+                    uid: user.uid,
+                    email: user.email ?? null,
+                    displayName: user.displayName ?? null,
+                    photoURL: user.photoURL ?? null,
+                    cart: newCart,
+                },
+                { merge: true }
+            );
         } catch (error) {
             console.error("Error updating cloud cart", error);
         }
     }
 
-    const addToCart = async (product: any) => {
-        let newCart = [...cart];
+    const addToCart = async (product: CartProductInput) => {
+        const newCart = [...cart];
         const existingIndex = newCart.findIndex(item => item.id === product.id);
 
         if (existingIndex > -1) {

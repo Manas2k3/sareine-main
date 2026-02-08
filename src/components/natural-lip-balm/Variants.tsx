@@ -6,6 +6,8 @@ import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase/firebase';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { useCart } from '@/context/CartContext';
+import Reveal from '@/components/motion/Reveal';
+import EditorialHeading from '@/components/motion/EditorialHeading';
 
 interface Product {
     id: string;
@@ -62,11 +64,11 @@ export default function Variants() {
     }
 
     return (
-        <section id="variants" className={styles.section} aria-label="Natural balm variants">
+        <Reveal as="section" id="variants" className={styles.section} aria-label="Natural balm variants" variant="section">
             <div className={styles.container}>
                 <header className={styles.header}>
                     <span className={styles.subtitle}>Our Collection</span>
-                    <h2 className={styles.title}>Nature's Finest Tints</h2>
+                    <EditorialHeading as="h2" className={styles.title} lines={["Nature's Finest", "Tints"]} />
                 </header>
 
                 <div>
@@ -75,9 +77,16 @@ export default function Variants() {
                             <p>No products found in the collection.</p>
                         </div>
                     ) : (
-                        products.map((product) => (
-                            <div key={product.id} className={styles.productRow}>
-                                <div className={styles.imageContainer}>
+                        products.map((product, index) => (
+                            <Reveal
+                                key={product.id}
+                                as="div"
+                                id={`variant-${product.slug}`}
+                                className={styles.productRow}
+                                variant="lift"
+                                delay={index * 90}
+                            >
+                                <Reveal as="div" className={styles.imageContainer} variant="image">
                                     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
                                         <Image
                                             src={product.image}
@@ -95,7 +104,7 @@ export default function Variants() {
                                             </div>
                                         )}
                                     </div>
-                                </div>
+                                </Reveal>
 
                                 <div className={styles.contentContainer}>
                                     <h3 className={styles.productName}>{product.name}</h3>
@@ -138,11 +147,11 @@ export default function Variants() {
                                         {product.inStock === false ? 'Out of Stock' : 'Shop Now'}
                                     </button>
                                 </div>
-                            </div>
+                            </Reveal>
                         ))
                     )}
                 </div>
             </div>
-        </section>
+        </Reveal>
     );
 }

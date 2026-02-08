@@ -1,5 +1,7 @@
 import styles from './Ingredients.module.css';
 import Image from 'next/image';
+import Reveal from '@/components/motion/Reveal';
+import EditorialHeading from '@/components/motion/EditorialHeading';
 
 const ingredients = [
     {
@@ -22,10 +24,10 @@ const ingredients = [
 
 export default function Ingredients() {
     return (
-        <section className={styles.ingredients} id="ingredients" aria-labelledby="ingredients-title">
+        <Reveal as="section" variant="section" className={styles.ingredients} id="ingredients" aria-labelledby="ingredients-title">
             <div className="container">
                 <div className={styles.inner}>
-                    <div className={styles.imageSide}>
+                    <Reveal as="div" variant="image" className={styles.imageSide}>
                         <div className={styles.imageWrapper}>
                             <Image
                                 src="/ingredients_image.png"
@@ -35,13 +37,16 @@ export default function Ingredients() {
                                 sizes="(max-width: 768px) 100vw, 50vw"
                             />
                         </div>
-                    </div>
+                    </Reveal>
 
                     <div className={styles.content}>
                         <span className={styles.subtitle}>The Formula</span>
-                        <h2 id="ingredients-title" className={styles.title}>
-                            Nature's Finest, Refined
-                        </h2>
+                        <EditorialHeading
+                            as="h2"
+                            id="ingredients-title"
+                            className={styles.title}
+                            lines={["Nature's Finest,", "Refined"]}
+                        />
                         <p className={styles.description}>
                             Every ingredient is hand-selected from the world's most pristine sources.
                             Our master formulators spent three years perfecting this blend—a symphony
@@ -50,7 +55,13 @@ export default function Ingredients() {
 
                         <ul className={styles.ingredientList} role="list">
                             {ingredients.map((ingredient, index) => (
-                                <li key={index} className={styles.ingredientItem}>
+                                <Reveal
+                                    as="li"
+                                    key={index}
+                                    variant="lift"
+                                    delay={index * 70}
+                                    className={styles.ingredientItem}
+                                >
                                     <svg className={styles.ingredientIcon} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
                                         <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
                                         <path d="M9 12l2 2 4-4" />
@@ -58,12 +69,12 @@ export default function Ingredients() {
                                     <span className={styles.ingredientText}>
                                         <strong className={styles.ingredientName}>{ingredient.name}</strong> — {ingredient.description}
                                     </span>
-                                </li>
+                                </Reveal>
                             ))}
                         </ul>
                     </div>
                 </div>
             </div>
-        </section>
+        </Reveal>
     );
 }

@@ -7,7 +7,8 @@ import styles from './Navbar.module.css';
 import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
+import { useRouteTransition } from '@/components/motion/RouteTransitionProvider';
 
 export default function Navbar() {
     const [scrolled, setScrolled] = useState(false);
@@ -19,7 +20,7 @@ export default function Navbar() {
     const [showHomeDropdown, setShowHomeDropdown] = useState(false);
     const [showNaturalDropdown, setShowNaturalDropdown] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
-    const router = useRouter();
+    const { navigate } = useRouteTransition();
     const pathname = usePathname();
     const isNaturalBalm = pathname?.startsWith('/natural-balm');
 
@@ -38,7 +39,7 @@ export default function Navbar() {
 
             if (!hash) {
                 // No hash, just navigate normally
-                await router.push(href);
+                navigate(href);
                 return;
             }
 
@@ -55,7 +56,7 @@ export default function Navbar() {
             }
 
             // Navigate to the target path (with hash), then smooth scroll when done
-            await router.push(href);
+            navigate(href);
 
             // Wait for the new content to render, then scroll to hash if present
             requestAnimationFrame(() => {
@@ -63,9 +64,9 @@ export default function Navbar() {
                 if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         } catch (err) {
-            // If URL parsing fails, fall back to router navigation
+            // If URL parsing fails, fall back to transition navigation
             console.error('Anchor navigation error', err);
-            router.push(href);
+            navigate(href);
         }
     };
 
@@ -93,7 +94,7 @@ export default function Navbar() {
         try {
             await signOut();
             setShowProfileMenu(false);
-            router.push('/');
+            navigate('/');
         } catch (error) {
             console.error("Logout failed", error);
         }
@@ -214,88 +215,108 @@ export default function Navbar() {
 
                     {/* Menu panel */}
                     <div className={styles.mobileMenu}>
+                        <div className={styles.mobileMenuHeader}>
+                            <span className={styles.mobileMenuLabel}>Navigation</span>
+                            <button
+                                type="button"
+                                className={styles.mobileMenuClose}
+                                onClick={() => setShowMobileNav(false)}
+                                aria-label="Close navigation"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M18 6 6 18" />
+                                    <path d="m6 6 12 12" />
+                                </svg>
+                            </button>
+                        </div>
                         <div className={styles.mobileMenuContent}>
-                            <Link
-                                href="/"
-                                className={styles.mobileMenuItem}
-                                onClick={() => setShowMobileNav(false)}
-                            >
-                                Home
-                            </Link>
-                            <Link
-                                href="/natural-balm"
-                                className={styles.mobileMenuItem}
-                                onClick={() => setShowMobileNav(false)}
-                            >
-                                Natural Balm
-                            </Link>
-                            {isNaturalBalm ? (
-                                <>
-                                    <Link
-                                        href="/natural-balm#formula"
-                                        className={styles.mobileMenuItem}
-                                        onClick={(e) => {
-                                            handleAnchorClick(e, '/natural-balm#formula');
-                                            setShowMobileNav(false);
-                                        }}
-                                    >
-                                        The Formula
-                                    </Link>
-                                    <Link
-                                        href="/natural-balm#features"
-                                        className={styles.mobileMenuItem}
-                                        onClick={(e) => {
-                                            handleAnchorClick(e, '/natural-balm#features');
-                                            setShowMobileNav(false);
-                                        }}
-                                    >
-                                        Features
-                                    </Link>
-                                    <Link
-                                        href="/natural-balm#variants"
-                                        className={styles.mobileMenuItem}
-                                        onClick={(e) => {
-                                            handleAnchorClick(e, '/natural-balm#variants');
-                                            setShowMobileNav(false);
-                                        }}
-                                    >
-                                        Our Collections
-                                    </Link>
-                                </>
-                            ) : (
-                                <>
-                                    <Link
-                                        href="/#features"
-                                        className={styles.mobileMenuItem}
-                                        onClick={(e) => {
-                                            handleAnchorClick(e, '/#features');
-                                            setShowMobileNav(false);
-                                        }}
-                                    >
-                                        Features
-                                    </Link>
-                                    <Link
-                                        href="/#ingredients"
-                                        className={styles.mobileMenuItem}
-                                        onClick={(e) => {
-                                            handleAnchorClick(e, '/#ingredients');
-                                            setShowMobileNav(false);
-                                        }}
-                                    >
-                                        Ingredients
-                                    </Link>
-                                    <Link
-                                        href="/#contact"
-                                        className={styles.mobileMenuItem}
-                                        onClick={(e) => {
-                                            handleAnchorClick(e, '/#contact');
-                                            setShowMobileNav(false);
-                                        }}
-                                    >
-                                        Contact
-                                    </Link>
-                                </>
-                            )}
+                            <div className={styles.mobileMenuSection}>
+                                <p className={styles.mobileMenuSectionTitle}>Explore</p>
+                                <Link
+                                    href="/"
+                                    className={styles.mobileMenuItem}
+                                    onClick={() => setShowMobileNav(false)}
+                                >
+                                    Home
+                                </Link>
+                                <Link
+                                    href="/natural-balm"
+                                    className={styles.mobileMenuItem}
+                                    onClick={() => setShowMobileNav(false)}
+                                >
+                                    Natural Balm
+                                </Link>
+                            </div>
+                            <div className={styles.mobileMenuSection}>
+                                <p className={styles.mobileMenuSectionTitle}>On This Page</p>
+                                {isNaturalBalm ? (
+                                    <>
+                                        <Link
+                                            href="/natural-balm#formula"
+                                            className={styles.mobileMenuItem}
+                                            onClick={(e) => {
+                                                handleAnchorClick(e, '/natural-balm#formula');
+                                                setShowMobileNav(false);
+                                            }}
+                                        >
+                                            The Formula
+                                        </Link>
+                                        <Link
+                                            href="/natural-balm#features"
+                                            className={styles.mobileMenuItem}
+                                            onClick={(e) => {
+                                                handleAnchorClick(e, '/natural-balm#features');
+                                                setShowMobileNav(false);
+                                            }}
+                                        >
+                                            Features
+                                        </Link>
+                                        <Link
+                                            href="/natural-balm#variants"
+                                            className={styles.mobileMenuItem}
+                                            onClick={(e) => {
+                                                handleAnchorClick(e, '/natural-balm#variants');
+                                                setShowMobileNav(false);
+                                            }}
+                                        >
+                                            Our Collections
+                                        </Link>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Link
+                                            href="/#features"
+                                            className={styles.mobileMenuItem}
+                                            onClick={(e) => {
+                                                handleAnchorClick(e, '/#features');
+                                                setShowMobileNav(false);
+                                            }}
+                                        >
+                                            Features
+                                        </Link>
+                                        <Link
+                                            href="/#ingredients"
+                                            className={styles.mobileMenuItem}
+                                            onClick={(e) => {
+                                                handleAnchorClick(e, '/#ingredients');
+                                                setShowMobileNav(false);
+                                            }}
+                                        >
+                                            Ingredients
+                                        </Link>
+                                        <Link
+                                            href="/#contact"
+                                            className={styles.mobileMenuItem}
+                                            onClick={(e) => {
+                                                handleAnchorClick(e, '/#contact');
+                                                setShowMobileNav(false);
+                                            }}
+                                        >
+                                            Contact
+                                        </Link>
+                                    </>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </>
@@ -315,35 +336,38 @@ export default function Navbar() {
                 </button>
 
                 {/* Auth Section */}
-                <div className="relative" ref={menuRef}>
+                <div className={styles.profileArea} ref={menuRef}>
                     {user ? (
                         <button
                             onClick={() => setShowProfileMenu(!showProfileMenu)}
-                            className="text-[#1C1C1C] hover:text-[#D4AF37] transition-colors p-2 flex items-center"
+                            className={styles.profileTrigger}
+                            aria-haspopup="menu"
+                            aria-expanded={showProfileMenu}
                         >
                             <span className="sr-only">Open user menu</span>
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles.bagIcon || "w-6 h-6"}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles.bagIcon}>
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                             </svg>
                         </button>
                     ) : (
-                        <Link href="/signin" className="text-[#1C1C1C] hover:text-[#D4AF37] transition-colors p-2 font-medium text-sm">
+                        <Link href="/signin" className={styles.loginLink}>
                             Login
                         </Link>
                     )}
 
                     {/* Profile Dropdown */}
                     {user && showProfileMenu && (
-                        <div className="absolute right-0 mt-2 w-48 bg-white border border-[#E5E5E5] shadow-xl rounded-md overflow-hidden z-50 animate-fade-in origin-top-right">
-                            <div className="px-4 py-3 border-b border-[#E5E5E5] bg-[#FAF9F6]">
-                                <p className="text-xs text-[#8C8C8C] uppercase tracking-wider">Signed in as</p>
-                                <p className="text-sm font-medium truncate text-[#1C1C1C]">{user.displayName || user.email}</p>
+                        <div className={styles.profileMenu} role="menu" aria-label="User menu">
+                            <div className={styles.profileMenuHeader}>
+                                <p className={styles.profileMenuLabel}>Signed in as</p>
+                                <p className={styles.profileMenuName}>{user.displayName || user.email}</p>
                             </div>
                             <button
                                 onClick={handleLogout}
-                                className="w-full text-left px-4 py-3 text-sm text-[#1C1C1C] hover:bg-[#F9F5F1] hover:text-[#D4AF37] transition-colors flex items-center gap-2"
+                                className={styles.profileMenuAction}
+                                role="menuitem"
                             >
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className={styles.profileMenuActionIcon}>
                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
                                 </svg>
                                 Sign out

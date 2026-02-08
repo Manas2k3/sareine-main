@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from 'next/image';
 import styles from "./IntroScreen.module.css";
+import EditorialHeading from "@/components/motion/EditorialHeading";
 
 interface IntroScreenProps {
     onEnter: () => void;
@@ -37,7 +38,9 @@ export default function IntroScreen({ onEnter }: IntroScreenProps) {
                     />
                 </div>
 
-                <div className={styles.subtitle}>NOT FOR EVERYONE</div>
+                <div className={styles.subtitle}>Not For Everyone</div>
+
+        
 
                 <button className={styles.enterButton} onClick={handleEnter} aria-label="Enter site">
                     ENTER

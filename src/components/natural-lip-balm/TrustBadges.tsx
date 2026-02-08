@@ -1,4 +1,5 @@
 import styles from './TrustBadges.module.css';
+import Reveal from '@/components/motion/Reveal';
 
 const badges = [
     {
@@ -41,17 +42,17 @@ const badges = [
 
 export default function TrustBadges() {
     return (
-        <section className={styles.section}>
+        <Reveal as="section" className={styles.section} variant="section">
             <div className={styles.container}>
                 <div className={styles.badges}>
                     {badges.map((b, i) => (
-                        <div key={i} className={styles.badge}>
+                        <Reveal key={i} as="div" className={styles.badge} variant="lift" delay={i * 70}>
                             <div className={styles.icon}>{b.icon}</div>
                             <span className={styles.label}>{b.label}</span>
-                        </div>
+                        </Reveal>
                     ))}
                 </div>
             </div>
-        </section>
+        </Reveal>
     );
 }

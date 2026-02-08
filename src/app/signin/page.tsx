@@ -1,25 +1,31 @@
 "use client";
 
 import { useAuth } from '@/context/AuthContext';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import styles from './SignIn.module.css';
+import { useRouteTransition } from '@/components/motion/RouteTransitionProvider';
 
 export default function SignIn() {
     const { user, signInWithGoogle, signInWithEmail } = useAuth();
-    const router = useRouter();
+    const { navigate } = useRouteTransition();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const errorId = 'signin-error';
 
     useEffect(() => {
         if (user) {
-            router.push('/');
+            navigate('/');
         }
-    }, [user, router]);
+    }, [user, navigate]);
+
+    const toFriendlyError = (err: unknown) => {
+        if (err instanceof Error) return err.message.replace('Firebase: ', '');
+        return 'Unable to sign in right now. Please try again.';
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -27,8 +33,8 @@ export default function SignIn() {
         setLoading(true);
         try {
             await signInWithEmail(email, password);
-        } catch (err: any) {
-            setError(err.message.replace('Firebase: ', ''));
+        } catch (err: unknown) {
+            setError(toFriendlyError(err));
         } finally {
             setLoading(false);
         }
@@ -48,15 +54,19 @@ export default function SignIn() {
 
             <div className={styles.card}>
                 <div className={styles.header}>
+                    <span className={styles.authTag}>Member Access</span>
                     <h1 className={styles.title}>Welcome Back</h1>
-                    <p className={styles.subtitle}>Enter your details to access your account</p>
+                    <p className={styles.subtitle}>Sign in to manage your orders and continue your Sareine experience.</p>
                 </div>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.formGroup}>
-                        <label className={styles.label}>Email Address</label>
+                        <label htmlFor="signin-email" className={styles.label}>Email Address</label>
                         <input
+                            id="signin-email"
+                            name="email"
                             type="email"
+                            autoComplete="email"
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -66,10 +76,13 @@ export default function SignIn() {
                     </div>
 
                     <div className={styles.formGroup}>
-                        <label className={styles.label}>Password</label>
+                        <label htmlFor="signin-password" className={styles.label}>Password</label>
                         <div className={styles.inputWrapper}>
                             <input
+                                id="signin-password"
+                                name="password"
                                 type={showPassword ? "text" : "password"}
+                                autoComplete="current-password"
                                 required
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -80,6 +93,7 @@ export default function SignIn() {
                                 type="button"
                                 className={styles.eyeBtn}
                                 onClick={() => setShowPassword(!showPassword)}
+                                aria-label={showPassword ? "Hide password" : "Show password"}
                             >
                                 {showPassword ? (
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -96,12 +110,17 @@ export default function SignIn() {
                         </div>
                     </div>
 
-                    {error && <div className={styles.error}>{error}</div>}
+                    {error && (
+                        <div id={errorId} className={styles.error} role="alert" aria-live="polite">
+                            {error}
+                        </div>
+                    )}
 
                     <button
                         type="submit"
                         disabled={loading}
                         className={styles.submitBtn}
+                        aria-describedby={error ? errorId : undefined}
                     >
                         {loading ? 'Please wait...' : 'Sign In'}
                     </button>

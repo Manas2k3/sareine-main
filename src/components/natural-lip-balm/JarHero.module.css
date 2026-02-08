@@ -1,10 +1,9 @@
 .heroWrapper {
     position: relative;
-    /* Use a single-viewport height to avoid a large blank area below the hero.
-       Previously this was 350vh to support long-scrolling canvas animations.
-       We now render a static hero so keep it to one viewport. */
     height: 100vh;
-    background-color: var(--color-ivory);
+    background:
+        radial-gradient(circle at 12% 12%, rgba(186, 160, 92, 0.16), transparent 36%),
+        linear-gradient(170deg, var(--color-paper) 0%, var(--color-ivory) 100%);
 }
 
 .stickyContainer {
@@ -26,6 +25,11 @@
     z-index: 0;
 }
 
+.heroImageReveal {
+    width: 100%;
+    height: 100%;
+}
+
 .heroCanvas {
     width: 100%;
     height: 100%;
@@ -41,42 +45,49 @@
     height: 100%;
     z-index: 10;
     pointer-events: none;
+    background:
+        linear-gradient(95deg, rgba(247, 244, 238, 0.62) 0%, rgba(247, 244, 238, 0.08) 56%, rgba(247, 244, 238, 0) 100%);
 }
 
 .textGroup {
     position: absolute;
-    top: 40%;
+    top: 34%;
     left: clamp(var(--space-4), 6vw, var(--space-10));
     transform: translateY(-50%);
-    max-width: 580px;
+    max-width: 680px;
     will-change: opacity, transform;
+    display: grid;
+    gap: var(--space-1);
 }
 
 .tagline {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: clamp(1.25rem, 2vw, 1.75rem);
-    color: var(--color-text);
-    margin-bottom: var(--space-3);
-    letter-spacing: 0.02em;
+    font-family: var(--font-sans);
+    font-size: clamp(0.74rem, 1vw, 0.86rem);
+    color: #7c715f;
+    margin-bottom: var(--space-1);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 500;
 }
 
 .headline {
-    font-size: clamp(2.25rem, 5vw, 4rem);
+    font-size: clamp(2.3rem, 6.4vw, 5rem);
     font-weight: 500;
-    line-height: 1.08;
+    line-height: 0.94;
     color: var(--color-text);
-    margin-bottom: var(--space-4);
-    letter-spacing: -0.02em;
+    margin-bottom: var(--space-2);
+    letter-spacing: -0.03em;
+    max-width: 9ch;
 }
 
 .price {
     font-family: var(--font-sans);
-    font-size: 1.375rem;
-    color: var(--color-text-light);
-    margin-bottom: var(--space-6);
+    font-size: 1.05rem;
+    color: #5e564f;
+    margin-bottom: var(--space-5);
     display: block;
-    font-weight: 500;
+    font-weight: 600;
+    letter-spacing: 0.08em;
 }
 
 .ctaButton {
@@ -84,20 +95,24 @@
     pointer-events: auto;
     display: inline-flex;
     align-items: center;
-    padding: var(--space-3) var(--space-6);
-    background-color: var(--color-text);
-    color: var(--color-ivory);
+    padding: 0.86rem 1.6rem;
+    background: rgba(255, 255, 255, 0.75);
+    color: var(--color-text);
+    border: 1px solid rgba(39, 36, 33, 0.2);
     text-transform: uppercase;
-    font-size: 0.875rem;
-    letter-spacing: 0.12em;
+    font-size: 0.78rem;
+    letter-spacing: 0.15em;
+    font-weight: 600;
     border-radius: var(--radius-full);
     text-decoration: none;
-    transition: transform var(--transition-base), background var(--transition-base);
+    transition: transform var(--transition-base), background var(--transition-base), box-shadow var(--transition-base);
+    backdrop-filter: blur(8px);
 }
 
 .ctaButton:hover {
-    background-color: var(--color-gold);
+    background-color: #fff;
     transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(39, 36, 33, 0.14);
 }
 
 .loadingOverlay {
@@ -142,13 +157,14 @@
 
     .tagline {
         margin-bottom: var(--space-2);
-        font-size: clamp(0.9rem, 3vw, 1.2rem);
+        font-size: clamp(0.66rem, 2.2vw, 0.74rem);
     }
 
     .headline {
         margin-bottom: var(--space-3);
-        font-size: clamp(1.75rem, 6.5vw, 2.5rem);
-        line-height: 1.2;
+        font-size: clamp(1.72rem, 6.5vw, 2.55rem);
+        line-height: 1.08;
+        max-width: unset;
     }
 
     .price {
@@ -157,8 +173,8 @@
     }
 
     .ctaButton {
-        padding: var(--space-2) var(--space-5);
-        font-size: 0.8125rem;
+        padding: 0.72rem 1.25rem;
+        font-size: 0.74rem;
     }
 }
 

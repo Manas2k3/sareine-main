@@ -1,19 +1,19 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase/firebase';
 import Image from 'next/image';
 import styles from './SearchBar.module.css';
+import { useRouteTransition } from '@/components/motion/RouteTransitionProvider';
 
 interface Product {
     id: string;
     name: string;
     price: number;
-    image: string;
-    slug: string;
-    category: string;
+    image?: string;
+    slug?: string;
+    category?: string;
 }
 
 interface SearchBarProps {
@@ -29,45 +29,87 @@ export default function SearchBar({ isMobile = false, onClose }: SearchBarProps)
     const [selectedIndex, setSelectedIndex] = useState(-1);
     const searchRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLInputElement>(null);
-    const router = useRouter();
+    const { navigate } = useRouteTransition();
 
-    // Debounced search function
+    const splitSearchTerms = (term: string) =>
+        term
+            .toLowerCase()
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean);
+
+    // Debounced search function against Firestore `products.name`.
     const searchProducts = useCallback(async (term: string) => {
-        if (!term.trim()) {
+        const normalizedTerm = term.trim();
+        if (!normalizedTerm) {
             setResults([]);
             setShowDropdown(false);
+            setSelectedIndex(-1);
             return;
         }
 
         setIsLoading(true);
         try {
             const productsRef = collection(db, 'products');
-            const q = query(productsRef, orderBy('name'));
-            const snapshot = await getDocs(q);
+            const searchWords = splitSearchTerms(normalizedTerm);
 
-            // Filter results client-side for case-insensitive partial matching
-            const filteredResults = snapshot.docs
-                .map(doc => ({ id: doc.id, ...doc.data() } as Product))
-                .filter(product =>
-                    product.name.toLowerCase().includes(term.toLowerCase())
+            const snapshot = await getDocs(
+                query(
+                    productsRef,
+                    orderBy('name')
                 )
-                .slice(0, 5); // Limit to 5 results
+            );
 
-            setResults(filteredResults);
+            const matches = snapshot.docs
+                .map((docSnapshot) => ({ id: docSnapshot.id, ...docSnapshot.data() } as Product))
+                .filter((product) => {
+                    const productName = product.name?.toLowerCase() ?? '';
+                    return searchWords.every((word) => productName.includes(word));
+                })
+                .sort((a, b) => {
+                    const aName = a.name.toLowerCase();
+                    const bName = b.name.toLowerCase();
+                    const full = normalizedTerm.toLowerCase();
+
+                    const aScore = aName.startsWith(full) ? 3 : aName.includes(full) ? 2 : 1;
+                    const bScore = bName.startsWith(full) ? 3 : bName.includes(full) ? 2 : 1;
+                    return bScore - aScore || aName.localeCompare(bName);
+                });
+
+            setResults(matches);
             setShowDropdown(true);
+            setSelectedIndex(-1);
         } catch (error) {
             console.error('Search error:', error);
             setResults([]);
+            setShowDropdown(false);
+            setSelectedIndex(-1);
         } finally {
             setIsLoading(false);
         }
     }, []);
 
+    const getProductDestination = (product: Product) => {
+        if (product.slug === 'limited-edition-natural-lip-balm') {
+            return '/';
+        }
+
+        if (product.slug) {
+            return `/natural-balm#variant-${product.slug}`;
+        }
+
+        if (product.category === 'Lip Care') {
+            return '/natural-balm#variants';
+        }
+
+        return '/natural-balm#variants';
+    };
+
     // Debounce search
     useEffect(() => {
         const timer = setTimeout(() => {
             searchProducts(searchTerm);
-        }, 300);
+        }, 250);
 
         return () => clearTimeout(timer);
     }, [searchTerm, searchProducts]);
@@ -91,11 +133,11 @@ export default function SearchBar({ isMobile = false, onClose }: SearchBarProps)
         switch (e.key) {
             case 'ArrowDown':
                 e.preventDefault();
-                setSelectedIndex(prev => (prev < results.length - 1 ? prev + 1 : prev));
+                setSelectedIndex((prev) => (prev < results.length - 1 ? prev + 1 : prev));
                 break;
             case 'ArrowUp':
                 e.preventDefault();
-                setSelectedIndex(prev => (prev > 0 ? prev - 1 : -1));
+                setSelectedIndex((prev) => (prev > 0 ? prev - 1 : -1));
                 break;
             case 'Enter':
                 e.preventDefault();
@@ -112,18 +154,7 @@ export default function SearchBar({ isMobile = false, onClose }: SearchBarProps)
 
     // Navigate to product page
     const handleProductClick = (product: Product) => {
-        let destination = '/';
-
-        // Route based on product category/slug
-        if (product.slug === 'limited-edition-natural-lip-balm') {
-            destination = '/';
-        } else if (product.category === 'Lip Care') {
-            destination = '/natural-balm#variants';
-        } else {
-            destination = `/natural-balm#variants`;
-        }
-
-        router.push(destination);
+        navigate(getProductDestination(product));
         setSearchTerm('');
         setShowDropdown(false);
         setSelectedIndex(-1);
@@ -165,7 +196,6 @@ export default function SearchBar({ isMobile = false, onClose }: SearchBarProps)
                     aria-label="Search products"
                     aria-autocomplete="list"
                     aria-controls="search-results"
-                    aria-expanded={showDropdown}
                 />
                 {searchTerm && (
                     <button
@@ -173,6 +203,7 @@ export default function SearchBar({ isMobile = false, onClose }: SearchBarProps)
                             setSearchTerm('');
                             setResults([]);
                             setShowDropdown(false);
+                            setSelectedIndex(-1);
                         }}
                         className={styles.clearButton}
                         aria-label="Clear search"
@@ -184,7 +215,6 @@ export default function SearchBar({ isMobile = false, onClose }: SearchBarProps)
                 )}
             </div>
 
-            {/* Dropdown Results */}
             {showDropdown && (
                 <div className={styles.dropdown} id="search-results" role="listbox">
                     {isLoading ? (
@@ -203,7 +233,7 @@ export default function SearchBar({ isMobile = false, onClose }: SearchBarProps)
                             >
                                 <div className={styles.productImage}>
                                     <Image
-                                        src={product.image}
+                                        src={product.image || '/logo.jpg'}
                                         alt={product.name}
                                         width={48}
                                         height={48}

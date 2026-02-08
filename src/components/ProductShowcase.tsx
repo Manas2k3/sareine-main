@@ -6,6 +6,8 @@ import { useState, useRef, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 import { db } from '@/lib/firebase/firebase';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
+import Reveal from '@/components/motion/Reveal';
+import EditorialHeading from '@/components/motion/EditorialHeading';
 
 // Default images for carousel
 const IMAGES = [
@@ -171,10 +173,12 @@ export default function ProductShowcase() {
   }
 
   return (
-    <section className={styles.section} aria-label="Featured limited edition lip balm">
+    <Reveal as="section" variant="section" className={styles.section} aria-label="Featured limited edition lip balm">
       <div className={styles.container}>
         {/* SECTION 1: HERO (two-column responsive) */}
-        <div
+        <Reveal
+          as="div"
+          variant="section"
           className={styles.heroRow}
           style={{
             display: 'flex',
@@ -189,7 +193,7 @@ export default function ProductShowcase() {
         >
           {/* Left: carousel (full width on mobile, ~60% on desktop) */}
           <div className={styles.heroCarouselCol}>
-            <div className={`${styles.carousel} ${styles.imageCard}`}>
+            <Reveal as="div" variant="image" className={`${styles.carousel} ${styles.imageCard}`}>
               {/* Use explicit width/height so Next/Image serves correctly from /public */}
               <div style={{ width: '100%', height: '100%', position: 'relative' }}>
                 <Image
@@ -203,7 +207,7 @@ export default function ProductShowcase() {
                   style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                 />
               </div>
-            </div>
+            </Reveal>
 
             <div className={styles.dots} role="tablist" aria-label="Product slides" style={{ marginTop: 16 }}>
               {IMAGES.map((src, i) => (
@@ -221,7 +225,11 @@ export default function ProductShowcase() {
           {/* Right: product content (full width on mobile, ~40% on desktop) */}
           <div className={`${styles.content} ${styles.heroContent}`}>
             <span className={styles.subtitle}>Featured</span>
-            <h1 className={styles.title} style={{ marginTop: 8, marginBottom: 8 }}>{product.name}</h1>
+            <EditorialHeading
+              as="h1"
+              className={styles.title}
+              lines={[product.name]}
+            />
 
             <div className={styles.priceRow}>
               <span className={styles.price} aria-hidden style={{ fontSize: '1.5rem', fontWeight: 700 }}>₹{product.price}</span>
@@ -247,18 +255,18 @@ export default function ProductShowcase() {
               </button>
             </div>
           </div>
-        </div>
+        </Reveal>
 
         {/* SECTION 2: BENEFITS */}
-        <section aria-labelledby="benefits-heading" className={styles.benefitsSection}>
+        <Reveal as="section" variant="section" aria-labelledby="benefits-heading" className={styles.benefitsSection}>
           <div className={styles.benefitsInner}>
             <span className={styles.eyebrow}>The Details</span>
-            <h2 id="benefits-heading" style={{ marginBottom: '0.75rem' }}>Key Benefits</h2>
+            <EditorialHeading as="h2" id="benefits-heading" lines={["Key Benefits"]} />
             <p style={{ color: '#6b6b6b', marginBottom: '1rem' }}>Selected benefits that emphasize the product's premium performance.</p>
 
             <div className={styles.benefitsGrid}>
               {product.benefits.slice(0, 4).map((b: string, i: number) => (
-                <div key={b} className={styles.benefitCard}>
+                <Reveal key={b} as="div" variant="lift" delay={i * 75} className={styles.benefitCard}>
                   <div className={styles.benefitIcon} aria-hidden>
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden>
                       <circle cx="12" cy="12" r="9" stroke="#c8b289" strokeWidth="1.25" fill="none" />
@@ -266,43 +274,43 @@ export default function ProductShowcase() {
                     </svg>
                   </div>
                   <h3 className={styles.featureTitle}>{b}</h3>
-                </div>
+                </Reveal>
               ))}
             </div>
           </div>
-        </section>
+        </Reveal>
 
         {/* SECTION 3: HOW TO USE */}
-        <section aria-labelledby="howto-heading" className={styles.howToSection}>
+        <Reveal as="section" variant="section" aria-labelledby="howto-heading" className={styles.howToSection}>
           <div className={styles.howToWrap}>
             <span className={styles.eyebrow}>The Ritual</span>
-            <h2 id="howto-heading" style={{ marginBottom: '0.5rem', textAlign: 'center' }}>How to Use</h2>
+            <EditorialHeading as="h2" id="howto-heading" lines={["How to Use"]} />
             <ol className={styles.howToList} aria-label="How to use steps">
               {product.howToUse.map((s: string, i: number) => (
-                <li key={i} className={styles.howToStep}>
+                <Reveal key={i} as="li" variant="lift" delay={i * 70} className={styles.howToStep}>
                   <div className={styles.howToStepNumber}>{String(i + 1).padStart(2, '0')}</div>
                   <div className={styles.howToStepText}>{s}</div>
-                </li>
+                </Reveal>
               ))}
             </ol>
           </div>
-        </section>
+        </Reveal>
 
         {/* SECTION 4: INGREDIENTS (Luxury Blend) — golden badges */}
-        <section aria-labelledby="ingredients-heading" className={styles.ingredientsSection}>
+        <Reveal as="section" variant="section" aria-labelledby="ingredients-heading" className={styles.ingredientsSection}>
           <div className={styles.ingredientsInner}>
             <span className={styles.eyebrow}>The Ingredients</span>
-            <h2 id="ingredients-heading" className={styles.ingredientsTitle}>Ingredients (Luxury Blend)</h2>
+            <EditorialHeading as="h2" id="ingredients-heading" className={styles.ingredientsTitle} lines={["Ingredients", "(Luxury Blend)"]} />
             <p className={styles.ingredientsSubtitle}>Carefully selected natural ingredients that nourish and protect.</p>
 
             <div className={styles.ingredientsGrid} role="list">
-              {product.ingredients.map((ing: string) => (
-                <span key={ing} className={styles.ingredientBadge} role="listitem">{ing}</span>
+              {product.ingredients.map((ing: string, i: number) => (
+                <Reveal key={ing} as="span" variant="lift" delay={i * 45} className={styles.ingredientBadge} role="listitem">{ing}</Reveal>
               ))}
             </div>
           </div>
-        </section>
+        </Reveal>
       </div>
-    </section>
+    </Reveal>
   );
 }

@@ -87,6 +87,134 @@
     gap: var(--space-4);
 }
 
+.profileArea {
+    position: relative;
+}
+
+.profileTrigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    color: var(--color-text);
+    background: transparent;
+    transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.profileTrigger:hover {
+    color: var(--color-gold);
+    border-color: rgba(201, 169, 98, 0.38);
+    background: rgba(255, 255, 255, 0.42);
+}
+
+.loginLink {
+    font-family: var(--font-sans);
+    font-size: 0.93rem;
+    font-weight: 500;
+    color: var(--color-text);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    padding: 8px 10px;
+    border-radius: 999px;
+    transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.loginLink:hover {
+    color: var(--color-gold);
+    background: rgba(255, 255, 255, 0.42);
+}
+
+.profileMenu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    min-width: 260px;
+    max-width: min(86vw, 340px);
+    border-radius: 18px;
+    border: 1px solid rgba(201, 169, 98, 0.28);
+    background:
+        linear-gradient(165deg, rgba(255, 255, 255, 0.98), rgba(248, 244, 236, 0.98));
+    box-shadow: 0 20px 48px rgba(28, 28, 28, 0.18);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    z-index: 90;
+    transform-origin: top right;
+    animation: profileMenuEnter 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.profileMenuHeader {
+    padding: 14px 16px 12px;
+    border-bottom: 1px solid rgba(201, 169, 98, 0.22);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(246, 242, 234, 0.72));
+}
+
+.profileMenuLabel {
+    margin: 0;
+    font-family: var(--font-sans);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #8b7f6f;
+}
+
+.profileMenuName {
+    margin: 6px 0 0;
+    font-family: var(--font-sans);
+    font-size: 1.02rem;
+    line-height: 1.35;
+    font-weight: 550;
+    color: #2d2925;
+    letter-spacing: 0.01em;
+    word-break: break-word;
+}
+
+.profileMenuAction {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+    border: 0;
+    background: transparent;
+    padding: 12px 16px;
+    font-family: var(--font-sans);
+    font-size: 0.98rem;
+    color: #272321;
+    cursor: pointer;
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.profileMenuAction:hover {
+    background: rgba(201, 169, 98, 0.13);
+    color: #3a342f;
+}
+
+.profileMenuAction:focus-visible {
+    outline: 2px solid rgba(201, 169, 98, 0.65);
+    outline-offset: -2px;
+}
+
+.profileMenuActionIcon {
+    width: 17px;
+    height: 17px;
+    color: rgba(47, 42, 38, 0.9);
+}
+
+@keyframes profileMenuEnter {
+    from {
+        opacity: 0;
+        transform: translateY(-6px) scale(0.985);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 .preOrderBtn {
     font-size: 0.9375rem;
     /* Increased from 0.8125rem */
@@ -201,6 +329,15 @@
         margin-left: auto;
         align-items: center;
     }
+
+    .profileMenu {
+        right: -8px;
+        min-width: 232px;
+    }
+
+    .profileMenuName {
+        font-size: 0.97rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -226,14 +363,72 @@
     position: fixed;
     top: 0;
     left: 0;
-    height: 100vh;
-    width: min(65vw, 280px);
-    background: var(--color-ivory);
-    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+    bottom: 0;
+    width: min(84vw, 360px);
+    background:
+        linear-gradient(170deg, rgba(255, 255, 255, 0.96) 0%, rgba(246, 242, 234, 0.96) 100%);
+    box-shadow:
+        14px 0 42px rgba(28, 28, 28, 0.18),
+        inset -1px 0 0 rgba(255, 255, 255, 0.56);
     z-index: 50;
-    animation: slideInFromLeft 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: slideInFromLeft 0.36s cubic-bezier(0.22, 1, 0.36, 1);
     overflow-y: auto;
-    border-right: 1px solid rgba(212, 175, 55, 0.2);
+    border-right: 1px solid rgba(201, 169, 98, 0.26);
+    backdrop-filter: blur(10px);
+}
+
+.mobileMenu::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 15% 10%, rgba(201, 169, 98, 0.16), transparent 38%),
+        radial-gradient(circle at 88% 85%, rgba(61, 57, 53, 0.08), transparent 42%);
+}
+
+.mobileMenuHeader {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: calc(12px + env(safe-area-inset-top, 0px)) 14px 10px;
+    border-bottom: 1px solid rgba(201, 169, 98, 0.2);
+    background: rgba(248, 244, 236, 0.88);
+    backdrop-filter: blur(6px);
+}
+
+.mobileMenuLabel {
+    font-family: var(--font-sans);
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #827664;
+}
+
+.mobileMenuClose {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid rgba(61, 57, 53, 0.18);
+    background: rgba(255, 255, 255, 0.82);
+    color: #3d3935;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+.mobileMenuClose:active {
+    transform: scale(0.97);
+}
+
+.mobileMenuClose:hover {
+    border-color: rgba(201, 169, 98, 0.56);
+    background: #fff;
 }
 
 @keyframes slideInFromLeft {
@@ -247,61 +442,79 @@
 }
 
 .mobileMenuContent {
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
-    padding: var(--space-8) var(--space-5);
-    gap: var(--space-2);
-    padding-top: calc(var(--space-8) + 60px);
-    /* Account for navbar height */
+    gap: 10px;
+    padding: 18px 14px calc(22px + env(safe-area-inset-bottom, 0px));
+}
+
+.mobileMenuSection {
+    margin: 0;
+    padding: 10px;
+    border-radius: 16px;
+    border: 1px solid rgba(201, 169, 98, 0.16);
+    background: rgba(255, 255, 255, 0.62);
+}
+
+.mobileMenuSectionTitle {
+    font-family: var(--font-sans);
+    font-size: 0.69rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #8c8070;
+    margin-bottom: 8px;
 }
 
 .mobileMenuItem {
+    display: block;
     font-family: var(--font-sans);
-    font-size: 1.0625rem;
+    font-size: 1rem;
     font-weight: 500;
     color: var(--color-text);
     text-decoration: none;
-    padding: var(--space-4) var(--space-4);
-    border-radius: var(--radius-md);
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    letter-spacing: 0.03em;
+    padding: 12px 12px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    letter-spacing: 0.02em;
     position: relative;
     overflow: hidden;
     text-transform: capitalize;
-    border-left: 3px solid transparent;
+    border: 1px solid transparent;
 }
 
 .mobileMenuItem::after {
-    content: '';
+    content: '↗';
     position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(to right, var(--color-gold), transparent);
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%) translateX(-3px);
+    font-size: 0.8rem;
     opacity: 0;
-    transition: opacity 0.25s ease;
+    color: var(--color-gold-muted);
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .mobileMenuItem:active {
-    transform: translateX(4px);
-    background: rgba(212, 175, 55, 0.08);
-    border-left-color: var(--color-gold);
+    background: rgba(201, 169, 98, 0.11);
+    border-color: rgba(201, 169, 98, 0.28);
 }
 
 .mobileMenuItem:active::after {
-    opacity: 0.3;
+    opacity: 0.95;
+    transform: translateY(-50%) translateX(0);
 }
 
 @media (hover: hover) {
     .mobileMenuItem:hover {
-        background: rgba(212, 175, 55, 0.06);
-        border-left-color: var(--color-gold);
-        transform: translateX(4px);
-        color: var(--color-gold);
+        background: rgba(201, 169, 98, 0.1);
+        border-color: rgba(201, 169, 98, 0.26);
+        color: #332f2b;
     }
 
     .mobileMenuItem:hover::after {
-        opacity: 0.2;
+        opacity: 0.95;
+        transform: translateY(-50%) translateX(0);
     }
 }

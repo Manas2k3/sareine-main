@@ -1,134 +1,120 @@
 .contact {
-    background: linear-gradient(180deg,
-            var(--color-ivory) 0%,
-            var(--color-cream) 100%);
+    background: linear-gradient(180deg, var(--color-cream) 0%, var(--color-paper) 100%);
     text-align: center;
     overflow-x: hidden;
-    /* Anchor offset for contact */
     scroll-margin-top: var(--section-scroll-offset, 88px);
-    padding: var(--space-10) 0;
+    padding: var(--space-12) 0 var(--space-10);
 }
 
 .inner {
-    max-width: 600px;
+    max-width: 700px;
     width: 100%;
     margin: 0 auto;
     padding: 0 var(--space-3);
-    min-width: 0;
-}
-
-@media (max-width: 480px) {
-    .contact .container {
-        padding-left: calc(var(--space-3) + env(safe-area-inset-left, 0px));
-        padding-right: calc(var(--space-3) + env(safe-area-inset-right, 0px));
-    }
-    .inner {
-        padding-left: 0;
-        padding-right: 0;
-    }
-    .description {
-        max-width: 100%;
-    }
-    .title {
-        font-size: clamp(1.5rem, 5vw, 2rem);
-    }
 }
 
 .subtitle {
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.2em;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--color-gold);
-    margin-bottom: var(--space-2);
+    color: var(--color-gold-muted);
+    margin-bottom: 0.7rem;
     display: block;
 }
 
 .title {
-    margin-bottom: var(--space-3);
+    margin-bottom: 0.9rem;
 }
 
 .description {
-    font-size: 1.15rem;
-    /* Increased from 1.0625rem */
-    line-height: 1.8;
-    margin-bottom: var(--space-5);
-    max-width: 500px;
-    /* Slight increase in width */
+    font-size: 1rem;
+    line-height: 1.85;
+    margin-bottom: 1.5rem;
+    max-width: 52ch;
     margin-left: auto;
     margin-right: auto;
 }
 
 .actions {
     display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    align-items: center;
-    margin-bottom: var(--space-6);
-}
-
-@media (min-width: 480px) {
-    .actions {
-        flex-direction: row;
-        justify-content: center;
-    }
+    justify-content: center;
+    margin-bottom: 1.4rem;
 }
 
 .divider {
     display: flex;
     align-items: center;
-    gap: var(--space-3);
-    margin-bottom: var(--space-4);
+    gap: 1rem;
+    margin-bottom: 1.2rem;
 }
 
 .dividerLine {
     flex: 1;
     height: 1px;
-    background: linear-gradient(to right,
-            transparent,
-            rgba(201, 169, 98, 0.3),
-            transparent);
+    background: linear-gradient(to right, transparent, rgba(186, 160, 92, 0.42), transparent);
 }
 
 .dividerText {
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--color-text-light);
+    color: #7d7367;
 }
 
 .emailLink {
     display: inline-flex;
     align-items: center;
-    gap: var(--space-1);
+    gap: 0.45rem;
     font-family: var(--font-sans);
-    font-size: 0.9375rem;
+    font-size: 0.94rem;
     color: var(--color-text);
     transition: color var(--transition-fast);
 }
 
 .emailLink:hover {
-    color: var(--color-gold);
+    color: var(--color-gold-muted);
 }
 
 .emailIcon {
-    width: 18px;
-    height: 18px;
-    color: var(--color-gold);
+    width: 17px;
+    height: 17px;
+    color: var(--color-gold-muted);
 }
 
 .footer {
-    margin-top: var(--space-8);
-    padding-top: var(--space-4);
-    border-top: 1px solid rgba(201, 169, 98, 0.15);
+    margin-top: 2.6rem;
+    padding-top: 1.15rem;
+    border-top: 1px solid rgba(186, 160, 92, 0.2);
 }
 
 .footerText {
-    font-size: 0.8125rem;
-    color: var(--color-text-light);
+    font-size: 0.8rem;
+    color: #766f66;
 }
 
 .footerBrand {
     font-family: var(--font-serif);
     color: var(--color-text);
+    font-size: 1.08em;
+}
+
+@media (max-width: 480px) {
+    .contact {
+        padding: var(--space-10) 0;
+    }
+
+    .inner {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .description {
+        max-width: 100%;
+        font-size: 0.93rem;
+    }
+
+    .title {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+    }
 }

@@ -34,3 +34,23 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## Security Notes
+
+- Firestore rules now enforce:
+  - `users/{uid}`: owner-only read/write (admins can also read/write).
+  - `products/{id}`: public read, admin-only write.
+  - all other paths: denied.
+- Public browser seeding route `/admin/seed` was removed.
+
+### Admin Access (Required for product writes)
+
+Product writes now require Firebase Auth custom claim `admin: true`.
+
+Example (run in a trusted server environment with Firebase Admin SDK):
+
+```js
+await admin.auth().setCustomUserClaims(uid, { admin: true });
+```
+
+After setting claims, the admin user must sign out/in (or refresh token) before the claim is available in security rules.

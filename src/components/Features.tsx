@@ -1,4 +1,6 @@
 import styles from './Features.module.css';
+import Reveal from '@/components/motion/Reveal';
+import EditorialHeading from '@/components/motion/EditorialHeading';
 
 const features = [
     {
@@ -33,27 +35,37 @@ const features = [
 
 export default function Features() {
     return (
-        <section className={styles.features} id="features" aria-labelledby="features-title">
+        <Reveal as="section" variant="section" className={styles.features} id="features" aria-labelledby="features-title">
             <div className="container">
                 <header className={styles.header}>
                     <span className={styles.subtitle}>The Details</span>
-                    <h2 id="features-title" className={styles.title}>
-                        Crafted for Perfection
-                    </h2>
+                    <EditorialHeading
+                        as="h2"
+                        id="features-title"
+                        className={styles.title}
+                        lines={["Crafted for", "Perfection"]}
+                    />
                 </header>
 
                 <div className={styles.grid} role="list">
                     {features.map((feature, index) => (
-                        <article key={index} className={styles.feature} role="listitem">
+                        <Reveal
+                            as="article"
+                            key={index}
+                            variant="lift"
+                            delay={index * 90}
+                            className={styles.feature}
+                            role="listitem"
+                        >
                             <div className={styles.icon} aria-hidden="true">
                                 {feature.icon}
                             </div>
                             <h3 className={styles.featureTitle}>{feature.title}</h3>
                             <p className={styles.featureDescription}>{feature.description}</p>
-                        </article>
+                        </Reveal>
                     ))}
                 </div>
             </div>
-        </section>
+        </Reveal>
     );
 }

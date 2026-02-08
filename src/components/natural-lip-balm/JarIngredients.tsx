@@ -1,5 +1,7 @@
 import styles from './JarIngredients.module.css';
 import Image from 'next/image';
+import Reveal from '@/components/motion/Reveal';
+import EditorialHeading from '@/components/motion/EditorialHeading';
 
 const ingredients = [
     {
@@ -34,9 +36,9 @@ const ingredients = [
 
 export default function JarIngredients() {
     return (
-        <section id="formula" className={styles.section}>
+        <Reveal as="section" id="formula" className={styles.section} variant="section">
             <div className={styles.container}>
-                <div className={styles.imageColumn}>
+                <Reveal as="div" className={styles.imageColumn} variant="image">
                     {/* Main Formula Shot */}
                     <Image
                         src="/jar-portrait.png"
@@ -45,11 +47,11 @@ export default function JarIngredients() {
                         className={styles.ingredientImage} // Correct class name
                         sizes="(max-width: 768px) 100vw, 600px"
                     />
-                </div>
+                </Reveal>
 
                 <div className={styles.textColumn}>
                     <span className={styles.subtitle}>The Formula</span>
-                    <h2 className={styles.title}>Botanical Excellence</h2>
+                    <EditorialHeading as="h2" className={styles.title} lines={["Botanical", "Excellence"]} />
 
                     <div className={styles.gridContainer}>
                         {/* Group 1: Botanical Extracts */}
@@ -57,7 +59,7 @@ export default function JarIngredients() {
                             <span className={styles.groupLabel}>Botanical Extracts</span>
                             <div className={styles.groupGrid}>
                                 {ingredients.slice(0, 2).map((item, i) => (
-                                    <div key={i} className={styles.item}>
+                                    <Reveal key={i} as="div" className={styles.item} variant="lift" delay={i * 75}>
                                         <div className={styles.iconWrapper}>
                                             {item.icon}
                                         </div>
@@ -65,7 +67,7 @@ export default function JarIngredients() {
                                             <span className={styles.itemName}>{item.name}</span>
                                             <p className={styles.itemDesc}>{item.desc}</p>
                                         </div>
-                                    </div>
+                                    </Reveal>
                                 ))}
                             </div>
                         </div>
@@ -77,7 +79,7 @@ export default function JarIngredients() {
                             <span className={styles.groupLabel}>Base Formula</span>
                             <div className={styles.groupGrid}>
                                 {ingredients.slice(2).map((item, i) => (
-                                    <div key={i} className={styles.item}>
+                                    <Reveal key={i} as="div" className={styles.item} variant="lift" delay={(i + 2) * 75}>
                                         <div className={styles.iconWrapper}>
                                             {item.icon}
                                         </div>
@@ -85,13 +87,13 @@ export default function JarIngredients() {
                                             <span className={styles.itemName}>{item.name}</span>
                                             <p className={styles.itemDesc}>{item.desc}</p>
                                         </div>
-                                    </div>
+                                    </Reveal>
                                 ))}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
+        </Reveal>
     );
 }

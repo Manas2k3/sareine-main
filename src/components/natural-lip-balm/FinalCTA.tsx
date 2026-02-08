@@ -1,10 +1,12 @@
 import styles from './FinalCTA.module.css';
+import Reveal from '@/components/motion/Reveal';
+import EditorialHeading from '@/components/motion/EditorialHeading';
 
 export default function FinalCTA() {
     return (
-        <section id="buy-now" className={styles.section}>
+        <Reveal as="section" id="buy-now" className={styles.section} variant="section">
             <div className={styles.container}>
-                <h2 className={styles.title}>Sareine Natural Lip Balm</h2>
+                <EditorialHeading as="h2" className={styles.title} lines={["Sareine", "Natural Lip Balm"]} />
                 <p className={styles.subtitle}>
                     Experience the difference of pure botanical luxury.
                     Limited stock available.
@@ -13,6 +15,6 @@ export default function FinalCTA() {
                     Shop the collection — from ₹599
                 </a>
             </div>
-        </section>
+        </Reveal>
     );
 }

@@ -1,4 +1,6 @@
 import styles from './KeyBenefits.module.css';
+import Reveal from '@/components/motion/Reveal';
+import EditorialHeading from '@/components/motion/EditorialHeading';
 
 const benefits = [
     {
@@ -33,23 +35,23 @@ const benefits = [
 
 export default function KeyBenefits() {
     return (
-        <section id="features" className={styles.section}>
+        <Reveal as="section" id="features" className={styles.section} variant="section">
             <div className={styles.container}>
                 <header className={styles.header}>
                     <span className={styles.subtitle}>Why You'll Love It</span>
-                    <h2 className={styles.title}>Visible Results</h2>
+                    <EditorialHeading as="h2" className={styles.title} lines={["Visible", "Results"]} />
                 </header>
 
                 <div className={styles.grid}>
                     {benefits.map((b, i) => (
-                        <div key={i} className={styles.card}>
+                        <Reveal key={i} as="div" className={styles.card} variant="lift" delay={i * 80}>
                             <div className={styles.icon}>{b.icon}</div>
                             <h3 className={styles.cardTitle}>{b.title}</h3>
                             <p className={styles.cardDesc}>{b.desc}</p>
-                        </div>
+                        </Reveal>
                     ))}
                 </div>
             </div>
-        </section>
+        </Reveal>
     );
 }

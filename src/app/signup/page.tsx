@@ -1,14 +1,14 @@
 "use client";
 
 import { useAuth } from '@/context/AuthContext';
-import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import styles from './SignUp.module.css';
+import { useRouteTransition } from '@/components/motion/RouteTransitionProvider';
 
 export default function SignUp() {
     const { user, signInWithGoogle, signUpWithEmail } = useAuth();
-    const router = useRouter();
+    const { navigate } = useRouteTransition();
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,12 +17,18 @@ export default function SignUp() {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const errorId = 'signup-error';
 
     useEffect(() => {
         if (user) {
-            router.push('/');
+            navigate('/');
         }
-    }, [user, router]);
+    }, [user, navigate]);
+
+    const toFriendlyError = (err: unknown) => {
+        if (err instanceof Error) return err.message.replace('Firebase: ', '');
+        return 'Unable to create account right now. Please try again.';
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -41,8 +47,8 @@ export default function SignUp() {
         setLoading(true);
         try {
             await signUpWithEmail(email, password, name);
-        } catch (err: any) {
-            setError(err.message.replace('Firebase: ', ''));
+        } catch (err: unknown) {
+            setError(toFriendlyError(err));
         } finally {
             setLoading(false);
         }
@@ -62,15 +68,19 @@ export default function SignUp() {
 
             <div className={styles.card}>
                 <div className={styles.header}>
+                    <span className={styles.authTag}>Create Profile</span>
                     <h1 className={styles.title}>Join Excellence</h1>
-                    <p className={styles.subtitle}>Create your account for exclusive access</p>
+                    <p className={styles.subtitle}>Create your account to unlock exclusive drops and track every purchase.</p>
                 </div>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} className={styles.form}>
                     <div className={styles.formGroup}>
-                        <label className={styles.label}>Full Name</label>
+                        <label htmlFor="signup-name" className={styles.label}>Full Name</label>
                         <input
+                            id="signup-name"
+                            name="name"
                             type="text"
+                            autoComplete="name"
                             required
                             value={name}
                             onChange={(e) => setName(e.target.value)}
@@ -80,9 +90,12 @@ export default function SignUp() {
                     </div>
 
                     <div className={styles.formGroup}>
-                        <label className={styles.label}>Email Address</label>
+                        <label htmlFor="signup-email" className={styles.label}>Email Address</label>
                         <input
+                            id="signup-email"
+                            name="email"
                             type="email"
+                            autoComplete="email"
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -92,10 +105,14 @@ export default function SignUp() {
                     </div>
 
                     <div className={styles.formGroup}>
-                        <label className={styles.label}>Password</label>
+                        <label htmlFor="signup-password" className={styles.label}>Password</label>
                         <div className={styles.inputWrapper}>
                             <input
+                                id="signup-password"
+                                name="password"
                                 type={showPassword ? "text" : "password"}
+                                autoComplete="new-password"
+                                minLength={6}
                                 required
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
@@ -106,6 +123,7 @@ export default function SignUp() {
                                 type="button"
                                 className={styles.eyeBtn}
                                 onClick={() => setShowPassword(!showPassword)}
+                                aria-label={showPassword ? "Hide password" : "Show password"}
                             >
                                 {showPassword ? (
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -120,13 +138,18 @@ export default function SignUp() {
                                 )}
                             </button>
                         </div>
+                        <p className={styles.hint}>Use at least 6 characters.</p>
                     </div>
 
                     <div className={styles.formGroup}>
-                        <label className={styles.label}>Confirm Password</label>
+                        <label htmlFor="signup-confirm-password" className={styles.label}>Confirm Password</label>
                         <div className={styles.inputWrapper}>
                             <input
+                                id="signup-confirm-password"
+                                name="confirmPassword"
                                 type={showConfirmPassword ? "text" : "password"}
+                                autoComplete="new-password"
+                                minLength={6}
                                 required
                                 value={confirmPassword}
                                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -137,6 +160,7 @@ export default function SignUp() {
                                 type="button"
                                 className={styles.eyeBtn}
                                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                aria-label={showConfirmPassword ? "Hide confirm password" : "Show confirm password"}
                             >
                                 {showConfirmPassword ? (
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -153,12 +177,17 @@ export default function SignUp() {
                         </div>
                     </div>
 
-                    {error && <div className={styles.error}>{error}</div>}
+                    {error && (
+                        <div id={errorId} className={styles.error} role="alert" aria-live="polite">
+                            {error}
+                        </div>
+                    )}
 
                     <button
                         type="submit"
                         disabled={loading}
                         className={styles.submitBtn}
+                        aria-describedby={error ? errorId : undefined}
                     >
                         {loading ? 'Creating...' : 'Create Account'}
                     </button>

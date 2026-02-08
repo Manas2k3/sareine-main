@@ -47,7 +47,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return () => unsubscribe();
     }, []);
 
-    const createUserDocument = async (user: User, additionalData?: any) => {
+    const createUserDocument = async (
+        user: User,
+        additionalData?: { displayName?: string }
+    ) => {
         if (!user) return;
         const userRef = doc(db, "users", user.uid);
         const userSnap = await getDoc(userRef);
@@ -57,12 +60,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             try {
                 await setDoc(userRef, {
                     uid: user.uid,
-                    email,
-                    displayName,
-                    photoURL,
+                    email: email ?? null,
+                    displayName: additionalData?.displayName ?? displayName ?? null,
+                    photoURL: photoURL ?? null,
                     createdAt: serverTimestamp(),
-                    role: 'customer',
-                    ...additionalData
+                    cart: [],
                 });
             } catch (error) {
                 console.error("Error creating user document", error);

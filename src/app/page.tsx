@@ -7,6 +7,7 @@ import Ingredients from '@/components/Ingredients';
 import ProductShowcase from '@/components/ProductShowcase';
 import Contact from '@/components/Contact';
 import IntroScreen from '@/components/IntroScreen';
+import Reveal from '@/components/motion/Reveal';
 
 import { useIntro } from '@/context/IntroContext';
 
@@ -24,10 +25,10 @@ export default function Home() {
         overflow: !hasShownIntro ? 'hidden' : 'visible'
       } as React.CSSProperties}>
         <Hero />
-        <ProductShowcase />
-        <Features />
-        <Ingredients />
-        <Contact />
+        <Reveal as="div" variant="section"><ProductShowcase /></Reveal>
+        <Reveal as="div" variant="section" delay={70}><Features /></Reveal>
+        <Reveal as="div" variant="section" delay={80}><Ingredients /></Reveal>
+        <Reveal as="div" variant="section" delay={90}><Contact /></Reveal>
       </div>
     </main>
   );
