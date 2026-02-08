@@ -39,14 +39,6 @@ export const metadata: Metadata = {
     description: "Experience the pinnacle of luxury lip care with exotic botanicals.",
     type: "website",
   },
-  // Use the project logo placed in /public as the site's favicon
-  // Next.js will include these in the <head>. Using a JPG is fine for modern browsers;
-  // for broader compatibility you can convert to .ico or provide multiple sizes.
-  icons: {
-    icon: '/logo.jpg',
-    shortcut: '/logo.jpg',
-    apple: '/logo.jpg',
-  },
 };
 
 export default function RootLayout({
