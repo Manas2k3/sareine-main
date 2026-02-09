@@ -99,6 +99,30 @@
     font-size: 1.08em;
 }
 
+.legalLinks {
+    margin-top: 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.legalLink {
+    font-size: 0.75rem;
+    color: #9b948a;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.legalLink:hover {
+    color: var(--color-gold-muted);
+}
+
+.legalSeparator {
+    color: rgba(186, 160, 92, 0.3);
+    font-size: 0.6rem;
+}
+
 @media (max-width: 480px) {
     .contact {
         padding: var(--space-10) 0;

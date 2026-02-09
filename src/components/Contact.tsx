@@ -45,6 +45,11 @@ export default function Contact() {
                         <p className={styles.footerText}>
                             © {currentYear} <span className={styles.footerBrand}>Sareine</span>. All rights reserved.
                         </p>
+                        <div className={styles.legalLinks}>
+                            <a href="/privacy-policy" className={styles.legalLink}>Privacy Policy</a>
+                            <span className={styles.legalSeparator}>•</span>
+                            <a href="/terms-of-service" className={styles.legalLink}>Terms of Service</a>
+                        </div>
                     </footer>
                 </div>
             </div>
