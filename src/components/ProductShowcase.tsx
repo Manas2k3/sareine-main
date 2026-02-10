@@ -180,12 +180,6 @@ export default function ProductShowcase() {
           as="div"
           variant="section"
           className={styles.heroRow}
-          style={{
-            display: 'flex',
-            gap: '2rem',
-            flexWrap: 'wrap',
-            alignItems: 'center',
-          }}
           onTouchStart={(e) => onPointerStart(e.touches[0]?.clientX ?? 0)}
           onTouchEnd={(e) => onPointerEnd(e.changedTouches[0]?.clientX ?? 0)}
           onMouseDown={(e) => onPointerStart(e.clientX)}
@@ -209,7 +203,7 @@ export default function ProductShowcase() {
               </div>
             </Reveal>
 
-            <div className={styles.dots} role="tablist" aria-label="Product slides" style={{ marginTop: 16 }}>
+            <div className={styles.dots} role="tablist" aria-label="Product slides">
               {IMAGES.map((src, i) => (
                 <button
                   key={src}
@@ -232,12 +226,12 @@ export default function ProductShowcase() {
             />
 
             <div className={styles.priceRow}>
-              <span className={styles.price} aria-hidden style={{ fontSize: '1.5rem', fontWeight: 700 }}>₹{product.price}</span>
+              <span className={styles.price} aria-hidden>₹{product.price}</span>
             </div>
 
             <p className={styles.tagline}>{product.tagline}</p>
 
-            <p className={styles.desc} style={{ marginBottom: 18 }}>{product.short}</p>
+            <p className={styles.desc}>{product.short}</p>
 
             <div className={styles.ctaWrap}>
               <button

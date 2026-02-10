@@ -1,3 +1,8 @@
+/* ============================================
+   FROSTED GLASS NAVIGATION
+   Golden glassmorphism treatment
+   ============================================ */
+
 .navbar {
     position: fixed;
     top: 0;
@@ -8,16 +13,20 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: transparent;
-    transition: background-color 0.3s ease, padding 0.3s ease;
+    background: transparent;
+    transition:
+        background 0.4s var(--ease-luxury),
+        padding 0.4s var(--ease-luxury),
+        box-shadow 0.4s var(--ease-luxury),
+        backdrop-filter 0.4s ease;
 }
 
 .scrolled {
-    background-color: rgba(242, 240, 235, 0.95);
-    /* Matches ivory with gloss */
-    backdrop-filter: blur(10px);
+    background: var(--glass-champagne);
+    backdrop-filter: var(--glass-blur) var(--glass-saturate);
     padding: var(--space-3) var(--space-6);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid var(--glass-border);
+    box-shadow: 0 4px 24px rgba(201, 164, 92, 0.1);
 }
 
 .brand {
@@ -52,29 +61,31 @@
 .navLink {
     font-family: var(--font-sans);
     font-size: 1rem;
-    /* Increased from 0.875rem */
     color: var(--color-text);
     text-decoration: none;
     text-transform: capitalize;
     letter-spacing: 0.05em;
-    opacity: 0.8;
-    transition: opacity 0.2s ease;
+    opacity: 0.85;
+    transition: opacity 0.32s var(--ease-luxury), color 0.32s ease;
     position: relative;
 }
 
 .navLink:hover {
     opacity: 1;
+    color: var(--color-text-warm);
 }
 
+/* Center-outward underline animation */
 .navLink::after {
     content: '';
     position: absolute;
     bottom: -4px;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 0%;
     height: 1px;
-    background-color: var(--color-gold);
-    transition: width 0.3s ease;
+    background: linear-gradient(90deg, transparent, var(--color-gold-accent), transparent);
+    transition: width 0.42s var(--ease-luxury);
 }
 
 .navLink:hover::after {

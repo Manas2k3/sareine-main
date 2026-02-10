@@ -41,20 +41,34 @@
     }
 }
 
+/* ============================================
+   FLOATING GLASS FEATURE CARDS
+   Golden glassmorphism treatment
+   ============================================ */
+
 .feature {
     text-align: left;
-    padding: clamp(1.2rem, 2.2vw, 1.8rem);
-    border-radius: var(--radius-lg);
-    border: 1px solid rgba(39, 36, 33, 0.1);
-    background: linear-gradient(170deg, rgba(255, 255, 255, 0.92) 0%, rgba(247, 244, 238, 0.82) 100%);
-    box-shadow: var(--shadow-sm);
-    transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+    padding: clamp(1.4rem, 2.4vw, 2rem);
+    border-radius: var(--radius-glass);
+    border: 1px solid var(--glass-border);
+    background: var(--glass-champagne);
+    backdrop-filter: var(--glass-blur-light) var(--glass-saturate);
+    box-shadow: var(--shadow-inset-highlight);
+    transition:
+        transform 0.38s var(--ease-luxury),
+        box-shadow 0.38s var(--ease-luxury),
+        border-color 0.32s ease,
+        background 0.32s ease;
 }
 
 .feature:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-md);
-    border-color: rgba(186, 160, 92, 0.38);
+    transform: translateY(-6px);
+    background: var(--glass-champagne-strong);
+    border-color: var(--glass-border-hover);
+    box-shadow:
+        var(--shadow-gold-md),
+        var(--shadow-inset-highlight),
+        var(--shadow-inset-glow);
 }
 
 .icon {
@@ -65,14 +79,20 @@
     align-items: center;
     justify-content: center;
     border-radius: var(--radius-full);
-    background: rgba(186, 160, 92, 0.09);
-    border: 1px solid rgba(186, 160, 92, 0.24);
+    background: var(--glass-champagne-soft);
+    border: 1px solid var(--glass-border-gold);
+    transition: border-color 0.28s ease, background 0.28s ease;
+}
+
+.feature:hover .icon {
+    border-color: var(--color-gold-accent);
+    background: var(--glass-champagne);
 }
 
 .iconSvg {
     width: 24px;
     height: 24px;
-    color: var(--color-gold-muted);
+    color: var(--color-gold-accent);
 }
 
 .featureTitle {
@@ -85,7 +105,7 @@
 
 .featureDescription {
     font-size: 0.96rem;
-    line-height: 1.72;
+    line-height: 1.76;
     color: var(--color-text-light);
     max-width: 34ch;
 }

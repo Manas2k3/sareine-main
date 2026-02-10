@@ -47,15 +47,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${cormorant.variable} ${manrope.variable}`}>
         <AuthProvider>
           <CartProvider>
             <IntroProvider>
               <Suspense fallback={null}>
+                <CartDrawer />
                 <RouteTransitionProvider>
                   <Navbar />
-                  <CartDrawer />
                   {children}
                 </RouteTransitionProvider>
               </Suspense>

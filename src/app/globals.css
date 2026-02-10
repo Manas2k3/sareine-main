@@ -6,23 +6,56 @@
    ============================================ */
 
 :root {
-  /* Color direction: calm neutrals + muted gold */
+  /* ========================================
+     GOLDEN GLASSMORPHISM DESIGN TOKENS
+     Warm champagne glass, sensory luxury
+     ======================================== */
+
+  /* Base Palette: Warm Neutrals */
   --color-ivory: #f2f0ea;
   --color-cream: #f7f4ee;
   --color-paper: #fbf9f4;
+  --color-warm-cream: #FAF7F2;
+  --color-champagne-base: #FFF5E1;
+  --color-text: #2a2723;
+  --color-text-light: #5e564d;
+  --color-text-warm: #3d3631;
+  --color-line: rgba(39, 36, 33, 0.1);
+  --color-white: #ffffff;
+
+  /* Golden Accent Palette */
   --color-gold: #baa05c;
   --color-gold-muted: #a88d47;
   --color-gold-light: #d8c58f;
-  --color-text: #272421;
-  --color-text-light: #676059;
-  --color-line: rgba(39, 36, 33, 0.12);
-  --color-white: #ffffff;
+  --color-gold-accent: #E6C27A;
+  --color-bronze: #C9A45C;
+  --color-gold-warm: #D4B46A;
+
+  /* Glass Surface Colors */
+  --glass-champagne: rgba(255, 245, 225, 0.32);
+  --glass-champagne-soft: rgba(255, 245, 225, 0.25);
+  --glass-champagne-strong: rgba(255, 245, 225, 0.45);
+  --glass-warm-white: rgba(255, 252, 248, 0.65);
+  --glass-cream: rgba(247, 244, 238, 0.55);
+
+  /* Glass Borders */
+  --glass-border: rgba(255, 215, 160, 0.28);
+  --glass-border-hover: rgba(255, 215, 160, 0.48);
+  --glass-border-subtle: rgba(255, 215, 160, 0.18);
+  --glass-border-gold: rgba(201, 164, 92, 0.35);
+
+  /* Glass Effects */
+  --glass-blur: blur(18px);
+  --glass-blur-light: blur(14px);
+  --glass-blur-heavy: blur(22px);
+  --glass-saturate: saturate(140%);
+  --glass-backdrop: var(--glass-blur) var(--glass-saturate);
 
   /* Typography */
   --font-serif: var(--font-editorial), "Cormorant Garamond", Georgia, serif;
   --font-sans: var(--font-body), "Manrope", -apple-system, BlinkMacSystemFont, sans-serif;
 
-  /* Spacing */
+  /* Spacing (8px grid) */
   --space-1: 8px;
   --space-2: 16px;
   --space-3: 24px;
@@ -42,17 +75,32 @@
   --radius-xl: 28px;
   --radius-2xl: 36px;
   --radius-full: 9999px;
+  --radius-glass: 20px;
+  --radius-glass-lg: 24px;
 
-  /* Motion */
+  /* Motion: Editorial Easing */
   --transition-fast: 180ms ease;
   --transition-base: 320ms cubic-bezier(0.22, 1, 0.36, 1);
   --transition-slow: 560ms cubic-bezier(0.22, 1, 0.36, 1);
+  --transition-glass: 400ms cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-luxury: cubic-bezier(0.22, 1, 0.36, 1);
 
-  /* Shadows */
+  /* Standard Shadows */
   --shadow-sm: 0 2px 10px rgba(21, 19, 16, 0.05);
   --shadow-md: 0 10px 28px rgba(21, 19, 16, 0.1);
   --shadow-lg: 0 20px 45px rgba(21, 19, 16, 0.14);
   --shadow-xl: 0 30px 70px rgba(21, 19, 16, 0.18);
+
+  /* Golden Glass Shadows */
+  --shadow-gold-sm: 0 4px 16px rgba(201, 164, 92, 0.12);
+  --shadow-gold-md: 0 8px 32px rgba(201, 164, 92, 0.18);
+  --shadow-gold-lg: 0 16px 48px rgba(201, 164, 92, 0.22);
+  --shadow-gold-glow: 0 0 24px rgba(230, 194, 122, 0.25);
+  --shadow-gold-soft: 0 4px 20px rgba(201, 164, 92, 0.08);
+
+  /* Glass Inset Highlights */
+  --shadow-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  --shadow-inset-glow: inset 0 0 20px rgba(255, 245, 225, 0.15);
 }
 
 *,
@@ -137,39 +185,63 @@ a:hover {
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
-  border: 0;
   border-radius: var(--radius-full);
-  padding: 0.85rem 1.8rem;
+  padding: 0.9rem 1.9rem;
   font-family: var(--font-sans);
   font-size: 0.78rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: transform var(--transition-fast), background var(--transition-base), box-shadow var(--transition-base), color var(--transition-base);
+  transition:
+    transform 0.28s var(--ease-luxury),
+    background 0.32s var(--ease-luxury),
+    box-shadow 0.32s var(--ease-luxury),
+    border-color 0.28s ease;
 }
 
+/* Molten Gold Glass Primary Button */
 .btn-primary {
-  background: linear-gradient(136deg, #a88d47 0%, #baa05c 55%, #d2bb7e 100%);
-  color: #fff;
-  box-shadow: 0 10px 24px rgba(168, 141, 71, 0.28);
+  background: linear-gradient(135deg,
+      rgba(230, 194, 122, 0.92) 0%,
+      rgba(201, 164, 92, 0.95) 50%,
+      rgba(212, 180, 106, 0.92) 100%);
+  color: var(--color-text-warm);
+  border: 1px solid var(--glass-border-gold);
+  backdrop-filter: blur(8px);
+  box-shadow:
+    var(--shadow-gold-sm),
+    var(--shadow-inset-highlight);
 }
 
 .btn-primary:hover {
-  color: var(--color-text);
-  transform: translateY(-2px);
-  box-shadow: 0 14px 30px rgba(168, 141, 71, 0.36);
+  transform: scale(1.03) translateY(-2px);
+  box-shadow:
+    var(--shadow-gold-md),
+    var(--shadow-gold-glow),
+    var(--shadow-inset-highlight);
+  border-color: var(--glass-border-hover);
 }
 
+.btn-primary:active {
+  transform: scale(0.99);
+}
+
+/* Glass Secondary Button */
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.76);
+  background: var(--glass-warm-white);
+  backdrop-filter: var(--glass-blur-light);
   color: var(--color-text);
-  border: 1px solid var(--color-line);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-inset-highlight);
 }
 
 .btn-secondary:hover {
-  background: #fff;
-  border-color: rgba(186, 160, 92, 0.38);
+  background: var(--glass-champagne-strong);
+  border-color: var(--glass-border-hover);
+  box-shadow:
+    var(--shadow-gold-soft),
+    var(--shadow-inset-highlight);
 }
 
 .container {
@@ -384,4 +456,40 @@ section {
     opacity: 1 !important;
     transform: none !important;
   }
+}
+
+/* ============================================
+   GLASSMORPHISM FALLBACKS
+   Support for browsers without backdrop-filter
+   ============================================ */
+
+@supports not (backdrop-filter: blur(10px)) {
+
+  /* Fallback for glass surfaces */
+  .btn-secondary,
+  .btn-primary {
+    background: linear-gradient(135deg,
+        rgba(247, 239, 220, 0.95) 0%,
+        rgba(230, 194, 122, 0.9) 100%);
+  }
+}
+
+/* ============================================
+   ACCESSIBILITY ENHANCEMENTS
+   Ensure text readability over glass surfaces
+   ============================================ */
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --glass-champagne: rgba(255, 245, 225, 0.75);
+    --glass-champagne-strong: rgba(255, 245, 225, 0.85);
+    --glass-border: rgba(201, 164, 92, 0.5);
+  }
+}
+
+/* Focus visible improvements for accessibility */
+:focus-visible {
+  outline: 2px solid var(--color-gold-accent);
+  outline-offset: 2px;
 }

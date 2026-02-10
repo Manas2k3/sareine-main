@@ -1,9 +1,43 @@
+/* ============================================
+   HERO SECTION - GOLDEN GLASSMORPHISM
+   Layered glass planes, shimmer, cinematic luxury
+   ============================================ */
+
 .heroWrapper {
     position: relative;
     height: 100vh;
     background:
-        radial-gradient(circle at 84% 16%, rgba(186, 160, 92, 0.14), transparent 42%),
-        linear-gradient(160deg, var(--color-paper) 0%, var(--color-ivory) 100%);
+        radial-gradient(ellipse at 20% 25%, rgba(230, 194, 122, 0.12), transparent 45%),
+        radial-gradient(ellipse at 75% 80%, rgba(201, 164, 92, 0.08), transparent 40%),
+        radial-gradient(circle at 90% 10%, rgba(255, 215, 160, 0.06), transparent 35%),
+        linear-gradient(160deg, var(--color-warm-cream) 0%, var(--color-ivory) 100%);
+    overflow: hidden;
+}
+
+/* Subtle gold dust / shimmer layer */
+.heroWrapper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(ellipse at 30% 40%, rgba(230, 194, 122, 0.08), transparent 50%),
+        radial-gradient(circle at 70% 30%, rgba(212, 180, 106, 0.06), transparent 40%);
+    opacity: 0;
+    animation: heroShimmer 10s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes heroShimmer {
+
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.35;
+    }
 }
 
 .stickyContainer {
@@ -40,7 +74,7 @@
     z-index: 10;
     pointer-events: none;
     background:
-        linear-gradient(90deg, rgba(247, 244, 238, 0.66) 0%, rgba(247, 244, 238, 0.08) 52%, rgba(247, 244, 238, 0) 100%);
+        linear-gradient(90deg, rgba(250, 247, 242, 0.72) 0%, rgba(250, 247, 242, 0.15) 48%, transparent 100%);
 }
 
 .textGroup {
@@ -58,7 +92,7 @@
     font-family: var(--font-sans);
     font-weight: 500;
     font-size: clamp(0.76rem, 1.1vw, 0.9rem);
-    color: #7a6f60;
+    color: var(--color-bronze);
     margin-bottom: var(--space-1);
     letter-spacing: 0.22em;
     text-transform: uppercase;
@@ -73,6 +107,7 @@
     max-width: 10ch;
 }
 
+/* Glass CTA Button */
 .ctaButton {
     position: absolute;
     bottom: 14%;
@@ -80,26 +115,34 @@
     pointer-events: auto;
     will-change: transform, opacity;
     display: inline-flex;
-    padding: 0.95rem 1.8rem;
-    border: 1px solid rgba(39, 36, 33, 0.2);
+    padding: 0.95rem 1.9rem;
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius-full);
-    color: #2a2723;
+    color: var(--color-text-warm);
     text-transform: uppercase;
     font-size: 0.78rem;
     font-weight: 600;
     letter-spacing: 0.16em;
-    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-    background: rgba(255, 255, 255, 0.72);
+    transition:
+        background 0.36s var(--ease-luxury),
+        border-color 0.32s ease,
+        transform 0.28s var(--ease-luxury),
+        box-shadow 0.36s var(--ease-luxury);
+    background: var(--glass-warm-white);
+    backdrop-filter: var(--glass-blur-light) var(--glass-saturate);
     text-decoration: none;
     z-index: 20;
-    backdrop-filter: blur(8px);
+    box-shadow: var(--shadow-gold-soft), var(--shadow-inset-highlight);
 }
 
 .ctaButton:hover {
-    background: #fff;
-    color: var(--color-text);
-    transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(39, 36, 33, 0.14);
+    background: var(--glass-champagne-strong);
+    border-color: var(--glass-border-hover);
+    transform: scale(1.02) translateY(-2px);
+    box-shadow:
+        var(--shadow-gold-md),
+        var(--shadow-gold-glow),
+        var(--shadow-inset-highlight);
 }
 
 @media (max-width: 768px) {
