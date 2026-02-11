@@ -61,6 +61,10 @@
     height: 100%;
 }
 
+.heroImage {
+    object-fit: cover;
+}
+
 .heroCanvas {
     width: 100%;
     height: 100%;
@@ -168,20 +172,28 @@
             linear-gradient(180deg, rgba(247, 244, 238, 0.62) 0%, rgba(247, 244, 238, 0.12) 50%, rgba(247, 244, 238, 0) 100%);
     }
 
+    .heroImage {
+        object-position: 55% center;
+    }
+
     .textGroup {
         top: 100px;
-        left: 76%;
-        right: auto;
-        transform: translateX(-50%);
-        text-align: center;
-        width: 90%;
-        max-width: 400px;
-        padding: 0 var(--space-4);
+        left: auto;
+        right: 5%;
+        transform: none;
+        text-align: right;
+        width: 55%;
+        max-width: none;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
     }
 
     .tagline {
         font-size: clamp(0.64rem, 2vw, 0.76rem);
         margin-bottom: var(--space-2);
+        width: 100%;
     }
 
     .headline {
@@ -189,10 +201,12 @@
         line-height: 1.08;
         letter-spacing: -0.01em;
         max-width: unset;
+        width: 100%;
     }
 
     .ctaButton {
-        left: clamp(var(--space-6), 10vw, var(--space-10));
+        left: auto;
+        right: 5%;
         transform: none;
         bottom: 6%;
         font-size: clamp(0.74rem, 2.3vw, 0.88rem);

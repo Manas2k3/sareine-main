@@ -17,7 +17,7 @@ export default function HeroAnimation() {
             src="/hero-images/hero-image1.png"
             alt="Sareine Limited Edition"
             fill
-            style={{ objectFit: 'cover' }}
+            className={styles.heroImage}
             priority
             sizes="100vw"
           />
