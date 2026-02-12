@@ -1,5 +1,7 @@
 "use client";
 
+import { createPortal } from 'react-dom';
+
 import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import SearchBar from './SearchBar';
@@ -204,12 +206,13 @@ export default function Navbar() {
                 )}
             </div>
 
-            {/* Mobile nav overlay */}
-            {showMobileNav && (
+            {/* Mobile nav overlay — rendered via portal to escape transformed parent */}
+            {showMobileNav && typeof document !== 'undefined' && createPortal(
                 <>
                     {/* Backdrop overlay */}
                     <div
-                        className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40 md:hidden"
+                        className="fixed inset-0 bg-black/30 backdrop-blur-sm md:hidden"
+                        style={{ zIndex: 1499 }}
                         onClick={() => setShowMobileNav(false)}
                     />
 
@@ -319,7 +322,8 @@ export default function Navbar() {
                             </div>
                         </div>
                     </div>
-                </>
+                </>,
+                document.body
             )}
 
 
