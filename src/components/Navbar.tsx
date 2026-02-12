@@ -122,7 +122,7 @@ export default function Navbar() {
             </Link>
 
             {/* Desktop Search Bar */}
-            <div className="hidden md:flex order-3 flex-1 max-w-[500px] mx-6">
+            <div className="hidden md:flex order-3 flex-1 max-w-[400px] mx-4">
                 <SearchBar />
             </div>
 

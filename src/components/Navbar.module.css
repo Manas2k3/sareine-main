@@ -38,7 +38,7 @@
     letter-spacing: 0.15em;
     display: flex;
     align-items: center;
-    gap: clamp(var(--space-2), 2vw, var(--space-3));
+    gap: clamp(var(--space-1), 1.5vw, var(--space-2));
     text-transform: uppercase;
     line-height: 1;
 }
@@ -55,7 +55,7 @@
 
 .navLinks {
     display: none;
-    gap: var(--space-8);
+    gap: var(--space-4);
 }
 
 .navLink {
