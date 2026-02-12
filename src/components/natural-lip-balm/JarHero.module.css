@@ -115,6 +115,20 @@
     box-shadow: 0 12px 24px rgba(39, 36, 33, 0.14);
 }
 
+.ctaButton.outOfStock {
+    background: rgba(200, 200, 200, 0.4);
+    color: rgba(39, 36, 33, 0.5);
+    border-color: rgba(39, 36, 33, 0.12);
+    cursor: not-allowed;
+    user-select: none;
+}
+
+.ctaButton.outOfStock:hover {
+    background: rgba(200, 200, 200, 0.4);
+    transform: none;
+    box-shadow: none;
+}
+
 .loadingOverlay {
     position: absolute;
     top: 50%;
