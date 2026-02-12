@@ -9,7 +9,7 @@ import Reveal from "@/components/motion/Reveal";
 
 export default function NaturalBalmPage() {
     return (
-        // Natural Balm needs a slightly larger anchor offset because the hero is sticky
+        // Luxury lip care collection needs a slightly larger anchor offset because the hero is sticky
         // and we want linked sections to clear the navbar and hero correctly.
         <main style={{ '--section-scroll-offset': '120px' } as React.CSSProperties}>
             <JarHero />

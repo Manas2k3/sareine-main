@@ -158,9 +158,9 @@ export default function Navbar() {
                     onMouseEnter={() => setShowNaturalDropdown(true)}
                     onMouseLeave={() => setShowNaturalDropdown(false)}
                 >
-                    <Link href="/natural-balm">Natural Balm</Link>
+                    <Link href="/natural-balm">Luxury lip care collection</Link>
 
-                    {/* Natural Balm dropdown: show the three Sareine product images */}
+                    {/* Luxury lip care collection dropdown: show the three Sareine product images */}
                     {showNaturalDropdown && (
                         <div className={styles.dropdown} onMouseEnter={() => setShowNaturalDropdown(true)} onMouseLeave={() => setShowNaturalDropdown(false)}>
                             <div className={styles.dropdownGrid}>
@@ -249,7 +249,7 @@ export default function Navbar() {
                                     className={styles.mobileMenuItem}
                                     onClick={() => setShowMobileNav(false)}
                                 >
-                                    Natural Balm
+                                    Luxury lip care collection
                                 </Link>
                                 <Link
                                     href="/gifts"

@@ -19,13 +19,23 @@
 }
 
 @media (max-width: 480px) {
-    .section { padding: var(--space-8) 0 var(--space-10); }
+    .section {
+        padding: var(--space-8) 0 var(--space-10);
+    }
+
     .container {
         padding-left: calc(var(--space-3) + env(safe-area-inset-left, 0px));
         padding-right: calc(var(--space-3) + env(safe-area-inset-right, 0px));
     }
-    .title { font-size: clamp(1.5rem, 5vw, 2rem); }
-    .description { max-width: 100%; font-size: 1rem; }
+
+    .title {
+        font-size: clamp(1.5rem, 5vw, 2rem);
+    }
+
+    .description {
+        max-width: 100%;
+        font-size: 1rem;
+    }
 }
 
 @media (min-width: 768px) {
@@ -75,15 +85,15 @@
 }
 
 /* Add consistent vertical rhythm between adjacent sections and headings used in the
-   Natural Balm flow (Nature's purest touch, Botanical Experience, Visible Results,
+   Luxury lip care collection flow (Nature's purest touch, Botanical Experience, Visible Results,
    Nature's finest Tints). These ensure predictable padding and clearer separation. */
-.section + .section {
+.section+.section {
     /* slightly larger top padding for subsequent sections */
     padding-top: var(--space-10);
 }
 
-.title + .description,
-.subtitle + .title {
+.title+.description,
+.subtitle+.title {
     /* ensure good spacing between title and following copy */
     margin-top: 0;
     margin-bottom: var(--space-6);
@@ -91,8 +101,13 @@
 
 /* Utility: slightly increase title spacing on wide screens for better hierarchy */
 @media (min-width: 1024px) {
-    .title { margin-bottom: var(--space-8); }
-    .section { padding: var(--space-10) 0 var(--space-14); }
+    .title {
+        margin-bottom: var(--space-8);
+    }
+
+    .section {
+        padding: var(--space-10) 0 var(--space-14);
+    }
 }
 
 .productImage {

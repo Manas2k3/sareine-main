@@ -38,7 +38,7 @@ export default function Variants() {
                 ...doc.data()
             })) as Product[];
 
-            // Natural Balm tab: only the 3 core variants (exclude Limited Edition)
+            // Luxury lip care collection tab: only the 3 core variants (exclude Limited Edition)
             const naturalBalmOnly = productsData.filter(
                 (p) => p.slug !== 'limited-edition-natural-lip-balm' && !p.name?.toLowerCase().includes('limited edition')
             );
@@ -64,7 +64,7 @@ export default function Variants() {
     }
 
     return (
-        <Reveal as="section" id="variants" className={styles.section} aria-label="Natural balm variants" variant="section">
+        <Reveal as="section" id="variants" className={styles.section} aria-label="Luxury lip care collection variants" variant="section">
             <div className={styles.container}>
                 <header className={styles.header}>
                     <span className={styles.subtitle}>Our Collection</span>

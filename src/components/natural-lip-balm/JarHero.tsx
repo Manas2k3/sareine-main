@@ -56,7 +56,7 @@ export default function JarHero() {
             <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
               <Image
                 src="/hero-images/hero-image2.png"
-                alt="Sareine Natural Balm"
+                alt="Sareine Luxury lip care collection"
                 fill
                 style={{ objectFit: 'cover' }}
                 priority
