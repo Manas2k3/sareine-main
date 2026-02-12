@@ -1,0 +1,287 @@
+/* ============================================
+   GIFTS PAGE – GOLDEN GLASSMORPHISM
+   Premium showcase for gifts & giveaways
+   ============================================ */
+
+.page {
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--color-warm-cream) 0%, var(--color-cream) 60%, var(--color-ivory) 100%);
+    padding-top: calc(80px + var(--space-8));
+    padding-bottom: var(--space-10, 80px);
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 var(--space-4);
+}
+
+@media (min-width: 480px) {
+    .container {
+        padding: 0 var(--space-6);
+    }
+}
+
+/* Page Header */
+.header {
+    text-align: center;
+    margin-bottom: var(--space-6);
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-gold);
+    margin-bottom: var(--space-3);
+}
+
+.eyebrow svg {
+    width: 14px;
+    height: 14px;
+}
+
+.pageTitle {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    font-weight: 500;
+    color: var(--color-text);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin: 0 0 var(--space-3);
+}
+
+.pageSubtitle {
+    font-family: var(--font-sans);
+    font-size: clamp(0.9375rem, 2vw, 1.0625rem);
+    color: var(--color-text-light);
+    line-height: 1.6;
+    max-width: 520px;
+    margin: 0 auto;
+}
+
+/* Gifts Grid */
+.giftsGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    max-width: 560px;
+    margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+    .giftsGrid {
+        grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    }
+}
+
+@media (min-width: 768px) {
+    .giftsGrid {
+        max-width: 640px;
+    }
+}
+
+/* Gift Card - reuses Golden Glassmorphism language */
+.giftCard {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.98), rgba(250, 248, 245, 0.95));
+    border: 1px solid rgba(180, 155, 110, 0.2);
+    border-radius: var(--radius-lg, 16px);
+    overflow: hidden;
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.05),
+        0 1px 4px rgba(180, 155, 110, 0.1);
+    position: relative;
+}
+
+.giftCard::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg,
+            var(--color-gold, #B49B6E) 0%,
+            #D4AF37 50%,
+            var(--color-gold, #B49B6E) 100%);
+    z-index: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .giftCard {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .giftCard:hover {
+        transform: translateY(-4px);
+        box-shadow:
+            0 12px 40px rgba(0, 0, 0, 0.1),
+            0 4px 12px rgba(180, 155, 110, 0.15),
+            inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+}
+
+/* Badge */
+.badge {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 14px;
+    background: linear-gradient(135deg, var(--color-gold, #B49B6E) 0%, #D4AF37 100%);
+    color: var(--color-white, #fff);
+    font-family: var(--font-sans);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: var(--radius-full, 50px);
+    box-shadow: 0 2px 10px rgba(180, 155, 110, 0.45);
+    z-index: 2;
+}
+
+.badge svg {
+    width: 12px;
+    height: 12px;
+}
+
+/* Image */
+.imageWrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    background: linear-gradient(180deg, #2a2a2a 0%, #1a1a1a 100%);
+    overflow: hidden;
+}
+
+@media (min-width: 480px) {
+    .imageWrap {
+        aspect-ratio: 16 / 9;
+    }
+}
+
+.image {
+    object-fit: cover;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .giftCard:hover .image {
+        transform: scale(1.03);
+        transition: transform 0.4s ease;
+    }
+}
+
+/* Content below image */
+.content {
+    padding: var(--space-4) var(--space-4) var(--space-5);
+}
+
+@media (min-width: 480px) {
+    .content {
+        padding: var(--space-5) var(--space-5) var(--space-6);
+    }
+}
+
+.giftTitle {
+    font-family: var(--font-serif);
+    font-size: clamp(1.125rem, 3vw, 1.375rem);
+    font-weight: 600;
+    color: var(--color-text);
+    margin: 0 0 var(--space-2);
+    line-height: 1.3;
+    background: linear-gradient(135deg, var(--color-text, #3D3935) 0%, #5a5550 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.giftTagline {
+    font-family: var(--font-sans);
+    font-size: clamp(0.8125rem, 2vw, 0.9375rem);
+    font-weight: 600;
+    color: var(--color-gold, #B49B6E);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+    margin: 0;
+}
+
+/* CTA Section */
+.ctaWrap {
+    text-align: center;
+    margin-top: var(--space-5);
+}
+
+.ctaBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-7, 48px);
+    background: linear-gradient(135deg,
+            rgba(230, 194, 122, 0.92) 0%,
+            rgba(201, 164, 92, 0.95) 50%,
+            rgba(212, 180, 106, 0.92) 100%);
+    color: var(--color-text-warm);
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--glass-border-gold);
+    border-radius: var(--radius-full);
+    backdrop-filter: blur(8px);
+    box-shadow:
+        var(--shadow-gold-sm),
+        var(--shadow-inset-highlight);
+    cursor: pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .ctaBtn {
+        transition:
+            transform 0.28s cubic-bezier(0.23, 1, 0.32, 1),
+            box-shadow 0.32s cubic-bezier(0.23, 1, 0.32, 1),
+            border-color 0.28s ease;
+    }
+
+    .ctaBtn:hover {
+        transform: scale(1.02) translateY(-1px);
+        border-color: var(--glass-border-hover);
+        box-shadow:
+            var(--shadow-gold-md),
+            var(--shadow-gold-glow),
+            var(--shadow-inset-highlight);
+    }
+
+    .ctaBtn:active {
+        transform: scale(0.99);
+    }
+}
+
+.ctaBtn:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 2px var(--color-gold-accent),
+        var(--shadow-gold-sm);
+}
+
+.ctaBtn svg {
+    width: 18px;
+    height: 18px;
+}
+
+@media (min-width: 480px) {
+    .ctaBtn {
+        padding: var(--space-3) var(--space-8, 56px);
+        font-size: 0.875rem;
+    }
+}

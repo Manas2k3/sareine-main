@@ -178,6 +178,8 @@ export default function Navbar() {
                     )}
                 </div>
 
+                <Link href="/gifts" className={styles.navLink}>Gifts</Link>
+
                 {/* Desktop links vary depending on the current page */}
                 {isNaturalBalm ? (
                     <>
@@ -248,6 +250,13 @@ export default function Navbar() {
                                     onClick={() => setShowMobileNav(false)}
                                 >
                                     Natural Balm
+                                </Link>
+                                <Link
+                                    href="/gifts"
+                                    className={styles.mobileMenuItem}
+                                    onClick={() => setShowMobileNav(false)}
+                                >
+                                    Gifts
                                 </Link>
                             </div>
                             <div className={styles.mobileMenuSection}>
