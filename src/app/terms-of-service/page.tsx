@@ -1,5 +1,19 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+    title: "Terms of Service",
+    description:
+        "Review the terms and conditions governing your use of the Sareine website and services.",
+    robots: {
+        index: false,
+        follow: true,
+    },
+    alternates: {
+        canonical: "/terms-of-service",
+    },
+};
 
 export default function TermsOfService() {
     const lastUpdated = "February 09, 2026";

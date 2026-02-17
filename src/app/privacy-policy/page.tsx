@@ -1,5 +1,19 @@
 import React from "react";
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+    title: "Privacy Policy",
+    description:
+        "Learn how Sareine collects, uses, and protects your personal data. Your privacy is our priority.",
+    robots: {
+        index: false,
+        follow: true,
+    },
+    alternates: {
+        canonical: "/privacy-policy",
+    },
+};
 
 export default function PrivacyPolicy() {
     const lastUpdated = "February 09, 2026";
