@@ -27,11 +27,16 @@ function getAdminApp(): App {
     }
 
     /* --- Local development (file on disk) --- */
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    const serviceAccount = require("../../../service-account.json");
-    return initializeApp({
-        credential: cert(serviceAccount),
-    });
+    try {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        const serviceAccount = require("../../../service-account.json");
+        return initializeApp({
+            credential: cert(serviceAccount),
+        });
+    } catch (error) {
+        console.error("Firebase Admin Init Error: service-account.json not found and FIREBASE_SERVICE_ACCOUNT_KEY not set.");
+        throw new Error("Missing Firebase Admin credentials");
+    }
 }
 
 const adminApp = getAdminApp();
