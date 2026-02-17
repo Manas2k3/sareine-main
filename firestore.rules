@@ -56,6 +56,19 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    match /orders/{orderId} {
+      allow read: if isAdmin() || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow create: if isSignedIn()
+        && request.resource.data.userId == request.auth.uid
+        && request.resource.data.status == "paid"
+        && request.resource.data.keys().hasAll([
+          "userId", "razorpayOrderId", "razorpayPaymentId",
+          "items", "amount", "currency", "status",
+          "shippingAddress", "createdAt"
+        ]);
+      allow update, delete: if false;
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

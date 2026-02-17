@@ -1,0 +1,223 @@
+/* ============================================
+   ADDRESS FORM - GOLDEN GLASSMORPHISM
+   Warm glass card with gold accents
+   ============================================ */
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-1) 0;
+    animation: formSlideIn 0.32s var(--ease-luxury);
+}
+
+@keyframes formSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Header with back arrow */
+.formHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-bottom: var(--space-1);
+}
+
+.backBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-full);
+    color: var(--color-text-light);
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: color var(--transition-fast), border-color var(--transition-fast),
+        background var(--transition-fast);
+}
+
+.backBtn:hover {
+    color: var(--color-text);
+    border-color: var(--glass-border-hover);
+    background: rgba(255, 245, 225, 0.25);
+}
+
+.backBtn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-gold);
+}
+
+.backBtn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.formTitle {
+    font-family: var(--font-serif);
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--color-text);
+    letter-spacing: -0.01em;
+}
+
+/* Field grid */
+.fieldGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+}
+
+.fieldFull {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.fieldHalf {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+@media (max-width: 380px) {
+    .fieldGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .fieldHalf {
+        grid-column: 1 / -1;
+    }
+}
+
+/* Label */
+.label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-text-light);
+}
+
+/* Input — glass card feel */
+.input {
+    width: 100%;
+    padding: var(--space-1) var(--space-2);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    background: var(--color-white);
+    border: 1px solid rgba(61, 57, 53, 0.12);
+    border-radius: var(--radius-sm);
+    outline: none;
+    transition: border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.input::placeholder {
+    color: rgba(61, 57, 53, 0.3);
+}
+
+.input:focus {
+    border-color: var(--color-gold);
+    box-shadow: 0 0 0 3px rgba(186, 160, 92, 0.12);
+}
+
+.input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Submit button — Molten Gold */
+.submitBtn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    padding: var(--space-2) var(--space-4);
+    margin-top: var(--space-1);
+    background: linear-gradient(135deg,
+            rgba(230, 194, 122, 0.92) 0%,
+            rgba(201, 164, 92, 0.95) 50%,
+            rgba(212, 180, 106, 0.92) 100%);
+    color: var(--color-text-warm);
+    font-family: var(--font-sans);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1px solid var(--glass-border-gold);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    box-shadow: var(--shadow-gold-sm), var(--shadow-inset-highlight);
+    transition: transform 0.28s var(--ease-luxury),
+        box-shadow 0.32s var(--ease-luxury), border-color 0.28s ease;
+}
+
+.submitBtn:hover {
+    transform: scale(1.02) translateY(-1px);
+    border-color: var(--glass-border-hover);
+    box-shadow: var(--shadow-gold-md), var(--shadow-gold-glow),
+        var(--shadow-inset-highlight);
+}
+
+.submitBtn:active {
+    transform: scale(0.99);
+}
+
+.submitBtn:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-gold-accent), var(--shadow-gold-sm);
+}
+
+.submitBtn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.submitBtn:disabled:hover {
+    transform: none;
+    box-shadow: var(--shadow-gold-sm), var(--shadow-inset-highlight);
+}
+
+/* Spinner */
+.spinner {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgba(61, 57, 53, 0.2);
+    border-top-color: var(--color-text-warm);
+    border-radius: var(--radius-full);
+    animation: spin 0.65s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .form {
+        animation: none;
+    }
+
+    .spinner {
+        animation: none;
+        border-top-color: transparent;
+    }
+}
