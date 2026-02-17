@@ -80,7 +80,9 @@ export async function POST(req: NextRequest) {
         });
 
         if (!emailResult.success) {
-            console.warn("Email send failed (non-blocking):", emailResult.error);
+            console.error("[VERIFY ROUTE] Email send failed:", emailResult.error);
+        } else {
+            console.log("[VERIFY ROUTE] Email sent successfully to:", customerEmail);
         }
 
         return NextResponse.json({ success: true });

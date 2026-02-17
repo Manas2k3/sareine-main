@@ -170,6 +170,19 @@ export async function sendOrderConfirmationEmail(
   data: OrderEmailData
 ): Promise<{ success: boolean; error?: string }> {
   try {
+    // Check for required environment variables
+    if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD) {
+      const missingVars = [];
+      if (!process.env.GMAIL_USER) missingVars.push('GMAIL_USER');
+      if (!process.env.GMAIL_APP_PASSWORD) missingVars.push('GMAIL_APP_PASSWORD');
+
+      const errorMsg = `Missing environment variables: ${missingVars.join(', ')}`;
+      console.error('[EMAIL SERVICE ERROR]:', errorMsg);
+      return { success: false, error: errorMsg };
+    }
+
+    console.log('[EMAIL SERVICE]: Attempting to send email to:', data.customerEmail);
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -186,11 +199,13 @@ export async function sendOrderConfirmationEmail(
     };
 
     const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent: " + info.response);
+    console.log("[EMAIL SERVICE SUCCESS]: Email sent:", info.response);
 
     return { success: true };
   } catch (err: any) {
-    console.error("Email service error:", err);
+    console.error("[EMAIL SERVICE ERROR]: Failed to send email:", err);
+    console.error("[EMAIL SERVICE ERROR]: Error message:", err.message);
+    console.error("[EMAIL SERVICE ERROR]: Error stack:", err.stack);
     return { success: false, error: err.message || "Failed to send email" };
   }
 }
