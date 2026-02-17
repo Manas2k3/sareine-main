@@ -1,36 +1,34 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 interface OrderItem {
-    name: string;
-    price: number;
-    quantity: number;
+  name: string;
+  price: number;
+  quantity: number;
 }
 
 interface ShippingAddress {
-    name: string;
-    email: string;
-    phone: string;
-    street: string;
-    city: string;
-    state: string;
-    zip: string;
+  name: string;
+  email: string;
+  phone: string;
+  street: string;
+  city: string;
+  state: string;
+  zip: string;
 }
 
 interface OrderEmailData {
-    customerName: string;
-    customerEmail: string;
-    razorpayPaymentId: string;
-    items: OrderItem[];
-    amount: number;
-    shippingAddress: ShippingAddress;
+  customerName: string;
+  customerEmail: string;
+  razorpayPaymentId: string;
+  items: OrderItem[];
+  amount: number;
+  shippingAddress: ShippingAddress;
 }
 
 function buildOrderEmailHtml(data: OrderEmailData): string {
-    const itemsRows = data.items
-        .map(
-            (item) => `
+  const itemsRows = data.items
+    .map(
+      (item) => `
       <tr>
         <td style="padding:12px 16px;border-bottom:1px solid #f0ece4;font-family:'Manrope',Helvetica,Arial,sans-serif;font-size:14px;color:#2a2723;">
           ${item.name}
@@ -42,10 +40,10 @@ function buildOrderEmailHtml(data: OrderEmailData): string {
           ₹${item.price * item.quantity}
         </td>
       </tr>`
-        )
-        .join("");
+    )
+    .join("");
 
-    return `
+  return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -167,25 +165,27 @@ function buildOrderEmailHtml(data: OrderEmailData): string {
 </html>`;
 }
 
+// Email service function
 export async function sendOrderConfirmationEmail(
-    data: OrderEmailData
+  data: OrderEmailData
 ): Promise<{ success: boolean; error?: string }> {
-    try {
-        const { error } = await resend.emails.send({
-            from: "Sareine <onboarding@resend.dev>",
-            to: [data.customerEmail],
-            subject: `Order Confirmed — Sareine`,
-            html: buildOrderEmailHtml(data),
-        });
+  try {
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const { error } = await resend.emails.send({
+      from: "Sareine <onboarding@resend.dev>",
+      to: [data.customerEmail],
+      subject: `Order Confirmed — Sareine`,
+      html: buildOrderEmailHtml(data),
+    });
 
-        if (error) {
-            console.error("Resend email error:", error);
-            return { success: false, error: error.message };
-        }
-
-        return { success: true };
-    } catch (err) {
-        console.error("Email service error:", err);
-        return { success: false, error: "Failed to send email" };
+    if (error) {
+      console.error("Resend email error:", error);
+      return { success: false, error: error.message };
     }
+
+    return { success: true };
+  } catch (err) {
+    console.error("Email service error:", err);
+    return { success: false, error: "Failed to send email" };
+  }
 }
