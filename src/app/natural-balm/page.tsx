@@ -16,12 +16,12 @@ import { adminDb } from "@/lib/firebase/admin";
  * exotic botanicals, luxury lip balm.
  * ────────────────────────────────────────────── */
 export const metadata: Metadata = {
-    title: "Natural Lip Balm – Limited Edition Exotic Botanicals Lip Treatment",
+    title: "Natural Lip Balm – Exotic Botanicals Lip Treatment",
     description:
-        "Sareine Natural Lip Balm — a limited edition lip treatment infused with exotic botanicals. Hydrate, nourish, and protect your lips with nature's finest ingredients.",
+        "Sareine Natural Lip Balm — a luxury lip treatment infused with exotic botanicals. Hydrate, nourish, and protect your lips with nature's finest ingredients.",
     keywords: [
         "natural lip balm",
-        "limited edition lip balm",
+        "luxury lip balm",
         "exotic botanicals lip treatment",
         "luxury lip care",
         "vegan lip balm",
@@ -32,9 +32,9 @@ export const metadata: Metadata = {
         canonical: "/natural-balm",
     },
     openGraph: {
-        title: "Natural Lip Balm – Limited Edition Exotic Botanicals | Sareine",
+        title: "Natural Lip Balm – Exotic Botanicals | Sareine",
         description:
-            "A limited edition lip treatment infused with exotic botanicals. Hydrate and nourish your lips with nature's finest ingredients.",
+            "A luxury lip treatment infused with exotic botanicals. Hydrate and nourish your lips with nature's finest ingredients.",
         url: "/natural-balm",
         type: "website",
         images: [
@@ -42,19 +42,19 @@ export const metadata: Metadata = {
                 url: "/sareine-natural-rose-lip-balm.jpeg",
                 width: 1200,
                 height: 630,
-                alt: "Sareine Natural Rose Lip Balm – Limited Edition",
+                alt: "Sareine Natural Rose Lip Balm",
             },
             {
                 url: "/sareine-natural-beetroot-lip-balm.jpeg",
                 width: 1200,
                 height: 630,
-                alt: "Sareine Natural Beetroot Lip Balm – Limited Edition",
+                alt: "Sareine Natural Beetroot Lip Balm",
             },
         ],
     },
     twitter: {
         card: "summary_large_image",
-        title: "Natural Lip Balm – Limited Edition | Sareine",
+        title: "Natural Lip Balm | Sareine",
         description:
             "Infused with exotic botanicals for effortlessly soft, nourished lips.",
         images: ["/sareine-natural-rose-lip-balm.jpeg"],
@@ -108,14 +108,14 @@ function buildProductSchema(products: FirestoreProduct[]) {
     return {
         "@context": "https://schema.org",
         "@type": "Product",
-        name: "Sareine Natural Lip Balm – Limited Edition",
+        name: "Sareine Natural Lip Balm",
         image: [
             "https://sareine.in/sareine-natural-rose-lip-balm.jpeg",
             "https://sareine.in/sareine-natural-beetroot-lip-balm.jpeg",
             "https://sareine.in/sareine-natural-pink-rose-lip-balm.jpeg",
         ],
         description:
-            "A limited edition natural lip balm crafted with exotic botanicals. Hydrate, nourish, and protect your lips with nature's finest ingredients.",
+            "A luxury natural lip balm crafted with exotic botanicals. Hydrate, nourish, and protect your lips with nature's finest ingredients.",
         brand: {
             "@type": "Brand",
             name: "Sareine",

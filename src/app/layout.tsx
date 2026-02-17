@@ -43,11 +43,11 @@ export const metadata: Metadata = {
     template: "%s | Sareine",
   },
   description:
-    "Experience the pinnacle of luxury lip care. Sareine Limited Edition Natural Lip Balm — crafted with exotic botanicals for effortlessly soft, nourished lips.",
+    "Experience the pinnacle of luxury lip care. Sareine — crafted with exotic botanicals for effortlessly soft, nourished lips.",
   keywords: [
     "luxury lip balm",
     "natural lip care",
-    "limited edition lip balm",
+    "luxury lip treatment",
     "vegan beauty",
     "cruelty-free cosmetics",
     "premium lip treatment",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Sareine",
     description:
-      "Discover Sareine — limited edition natural lip balms crafted with exotic botanicals for effortlessly soft, nourished lips.",
+      "Discover Sareine — luxury natural lip balms crafted with exotic botanicals for effortlessly soft, nourished lips.",
     url: "/",
     siteName: "Sareine",
     locale: "en_IN",
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
         url: "/jar-portrait.png",
         width: 1200,
         height: 630,
-        alt: "Sareine Limited Edition Natural Lip Balm – Luxury Lip Care",
+        alt: "Sareine – Luxury Natural Lip Care",
       },
     ],
   },
@@ -96,7 +96,7 @@ const organizationSchema = {
   url: "https://sareine.in",
   logo: "https://sareine.in/logo-image.png",
   description:
-    "Luxury e-commerce brand specializing in limited edition natural lip balms crafted with exotic botanicals.",
+    "Luxury e-commerce brand specializing in natural lip balms crafted with exotic botanicals.",
   contactPoint: {
     "@type": "ContactPoint",
     email: "hello@sareine.in",
