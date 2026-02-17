@@ -1,4 +1,4 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
 
 interface OrderItem {
   name: string;
@@ -170,22 +170,27 @@ export async function sendOrderConfirmationEmail(
   data: OrderEmailData
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    const { error } = await resend.emails.send({
-      from: "Sareine <onboarding@resend.dev>",
-      to: [data.customerEmail],
-      subject: `Order Confirmed — Sareine`,
-      html: buildOrderEmailHtml(data),
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_APP_PASSWORD,
+      },
     });
 
-    if (error) {
-      console.error("Resend email error:", error);
-      return { success: false, error: error.message };
-    }
+    const mailOptions = {
+      from: '"Sareine" <sareinebeauty@gmail.com>',
+      to: data.customerEmail,
+      subject: "Order Confirmed — Sareine",
+      html: buildOrderEmailHtml(data),
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent: " + info.response);
 
     return { success: true };
-  } catch (err) {
+  } catch (err: any) {
     console.error("Email service error:", err);
-    return { success: false, error: "Failed to send email" };
+    return { success: false, error: err.message || "Failed to send email" };
   }
 }
