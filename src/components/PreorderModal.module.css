@@ -1,0 +1,262 @@
+/* ═══════════════════════════════════════════════
+   PreorderModal — CSS Module
+   Sareine Gold Glassmorphism Theme
+   ═══════════════════════════════════════════════ */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: 16px;
+    animation: fadeIn 0.25s ease;
+}
+
+.modal {
+    position: relative;
+    width: 100%;
+    max-width: 520px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #faf9f7;
+    border-radius: 16px;
+    border: 1px solid rgba(201, 164, 92, 0.2);
+    box-shadow: 0 24px 56px rgba(0, 0, 0, 0.25);
+    padding: 32px;
+    animation: slideUp 0.3s ease;
+}
+
+.closeBtn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #8a847a;
+    cursor: pointer;
+    padding: 4px;
+    transition: color 0.2s;
+}
+
+.closeBtn:hover {
+    color: #1c1c1c;
+}
+
+/* ─── Header ─── */
+.header {
+    margin-bottom: 24px;
+}
+
+.title {
+    margin: 0 0 12px;
+    font-family: var(--font-editorial, "Cormorant Garamond", Georgia, serif);
+    font-size: 24px;
+    font-weight: 500;
+    color: #1c1c1c;
+    letter-spacing: 0.03em;
+}
+
+.productInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: rgba(201, 164, 92, 0.06);
+    border: 1px solid rgba(201, 164, 92, 0.15);
+    border-radius: 8px;
+}
+
+.productName {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1c1c1c;
+}
+
+.productPrice {
+    font-family: var(--font-editorial, "Cormorant Garamond", Georgia, serif);
+    font-size: 18px;
+    font-weight: 600;
+    color: #c9a45c;
+}
+
+/* ─── Form ─── */
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.label {
+    font-size: 11px;
+    font-weight: 600;
+    color: #8a847a;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.input {
+    padding: 10px 14px;
+    border: 1px solid rgba(201, 164, 92, 0.2);
+    border-radius: 8px;
+    background: #fff;
+    color: #1c1c1c;
+    font-size: 14px;
+    font-family: var(--font-body, "Manrope", sans-serif);
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input:focus {
+    border-color: #c9a45c;
+}
+
+.input::placeholder {
+    color: #bbb;
+}
+
+.error {
+    margin: 0;
+    padding: 10px 14px;
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-radius: 8px;
+    color: #ef4444;
+    font-size: 13px;
+}
+
+.submitBtn {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #c9a45c, #d4b46a, #baa05c);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: var(--font-body, "Manrope", sans-serif);
+    cursor: pointer;
+    letter-spacing: 0.04em;
+    transition: opacity 0.2s;
+    margin-top: 8px;
+}
+
+.submitBtn:hover:not(:disabled) {
+    opacity: 0.9;
+}
+
+.submitBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* ─── Success ─── */
+.successWrap {
+    text-align: center;
+    padding: 24px 0;
+}
+
+.successIcon {
+    margin-bottom: 16px;
+}
+
+.successTitle {
+    margin: 0 0 8px;
+    font-family: var(--font-editorial, "Cormorant Garamond", Georgia, serif);
+    font-size: 22px;
+    font-weight: 500;
+    color: #1c1c1c;
+}
+
+.successText {
+    margin: 0 0 24px;
+    font-size: 14px;
+    color: #6b6b6b;
+    line-height: 1.6;
+}
+
+.doneBtn {
+    padding: 12px 32px;
+    border: 1px solid rgba(201, 164, 92, 0.3);
+    border-radius: 8px;
+    background: transparent;
+    color: #c9a45c;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: var(--font-body, "Manrope", sans-serif);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.doneBtn:hover {
+    background: rgba(201, 164, 92, 0.06);
+}
+
+/* ─── Animations ─── */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+    .overlay {
+        animation: none;
+    }
+
+    .modal {
+        animation: none;
+    }
+
+    .closeBtn,
+    .submitBtn,
+    .doneBtn,
+    .input {
+        transition: none;
+    }
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 480px) {
+    .modal {
+        padding: 24px 20px;
+        border-radius: 12px;
+    }
+
+    .row {
+        grid-template-columns: 1fr;
+    }
+}

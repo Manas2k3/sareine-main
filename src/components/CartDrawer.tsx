@@ -403,58 +403,72 @@ export default function CartDrawer() {
                 </div>
               ) : (
                 <div className={styles.itemsList}>
-                  {cart.map((item) => (
-                    <div key={item.id} className={styles.itemRow}>
-                      <div className={styles.itemImageWrap}>
-                        <Image
-                          src={item.image}
-                          alt={item.name}
-                          fill
-                          sizes="80px"
-                          className={styles.itemImage}
-                        />
-                      </div>
-                      <div className={styles.itemContent}>
-                        <div className={styles.itemTop}>
-                          <h3 className={styles.itemName}>{item.name}</h3>
-                          <span className={styles.itemPrice}>
-                            ₹{item.price * item.quantity}
-                          </span>
+                  {cart.map((item) => {
+                    // Helper to get hardcoded image based on product name/slug
+                    const getProductImage = (name: string, currentImage: string) => {
+                      const lowerName = name.toLowerCase();
+                      if (lowerName.includes('limited edition')) return '/sareine-limited-edition-natural-lip-balm.png';
+                      if (lowerName.includes('beetroot')) return '/sareine-natural-beetroot-lip-balm.jpeg';
+                      if (lowerName.includes('pink rose')) return '/sareine-natural-pink-rose-lip-balm.jpeg';
+                      if (lowerName.includes('rose')) return '/sareine-natural-rose-lip-balm.jpeg';
+                      return currentImage;
+                    };
+
+                    const displayImage = getProductImage(item.name, item.image);
+
+                    return (
+                      <div key={item.id} className={styles.itemRow}>
+                        <div className={styles.itemImageWrap}>
+                          <Image
+                            src={displayImage}
+                            alt={item.name}
+                            fill
+                            sizes="80px"
+                            className={styles.itemImage}
+                          />
                         </div>
-                        <div className={styles.itemActions}>
-                          <div className={styles.quantityWrap}>
-                            <button
-                              type="button"
-                              onClick={() => decreaseQuantity(item.id)}
-                              className={styles.quantityBtn}
-                              aria-label="Decrease quantity"
-                            >
-                              −
-                            </button>
-                            <span className={styles.quantityValue}>
-                              {item.quantity}
+                        <div className={styles.itemContent}>
+                          <div className={styles.itemTop}>
+                            <h3 className={styles.itemName}>{item.name}</h3>
+                            <span className={styles.itemPrice}>
+                              ₹{item.price * item.quantity}
                             </span>
+                          </div>
+                          <div className={styles.itemActions}>
+                            <div className={styles.quantityWrap}>
+                              <button
+                                type="button"
+                                onClick={() => decreaseQuantity(item.id)}
+                                className={styles.quantityBtn}
+                                aria-label="Decrease quantity"
+                              >
+                                −
+                              </button>
+                              <span className={styles.quantityValue}>
+                                {item.quantity}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => addToCart(item)}
+                                className={styles.quantityBtn}
+                                aria-label="Increase quantity"
+                              >
+                                +
+                              </button>
+                            </div>
                             <button
                               type="button"
-                              onClick={() => addToCart(item)}
-                              className={styles.quantityBtn}
-                              aria-label="Increase quantity"
+                              onClick={() => removeFromCart(item.id)}
+                              className={styles.removeBtn}
+                              aria-label="Remove item"
                             >
-                              +
+                              Remove
                             </button>
                           </div>
-                          <button
-                            type="button"
-                            onClick={() => removeFromCart(item.id)}
-                            className={styles.removeBtn}
-                            aria-label="Remove item"
-                          >
-                            Remove
-                          </button>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
 

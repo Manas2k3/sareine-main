@@ -8,6 +8,9 @@ import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import { useCart } from '@/context/CartContext';
 import Reveal from '@/components/motion/Reveal';
 import EditorialHeading from '@/components/motion/EditorialHeading';
+import PreorderModal from '@/components/PreorderModal';
+
+const IS_PREORDER = process.env.NEXT_PUBLIC_ENABLE_PREORDER === "true";
 
 interface Product {
     id: string;
@@ -27,6 +30,8 @@ export default function Variants() {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
     const { addToCart } = useCart();
+    const [preorderOpen, setPreorderOpen] = useState(false);
+    const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
     useEffect(() => {
         const q = query(collection(db, 'products'), where('category', '==', 'Lip Care'));
@@ -52,6 +57,16 @@ export default function Variants() {
         // Cleanup on unmount
         return () => unsubscribe();
     }, []);
+
+    const handleProductAction = (product: Product) => {
+        if (product.inStock === false) return;
+        if (IS_PREORDER) {
+            setSelectedProduct(product);
+            setPreorderOpen(true);
+        } else {
+            addToCart(product);
+        }
+    };
 
     return (
         <Reveal as="section" id="variants" className={styles.section} aria-label="Luxury lip care collection variants" variant="section">
@@ -87,8 +102,9 @@ export default function Variants() {
                                                 // Helper to get hardcoded image based on product name
                                                 const getFallbackImage = (name: string) => {
                                                     const lowerName = name.toLowerCase();
+                                                    if (lowerName.includes('limited edition')) return '/sareine-limited-edition-natural-lip-balm.png';
                                                     if (lowerName.includes('beetroot')) return '/sareine-natural-beetroot-lip-balm.jpeg';
-                                                    if (lowerName.includes('pink')) return '/sareine-natural-pink-rose-lip-balm.jpeg';
+                                                    if (lowerName.includes('pink rose')) return '/sareine-natural-pink-rose-lip-balm.jpeg';
                                                     if (lowerName.includes('rose')) return '/sareine-natural-rose-lip-balm.jpeg';
                                                     return '/sareine-natural-rose-lip-balm.jpeg'; // Default to Rose
                                                 };
@@ -160,10 +176,10 @@ export default function Variants() {
                                         <button
                                             className={`btn btn-secondary ${product.inStock === false ? 'opacity-50 cursor-not-allowed bg-gray-200 text-gray-400 border-gray-200' : ''}`}
                                             style={{ alignSelf: 'start' }}
-                                            onClick={() => product.inStock !== false && addToCart(product)}
+                                            onClick={() => handleProductAction(product)}
                                             disabled={product.inStock === false}
                                         >
-                                            {product.inStock === false ? 'Out of Stock' : 'Shop Now'}
+                                            {product.inStock === false ? 'Out of Stock' : (IS_PREORDER ? 'Pre-order Now' : 'Shop Now')}
                                         </button>
                                     </div>
                                 </Reveal>
@@ -172,6 +188,17 @@ export default function Variants() {
                     </div>
                 </div>
             )}
+
+            {/* Preorder Modal */}
+            {IS_PREORDER && selectedProduct && (
+                <PreorderModal
+                    product={{ id: selectedProduct.id, name: selectedProduct.name, price: selectedProduct.price, slug: selectedProduct.slug }}
+                    open={preorderOpen}
+                    onClose={() => { setPreorderOpen(false); setSelectedProduct(null); }}
+                />
+            )}
         </Reveal>
     );
 }
+
+

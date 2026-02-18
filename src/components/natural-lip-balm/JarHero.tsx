@@ -7,17 +7,23 @@ import EditorialHeading from '@/components/motion/EditorialHeading';
 import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase/firebase';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
+import PreorderModal from '@/components/PreorderModal';
+
+const IS_PREORDER = process.env.NEXT_PUBLIC_ENABLE_PREORDER === "true";
 
 interface Product {
   id: string;
   name: string;
   slug: string;
+  price?: number;
   inStock?: boolean;
 }
 
 export default function JarHero() {
   const [allOutOfStock, setAllOutOfStock] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [preorderOpen, setPreorderOpen] = useState(false);
+  const [firstProduct, setFirstProduct] = useState<Product | null>(null);
 
   useEffect(() => {
     const q = query(collection(db, 'products'), where('category', '==', 'Lip Care'));
@@ -38,6 +44,7 @@ export default function JarHero() {
       const allAreOutOfStock = naturalBalmOnly.length > 0 && naturalBalmOnly.every(product => product.inStock === false);
 
       setAllOutOfStock(allAreOutOfStock);
+      if (naturalBalmOnly.length > 0) setFirstProduct(naturalBalmOnly[0]);
       setLoading(false);
     }, (error) => {
       console.error("Error fetching product stock status:", error);
@@ -47,6 +54,18 @@ export default function JarHero() {
     // Cleanup on unmount
     return () => unsubscribe();
   }, []);
+
+  const handleCtaClick = (e: React.MouseEvent) => {
+    if (allOutOfStock) {
+      e.preventDefault();
+      return;
+    }
+    if (IS_PREORDER) {
+      e.preventDefault();
+      setPreorderOpen(true);
+    }
+    // If not preorder, default anchor behavior (#buy-now) applies
+  };
 
   return (
     <section id="jar-hero-wrapper" className={styles.heroWrapper}>
@@ -78,17 +97,26 @@ export default function JarHero() {
               <span className={styles.price}>₹599</span>
 
               <a
-                href={allOutOfStock ? undefined : "#buy-now"}
+                href={allOutOfStock ? undefined : (IS_PREORDER ? undefined : "#buy-now")}
                 className={`${styles.ctaButton} ${allOutOfStock ? styles.outOfStock : ''}`}
-                style={allOutOfStock ? { cursor: 'not-allowed', opacity: 0.6 } : {}}
-                onClick={allOutOfStock ? (e) => e.preventDefault() : undefined}
+                style={allOutOfStock ? { cursor: 'not-allowed', opacity: 0.6 } : { cursor: 'pointer' }}
+                onClick={handleCtaClick}
               >
-                {loading ? 'Loading...' : (allOutOfStock ? 'Out of Stock' : 'Add to Cart')}
+                {loading ? 'Loading...' : (allOutOfStock ? 'Out of Stock' : (IS_PREORDER ? 'Pre-order Now' : 'Add to Cart'))}
               </a>
             </Reveal>
           </div>
         </div>
       </div>
+
+      {/* Preorder Modal */}
+      {IS_PREORDER && firstProduct && (
+        <PreorderModal
+          product={{ id: firstProduct.id, name: firstProduct.name, price: firstProduct.price || 599, slug: firstProduct.slug }}
+          open={preorderOpen}
+          onClose={() => setPreorderOpen(false)}
+        />
+      )}
     </section>
   );
 }

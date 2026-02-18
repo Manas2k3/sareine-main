@@ -8,10 +8,13 @@ import { db } from '@/lib/firebase/firebase';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import Reveal from '@/components/motion/Reveal';
 import EditorialHeading from '@/components/motion/EditorialHeading';
+import PreorderModal from '@/components/PreorderModal';
+
+const IS_PREORDER = process.env.NEXT_PUBLIC_ENABLE_PREORDER === "true";
 
 // Default images for carousel
 const IMAGES = [
-  '/lip-glow-balm/image-1.png',
+  '/sareine-limited-edition-natural-lip-balm.png',
   '/lip-glow-balm/image-2.png',
   '/lip-glow-balm/image-3.png',
 ];
@@ -59,6 +62,7 @@ export default function ProductShowcase() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const { addToCart } = useCart();
+  const [preorderOpen, setPreorderOpen] = useState(false);
 
   useEffect(() => {
     const productSlug = 'limited-edition-natural-lip-balm'; // Hardcoded for this specific page
@@ -237,17 +241,32 @@ export default function ProductShowcase() {
               <button
                 type="button"
                 className={styles.primaryBtn}
-                aria-label="Add limited edition to cart"
-                onClick={() => addToCart(product)}
+                aria-label={IS_PREORDER ? "Pre-order limited edition" : "Add limited edition to cart"}
+                onClick={() => {
+                  if (IS_PREORDER) {
+                    setPreorderOpen(true);
+                  } else {
+                    addToCart(product);
+                  }
+                }}
                 disabled={!product.inStock}
                 style={{
                   opacity: product.inStock ? 1 : 0.6,
                   cursor: product.inStock ? 'pointer' : 'not-allowed'
                 }}
               >
-                {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                {product.inStock ? (IS_PREORDER ? 'Pre-order Now' : 'Add to Cart') : 'Out of Stock'}
               </button>
             </div>
+
+            {/* Preorder Modal */}
+            {IS_PREORDER && product && (
+              <PreorderModal
+                product={{ id: product.id, name: product.name, price: product.price, slug: product.slug }}
+                open={preorderOpen}
+                onClose={() => setPreorderOpen(false)}
+              />
+            )}
           </div>
         </Reveal>
 
