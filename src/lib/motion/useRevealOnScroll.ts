@@ -10,8 +10,8 @@ interface UseRevealOnScrollOptions {
 
 export function useRevealOnScroll<T extends HTMLElement>({
   once = true,
-  threshold = 0.18,
-  rootMargin = "0px 0px -8% 0px",
+  threshold = 0.08,
+  rootMargin = "0px 0px -5% 0px",
 }: UseRevealOnScrollOptions = {}) {
   const ref = useRef<T | null>(null);
   const [isVisible, setIsVisible] = useState(false);

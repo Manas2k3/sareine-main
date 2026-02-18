@@ -6,7 +6,6 @@ import KeyBenefits from "@/components/natural-lip-balm/KeyBenefits";
 import TrustBadges from "@/components/natural-lip-balm/TrustBadges";
 import FinalCTA from "@/components/natural-lip-balm/FinalCTA";
 import Variants from "@/components/natural-lip-balm/Variants";
-import Reveal from "@/components/motion/Reveal";
 import JsonLd from "@/components/JsonLd";
 import { adminDb } from "@/lib/firebase/admin";
 
@@ -159,12 +158,12 @@ export default async function NaturalBalmPage() {
         <main style={{ '--section-scroll-offset': '120px' } as React.CSSProperties}>
             <JsonLd data={productSchema} />
             <JarHero />
-            <Reveal as="div" variant="section"><WhatItIs /></Reveal>
-            <Reveal as="div" variant="section" delay={60}><JarIngredients /></Reveal>
-            <Reveal as="div" variant="section" delay={70}><KeyBenefits /></Reveal>
-            <Reveal as="div" variant="section" delay={80}><Variants /></Reveal>
-            <Reveal as="div" variant="section" delay={90}><TrustBadges /></Reveal>
-            <Reveal as="div" variant="section" delay={100}><FinalCTA /></Reveal>
+            <WhatItIs />
+            <JarIngredients />
+            <KeyBenefits />
+            <Variants />
+            <TrustBadges />
+            <FinalCTA />
         </main>
     );
 }
