@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import { AuthProvider } from "@/context/AuthContext";
 import { CartProvider } from "@/context/CartContext";
 import { IntroProvider } from "@/context/IntroContext";
+import { SiteSettingsProvider } from "@/context/SiteSettingsContext";
 import CartDrawer from "@/components/CartDrawer";
 import { RouteTransitionProvider } from "@/components/motion/RouteTransitionProvider";
 import { Suspense } from "react";
@@ -113,19 +114,21 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${cormorant.variable} ${manrope.variable}`}>
         <JsonLd data={organizationSchema} />
-        <AuthProvider>
-          <CartProvider>
-            <IntroProvider>
-              <Suspense fallback={null}>
-                <CartDrawer />
-                <RouteTransitionProvider>
-                  <Navbar />
-                  {children}
-                </RouteTransitionProvider>
-              </Suspense>
-            </IntroProvider>
-          </CartProvider>
-        </AuthProvider>
+        <SiteSettingsProvider>
+          <AuthProvider>
+            <CartProvider>
+              <IntroProvider>
+                <Suspense fallback={null}>
+                  <CartDrawer />
+                  <RouteTransitionProvider>
+                    <Navbar />
+                    {children}
+                  </RouteTransitionProvider>
+                </Suspense>
+              </IntroProvider>
+            </CartProvider>
+          </AuthProvider>
+        </SiteSettingsProvider>
       </body>
     </html>
   );

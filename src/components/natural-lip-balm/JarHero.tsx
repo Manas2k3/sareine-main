@@ -8,8 +8,9 @@ import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase/firebase';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import PreorderModal from '@/components/PreorderModal';
+import { useSiteSettings } from '@/context/SiteSettingsContext';
 
-const IS_PREORDER = process.env.NEXT_PUBLIC_ENABLE_PREORDER === "true";
+
 
 interface Product {
   id: string;
@@ -20,6 +21,7 @@ interface Product {
 }
 
 export default function JarHero() {
+  const { preorderEnabled: IS_PREORDER } = useSiteSettings();
   const [allOutOfStock, setAllOutOfStock] = useState(false);
   const [loading, setLoading] = useState(true);
   const [preorderOpen, setPreorderOpen] = useState(false);

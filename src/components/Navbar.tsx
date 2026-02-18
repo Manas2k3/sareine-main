@@ -11,10 +11,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useRouteTransition } from '@/components/motion/RouteTransitionProvider';
+import { useSiteSettings } from '@/context/SiteSettingsContext';
 
-const IS_PREORDER = process.env.NEXT_PUBLIC_ENABLE_PREORDER === "true";
+
 
 export default function Navbar() {
+    const { preorderEnabled: IS_PREORDER } = useSiteSettings();
     const [scrolled, setScrolled] = useState(false);
     const { toggleCart, cartCount } = useCart();
     const { user, signOut } = useAuth();

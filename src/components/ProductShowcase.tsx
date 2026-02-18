@@ -9,8 +9,9 @@ import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import Reveal from '@/components/motion/Reveal';
 import EditorialHeading from '@/components/motion/EditorialHeading';
 import PreorderModal from '@/components/PreorderModal';
+import { useSiteSettings } from '@/context/SiteSettingsContext';
 
-const IS_PREORDER = process.env.NEXT_PUBLIC_ENABLE_PREORDER === "true";
+
 
 // Default images for carousel
 const IMAGES = [
@@ -57,6 +58,7 @@ interface DisplayProduct {
 }
 
 export default function ProductShowcase() {
+  const { preorderEnabled: IS_PREORDER } = useSiteSettings();
   const [index, setIndex] = useState(0);
   const [product, setProduct] = useState<DisplayProduct | null>(null);
   const [loading, setLoading] = useState(true);
