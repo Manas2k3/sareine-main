@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext";
 import styles from "./PreorderModal.module.css";
 
-const IS_PREORDER = process.env.NEXT_PUBLIC_ENABLE_PREORDER === "true";
+
 
 interface PreorderProduct {
     id: string;
@@ -67,7 +67,7 @@ export default function PreorderModal({ product, open, onClose }: PreorderModalP
         };
     }, [open]);
 
-    if (!IS_PREORDER || !open) return null;
+    if (!open) return null;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
