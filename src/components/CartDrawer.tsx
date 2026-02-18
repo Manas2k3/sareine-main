@@ -37,6 +37,9 @@ interface RazorpayResponse {
   razorpay_signature: string;
 }
 
+/* ─── Preorder mode ─── */
+const IS_PREORDER = process.env.NEXT_PUBLIC_ENABLE_PREORDER === "true";
+
 /* ─── Checkout steps ─── */
 type CheckoutStep = "cart" | "address" | "success";
 
@@ -112,7 +115,48 @@ export default function CartDrawer() {
     setStep("address");
   }, [user, cart]);
 
-  /* ─── Step 2: Address submitted → pay ─── */
+  /* ─── Step 2a: Address submitted → PREORDER (no payment) ─── */
+  const handlePreorderSubmit = useCallback(
+    async (address: ShippingAddress) => {
+      if (!user || cart.length === 0) return;
+      setIsProcessing(true);
+      setErrorMsg(null);
+
+      try {
+        const res = await fetch("/api/preorder", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: user.uid,
+            items: cart.map((i) => ({
+              id: i.id,
+              name: i.name,
+              price: i.price,
+              quantity: i.quantity,
+              slug: i.slug,
+            })),
+            amount: cartTotal,
+            shippingAddress: address,
+            customerName: address.name,
+            customerEmail: address.email,
+          }),
+        });
+
+        if (!res.ok) throw new Error("Failed to place pre-order");
+
+        await clearCart();
+        setStep("success");
+        setTimeout(() => toggleCart(), 4000);
+      } catch {
+        setErrorMsg("Something went wrong. Please try again.");
+      } finally {
+        setIsProcessing(false);
+      }
+    },
+    [user, cart, cartTotal, clearCart, toggleCart]
+  );
+
+  /* ─── Step 2b: Address submitted → pay (standard flow) ─── */
   const handleAddressSubmit = useCallback(
     async (address: ShippingAddress) => {
       if (!user || cart.length === 0) return;
@@ -288,9 +332,13 @@ export default function CartDrawer() {
                   />
                 </svg>
               </div>
-              <h3 className={styles.successTitle}>Payment Successful!</h3>
+              <h3 className={styles.successTitle}>
+                {IS_PREORDER ? "Pre-order Placed!" : "Payment Successful!"}
+              </h3>
               <p className={styles.successText}>
-                Thank you for your order. A confirmation email has been sent.
+                {IS_PREORDER
+                  ? "Thank you! We\u2019ll send you a payment link once your order is ready."
+                  : "Thank you for your order. A confirmation email has been sent."}
               </p>
             </div>
           )}
@@ -309,7 +357,7 @@ export default function CartDrawer() {
               </div>
 
               <AddressForm
-                onSubmit={handleAddressSubmit}
+                onSubmit={IS_PREORDER ? handlePreorderSubmit : handleAddressSubmit}
                 onBack={() => {
                   setStep("cart");
                   setErrorMsg(null);
@@ -474,7 +522,7 @@ export default function CartDrawer() {
               aria-label="Proceed to checkout"
               onClick={handleCheckoutClick}
             >
-              Checkout
+              {IS_PREORDER ? "Pre-order Now" : "Checkout"}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"

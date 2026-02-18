@@ -88,12 +88,27 @@ export default function Variants() {
                             >
                                 <Reveal as="div" className={styles.imageContainer} variant="image">
                                     <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+                                        {/* Debugging: Log the image URL */}
+                                        {(() => { console.log(`Rendering product: ${product.name}, Image URL: ${product.image}`); return null; })()}
+
                                         <Image
-                                            src={product.image}
+                                            src={product.image || '/sareine-natural-rose-lip-balm.jpeg'} // Fallback if empty
                                             alt={product.name}
                                             fill
                                             style={{ objectFit: 'cover' }}
                                             className={styles.productImage}
+                                            onError={(e) => {
+                                                console.error(`Failed to load image for ${product.name}: ${product.image}`);
+                                                // Check if the current src is already the fallback to avoid infinite loop
+                                                const target = e.target as HTMLImageElement;
+                                                const fallbackImage = '/sareine-natural-rose-lip-balm.jpeg';
+
+                                                // Use srcset for next/image if needed, but src usually works for simple img tag fallback
+                                                if (target.src.indexOf('sareine-natural-rose-lip-balm.jpeg') === -1) {
+                                                    target.src = fallbackImage;
+                                                    target.srcset = fallbackImage;
+                                                }
+                                            }}
                                         />
                                         {/* Out of Stock Overlay */}
                                         {product.inStock === false && (
