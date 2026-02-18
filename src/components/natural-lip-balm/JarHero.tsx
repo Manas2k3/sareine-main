@@ -56,13 +56,14 @@ export default function JarHero() {
   }, []);
 
   const handleCtaClick = (e: React.MouseEvent) => {
-    if (allOutOfStock) {
-      e.preventDefault();
-      return;
-    }
     if (IS_PREORDER) {
       e.preventDefault();
       setPreorderOpen(true);
+      return;
+    }
+    if (allOutOfStock) {
+      e.preventDefault();
+      return;
     }
     // If not preorder, default anchor behavior (#buy-now) applies
   };
@@ -97,12 +98,12 @@ export default function JarHero() {
               <span className={styles.price}>₹599</span>
 
               <a
-                href={allOutOfStock ? undefined : (IS_PREORDER ? undefined : "#buy-now")}
-                className={`${styles.ctaButton} ${allOutOfStock ? styles.outOfStock : ''}`}
-                style={allOutOfStock ? { cursor: 'not-allowed', opacity: 0.6 } : { cursor: 'pointer' }}
+                href={IS_PREORDER ? undefined : (allOutOfStock ? undefined : "#buy-now")}
+                className={`${styles.ctaButton} ${!IS_PREORDER && allOutOfStock ? styles.outOfStock : ''}`}
+                style={!IS_PREORDER && allOutOfStock ? { cursor: 'not-allowed', opacity: 0.6 } : { cursor: 'pointer' }}
                 onClick={handleCtaClick}
               >
-                {loading ? 'Loading...' : (allOutOfStock ? 'Out of Stock' : (IS_PREORDER ? 'Pre-order Now' : 'Add to Cart'))}
+                {loading ? 'Loading...' : (IS_PREORDER ? 'Pre-order Now' : (allOutOfStock ? 'Out of Stock' : 'Add to Cart'))}
               </a>
             </Reveal>
           </div>

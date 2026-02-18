@@ -249,13 +249,13 @@ export default function ProductShowcase() {
                     addToCart(product);
                   }
                 }}
-                disabled={!product.inStock}
+                disabled={!IS_PREORDER && !product.inStock}
                 style={{
-                  opacity: product.inStock ? 1 : 0.6,
-                  cursor: product.inStock ? 'pointer' : 'not-allowed'
+                  opacity: (IS_PREORDER || product.inStock) ? 1 : 0.6,
+                  cursor: (IS_PREORDER || product.inStock) ? 'pointer' : 'not-allowed'
                 }}
               >
-                {product.inStock ? (IS_PREORDER ? 'Pre-order Now' : 'Add to Cart') : 'Out of Stock'}
+                {IS_PREORDER ? 'Pre-order Now' : (product.inStock ? 'Add to Cart' : 'Out of Stock')}
               </button>
             </div>
 

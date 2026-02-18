@@ -59,13 +59,13 @@ export default function Variants() {
     }, []);
 
     const handleProductAction = (product: Product) => {
-        if (product.inStock === false) return;
         if (IS_PREORDER) {
             setSelectedProduct(product);
             setPreorderOpen(true);
-        } else {
-            addToCart(product);
+            return;
         }
+        if (product.inStock === false) return;
+        addToCart(product);
     };
 
     return (
@@ -130,8 +130,8 @@ export default function Variants() {
                                                 );
                                             })()}
 
-                                            {/* Out of Stock Overlay */}
-                                            {product.inStock === false && (
+                                            {/* Out of Stock Overlay — hidden in preorder mode */}
+                                            {!IS_PREORDER && product.inStock === false && (
                                                 <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10 backdrop-blur-[1px]">
                                                     <span className="bg-[#1C1C1C] text-white px-4 py-2 text-xs uppercase tracking-widest font-medium shadow-lg">
                                                         Out of Stock
@@ -145,7 +145,7 @@ export default function Variants() {
                                         <h3 className={styles.productName}>{product.name}</h3>
                                         <div className={styles.priceRow}>
                                             <p className={styles.price}>₹{product.price} / {product.weight}</p>
-                                            {product.inStock === false && (
+                                            {!IS_PREORDER && product.inStock === false && (
                                                 <span className="text-xs text-red-500 font-medium uppercase tracking-wide px-2 py-0.5 border border-red-200 bg-red-50">
                                                     Sold Out
                                                 </span>
@@ -174,12 +174,12 @@ export default function Variants() {
                                         </div>
 
                                         <button
-                                            className={`btn btn-secondary ${product.inStock === false ? 'opacity-50 cursor-not-allowed bg-gray-200 text-gray-400 border-gray-200' : ''}`}
+                                            className={`btn btn-secondary ${!IS_PREORDER && product.inStock === false ? 'opacity-50 cursor-not-allowed bg-gray-200 text-gray-400 border-gray-200' : ''}`}
                                             style={{ alignSelf: 'start' }}
                                             onClick={() => handleProductAction(product)}
-                                            disabled={product.inStock === false}
+                                            disabled={!IS_PREORDER && product.inStock === false}
                                         >
-                                            {product.inStock === false ? 'Out of Stock' : (IS_PREORDER ? 'Pre-order Now' : 'Shop Now')}
+                                            {IS_PREORDER ? 'Pre-order Now' : (product.inStock === false ? 'Out of Stock' : 'Shop Now')}
                                         </button>
                                     </div>
                                 </Reveal>
