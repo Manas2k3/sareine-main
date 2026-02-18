@@ -165,13 +165,13 @@ export default function Navbar() {
                         <div className={styles.dropdown} onMouseEnter={() => setShowNaturalDropdown(true)} onMouseLeave={() => setShowNaturalDropdown(false)}>
                             <div className={styles.dropdownGrid}>
                                 <Link href="/natural-balm#variants" className={styles.dropdownItem} onClick={(e) => handleAnchorClick(e, '/natural-balm#variants')}>
-                                    <Image src="/Sareine Natural Rose Lip Balm.jpeg" alt="Rose Balm" width={240} height={240} className={styles.dropdownImage} />
+                                    <Image src="/sareine-natural-rose-lip-balm.jpeg" alt="Rose Balm" width={240} height={240} className={styles.dropdownImage} />
                                 </Link>
                                 <Link href="/natural-balm#variants" className={styles.dropdownItem} onClick={(e) => handleAnchorClick(e, '/natural-balm#variants')}>
-                                    <Image src="/Sareine Natural Beetroot Lip Balm.jpeg" alt="Beetroot Balm" width={240} height={240} className={styles.dropdownImage} />
+                                    <Image src="/sareine-natural-beetroot-lip-balm.jpeg" alt="Beetroot Balm" width={240} height={240} className={styles.dropdownImage} />
                                 </Link>
                                 <Link href="/natural-balm#variants" className={styles.dropdownItem} onClick={(e) => handleAnchorClick(e, '/natural-balm#variants')}>
-                                    <Image src="/Sareine Natural Pink Rose Lip Balm.jpeg" alt="Pink Rose Balm" width={240} height={240} className={styles.dropdownImage} />
+                                    <Image src="/sareine-natural-pink-rose-lip-balm.jpeg" alt="Pink Rose Balm" width={240} height={240} className={styles.dropdownImage} />
                                 </Link>
                             </div>
                         </div>

@@ -91,25 +91,38 @@ export default function Variants() {
                                         {/* Debugging: Log the image URL */}
                                         {(() => { console.log(`Rendering product: ${product.name}, Image URL: ${product.image}`); return null; })()}
 
-                                        <Image
-                                            src={product.image || '/sareine-natural-rose-lip-balm.jpeg'} // Fallback if empty
-                                            alt={product.name}
-                                            fill
-                                            style={{ objectFit: 'cover' }}
-                                            className={styles.productImage}
-                                            onError={(e) => {
-                                                console.error(`Failed to load image for ${product.name}: ${product.image}`);
-                                                // Check if the current src is already the fallback to avoid infinite loop
-                                                const target = e.target as HTMLImageElement;
-                                                const fallbackImage = '/sareine-natural-rose-lip-balm.jpeg';
+                                        {(() => {
+                                            // Helper to get hardcoded image based on product name
+                                            const getFallbackImage = (name: string) => {
+                                                const lowerName = name.toLowerCase();
+                                                if (lowerName.includes('beetroot')) return '/sareine-natural-beetroot-lip-balm.jpeg';
+                                                if (lowerName.includes('pink')) return '/sareine-natural-pink-rose-lip-balm.jpeg';
+                                                if (lowerName.includes('rose')) return '/sareine-natural-rose-lip-balm.jpeg';
+                                                return '/sareine-natural-rose-lip-balm.jpeg'; // Default to Rose
+                                            };
 
-                                                // Use srcset for next/image if needed, but src usually works for simple img tag fallback
-                                                if (target.src.indexOf('sareine-natural-rose-lip-balm.jpeg') === -1) {
-                                                    target.src = fallbackImage;
-                                                    target.srcset = fallbackImage;
-                                                }
-                                            }}
-                                        />
+                                            const fallbackImage = getFallbackImage(product.name);
+
+                                            return (
+                                                <Image
+                                                    src={product.image || fallbackImage}
+                                                    alt={product.name}
+                                                    fill
+                                                    style={{ objectFit: 'cover' }}
+                                                    className={styles.productImage}
+                                                    onError={(e) => {
+                                                        console.error(`Failed to load image for ${product.name}: ${product.image}`);
+                                                        const target = e.target as HTMLImageElement;
+                                                        // Prevent infinite loop if fallback also fails (though it shouldn't as we verified files exist)
+                                                        if (target.src.indexOf(fallbackImage) === -1) {
+                                                            target.src = fallbackImage;
+                                                            target.srcset = fallbackImage;
+                                                        }
+                                                    }}
+                                                />
+                                            );
+                                        })()}
+
                                         {/* Out of Stock Overlay */}
                                         {product.inStock === false && (
                                             <div className="absolute inset-0 bg-black/40 flex items-center justify-center z-10 backdrop-blur-[1px]">
