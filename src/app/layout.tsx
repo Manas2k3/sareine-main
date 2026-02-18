@@ -10,6 +10,7 @@ import CartDrawer from "@/components/CartDrawer";
 import { RouteTransitionProvider } from "@/components/motion/RouteTransitionProvider";
 import { Suspense } from "react";
 import JsonLd from "@/components/JsonLd";
+import AnnouncementBar from "@/components/AnnouncementBar/AnnouncementBar";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -119,6 +120,7 @@ export default function RootLayout({
             <CartProvider>
               <IntroProvider>
                 <Suspense fallback={null}>
+                  <AnnouncementBar />
                   <CartDrawer />
                   <RouteTransitionProvider>
                     <Navbar />
