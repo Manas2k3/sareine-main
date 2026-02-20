@@ -96,9 +96,9 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                                             <polyline points="22 4 12 14.01 9 11.01"></polyline>
                                         </svg>
                                     </div>
-                                    <h2 className={styles.title}>You're on the list.</h2>
+                                    <h2 className={styles.title}>You are on the list!</h2>
                                     <p className={styles.description}>
-                                        A mail will be sent when the product is revealed.
+                                        Thank you for your interest. A confirmation email will be sent to <strong>{user ? user.email : email}</strong> as soon as the luxury collection is unveiled.
                                     </p>
                                 </div>
                             ) : user ? (
