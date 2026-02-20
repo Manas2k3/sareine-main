@@ -17,7 +17,7 @@ export default function Contact() {
                         lines={["Be Among", "the First"]}
                     />
                     <p className={styles.description}>
-                        Only 2,000 pieces available worldwide. Secure your Limited Edition
+                        Only 500 pieces available worldwide. Secure your Limited Edition
                         Natural Lip Balm before they're gone forever.
                     </p>
 
