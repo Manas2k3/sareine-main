@@ -69,6 +69,11 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    match /waitlist/{email} {
+      allow create: if true;
+      allow read: if isAdmin();
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

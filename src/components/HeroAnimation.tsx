@@ -23,12 +23,21 @@ export default function HeroAnimation() {
     }
   }, [user, searchParams]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    // Calculate percentage position of mouse within the container
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
+  const handlePointerMove = (clientX: number, clientY: number, currentTarget: EventTarget & HTMLDivElement) => {
+    const rect = currentTarget.getBoundingClientRect();
+    const x = ((clientX - rect.left) / rect.width) * 100;
+    const y = ((clientY - rect.top) / rect.height) * 100;
     setMousePos({ x, y });
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    handlePointerMove(e.clientX, e.clientY, e.currentTarget);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length > 0) {
+      handlePointerMove(e.touches[0].clientX, e.touches[0].clientY, e.currentTarget);
+    }
   };
 
   const handleNotifyClick = () => {
@@ -41,7 +50,11 @@ export default function HeroAnimation() {
 
   return (
     <>
-      <div className={styles.canvasWrapper}>
+      <div
+        className={styles.canvasWrapper}
+        onMouseMove={handleMouseMove}
+        onTouchMove={handleTouchMove}
+      >
         <Reveal as="div" variant="image" className={styles.heroImageReveal}>
           <div style={{ position: 'relative', width: '100%', height: '100vh' }}>
             <Image
@@ -58,7 +71,6 @@ export default function HeroAnimation() {
         {/* FROSTED VAULT TEASER OVERLAY */}
         <div
           className={styles.frostedVaultContainer}
-          onMouseMove={handleMouseMove}
           style={{
             '--mouse-x': `${mousePos.x}%`,
             '--mouse-y': `${mousePos.y}%`

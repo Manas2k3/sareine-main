@@ -98,7 +98,7 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                                     </div>
                                     <h2 className={styles.title}>You're on the list.</h2>
                                     <p className={styles.description}>
-                                        Thank you for your interest. You will be among the first to know when our new standard of luxury is unveiled.
+                                        A mail will be sent when the product is revealed.
                                     </p>
                                 </div>
                             ) : user ? (
