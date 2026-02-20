@@ -10,7 +10,7 @@ import EditorialHeading from '@/components/motion/EditorialHeading';
 import WaitlistModal from '@/components/WaitlistModal';
 
 export default function HeroAnimation() {
-  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
+  const vaultRef = useRef<HTMLDivElement>(null);
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const { user } = useAuth();
   const router = useRouter();
@@ -24,10 +24,12 @@ export default function HeroAnimation() {
   }, [user, searchParams]);
 
   const handlePointerMove = (clientX: number, clientY: number, currentTarget: EventTarget & HTMLDivElement) => {
+    if (!vaultRef.current) return;
     const rect = currentTarget.getBoundingClientRect();
     const x = ((clientX - rect.left) / rect.width) * 100;
     const y = ((clientY - rect.top) / rect.height) * 100;
-    setMousePos({ x, y });
+    vaultRef.current.style.setProperty('--mouse-x', `${x}%`);
+    vaultRef.current.style.setProperty('--mouse-y', `${y}%`);
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -70,11 +72,8 @@ export default function HeroAnimation() {
 
         {/* FROSTED VAULT TEASER OVERLAY */}
         <div
+          ref={vaultRef}
           className={styles.frostedVaultContainer}
-          style={{
-            '--mouse-x': `${mousePos.x}%`,
-            '--mouse-y': `${mousePos.y}%`
-          } as React.CSSProperties}
         />
 
         <div className={styles.overlayContainer}>

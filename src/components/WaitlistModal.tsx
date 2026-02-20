@@ -71,7 +71,14 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
     return (
         <AnimatePresence>
             {isOpen && (
-                <div className={styles.overlay} onClick={handleClose}>
+                <motion.div
+                    className={styles.overlay}
+                    onClick={handleClose}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                >
                     <motion.div
                         className={styles.modal}
                         onClick={(e) => e.stopPropagation()}
@@ -101,7 +108,7 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                                         Thank you for your interest. A confirmation email will be sent to <strong>{user ? user.email : email}</strong> as soon as the luxury collection is unveiled.
                                     </p>
                                 </div>
-                            ) : user ? (
+                            ) : user && !error ? (
                                 <div className={styles.successContent}>
                                     <h2 className={styles.title}>Securing your spot...</h2>
                                     <p className={styles.description}>
@@ -150,7 +157,7 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                             )}
                         </div>
                     </motion.div>
-                </div>
+                </motion.div>
             )}
         </AnimatePresence>
     );
