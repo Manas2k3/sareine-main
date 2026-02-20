@@ -36,7 +36,6 @@
     }
 }
 
-/* Glass Image Wrapper */
 .imageWrapper {
     position: relative;
     aspect-ratio: 4 / 5;
@@ -53,6 +52,30 @@
 .imageWrapper:hover {
     box-shadow: var(--shadow-gold-md), var(--shadow-inset-highlight);
     border-color: var(--glass-border-hover);
+}
+
+.suspenseReveal {
+    animation: suspenseBlur 2.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes suspenseBlur {
+    0% {
+        filter: blur(25px);
+        transform: scale(1.1);
+        opacity: 0;
+    }
+
+    30% {
+        filter: blur(15px);
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+
+    100% {
+        filter: blur(0px);
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .ingredientImage {
@@ -139,6 +162,65 @@
     font-weight: 600;
 }
 
+/* ============================================
+   SUSPENSE OVERLAY
+   ============================================ */
+
+.wrapper {
+    position: relative;
+    border-radius: var(--radius-2xl);
+    overflow: hidden;
+    background: var(--color-paper);
+    padding: var(--space-8);
+}
+
+.blurredContent {
+    filter: blur(12px);
+    opacity: 0.7;
+    pointer-events: none;
+    user-select: none;
+    transition: filter 0.8s ease, opacity 0.8s ease;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    text-align: center;
+    padding: var(--space-4);
+}
+
+.overlayTitle {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--color-gold-warm);
+    max-width: 20ch;
+    line-height: 1.1;
+    margin-bottom: var(--space-4);
+    text-shadow: 0 4px 12px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 255, 255, 0.6);
+}
+
+.overlaySubtitle {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin-bottom: var(--space-4);
+}
+
+.overlayDesc {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--color-text-light);
+}
+
 @media (max-width: 480px) {
     .ingredients {
         padding: var(--space-10) 0;
@@ -151,5 +233,9 @@
     .description,
     .ingredientText {
         font-size: 0.92rem;
+    }
+
+    .wrapper {
+        padding: var(--space-4);
     }
 }

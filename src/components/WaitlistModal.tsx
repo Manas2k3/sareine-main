@@ -6,6 +6,7 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { useAuth } from '@/context/AuthContext';
 import styles from './WaitlistModal.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
+import { createPortal } from 'react-dom';
 
 interface WaitlistModalProps {
     isOpen: boolean;
@@ -19,6 +20,11 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState('');
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const performSubmit = async (submitEmail: string, submitName: string) => {
         setLoading(true);
@@ -68,7 +74,9 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
         onClose();
     };
 
-    return (
+    if (!mounted) return null;
+
+    const modalContent = (
         <AnimatePresence>
             {isOpen && (
                 <motion.div
@@ -105,11 +113,12 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                                     </div>
                                     <h2 className={styles.title}>You are on the list!</h2>
                                     <p className={styles.description}>
-                                        Thank you for your interest. A confirmation email will be sent to <strong>{user ? user.email : email}</strong> as soon as the luxury collection is unveiled.
+                                        An email would be sent upon the product is live
                                     </p>
                                 </div>
-                            ) : user && !error ? (
+                            ) : loading || (user && !error) ? (
                                 <div className={styles.successContent}>
+                                    <div className={styles.loader}></div>
                                     <h2 className={styles.title}>Securing your spot...</h2>
                                     <p className={styles.description}>
                                         Please wait a moment.
@@ -161,4 +170,6 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
             )}
         </AnimatePresence>
     );
+
+    return createPortal(modalContent, document.body);
 }

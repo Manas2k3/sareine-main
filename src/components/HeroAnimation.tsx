@@ -55,13 +55,17 @@ export default function HeroAnimation() {
   };
 
   const handleNotifyClick = () => {
+    console.log('Notify Me clicked', { authLoading, user: !!user });
     if (authLoading) {
+      console.log('authLoading is true, setting isButtonLoading to true');
       setIsButtonLoading(true);
       return;
     }
     if (!user) {
+      console.log('No user, redirecting to /signin?redirect=notify');
       router.push('/signin?redirect=notify');
     } else {
+      console.log('User found, opening waitlist modal');
       setIsWaitlistOpen(true);
     }
   };

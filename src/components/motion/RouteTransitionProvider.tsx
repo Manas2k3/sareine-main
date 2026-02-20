@@ -62,6 +62,14 @@ export function RouteTransitionProvider({ children }: { children: ReactNode }) {
       const currentUrl = new URL(window.location.href);
       const targetUrl = new URL(href, window.location.origin);
 
+      if (
+        targetUrl.pathname === currentUrl.pathname &&
+        targetUrl.search === currentUrl.search &&
+        targetUrl.hash === currentUrl.hash
+      ) {
+        return; // Exact same URL, no navigation needed, prevents stuck transition phase
+      }
+
       if (canBypassTransition(targetUrl, currentUrl)) {
         window.location.hash = targetUrl.hash;
         return;
