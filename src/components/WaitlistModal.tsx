@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase/firebase';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { useAuth } from '@/context/AuthContext';
 import styles from './WaitlistModal.module.css';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -12,40 +13,48 @@ interface WaitlistModalProps {
 }
 
 export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
+    const { user } = useAuth();
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState(false);
     const [error, setError] = useState('');
 
+    const performSubmit = async (submitEmail: string, submitName: string) => {
+        setLoading(true);
+        setError('');
+        try {
+            await addDoc(collection(db, 'waitlist'), {
+                email: submitEmail,
+                name: submitName || 'Anonymous',
+                source: user ? 'hero_frosted_teaser_auto' : 'hero_frosted_teaser',
+                createdAt: serverTimestamp()
+            });
+
+            setSuccess(true);
+        } catch (err: any) {
+            console.error('Error adding to waitlist:', err);
+            setError('Something went wrong. Please try again later.');
+            setLoading(false);
+        }
+    };
+
+    // Auto-submit if user is already logged in
+    useEffect(() => {
+        if (isOpen && user && !success && !loading && !error) {
+            performSubmit(user.email || '', user.displayName || '');
+        }
+    }, [isOpen, user, success, loading, error]);
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError('');
 
         if (!email || !email.includes('@')) {
             setError('Please enter a valid email address.');
             return;
         }
 
-        setLoading(true);
-
-        try {
-            await addDoc(collection(db, 'waitlist'), {
-                email,
-                name: name || 'Anonymous',
-                source: 'hero_frosted_teaser',
-                createdAt: serverTimestamp()
-            });
-
-            setSuccess(true);
-            // Optional: close after a few seconds
-            // setTimeout(() => { onClose(); }, 4000);
-        } catch (err: any) {
-            console.error('Error adding to waitlist:', err);
-            setError('Something went wrong. Please try again later.');
-        } finally {
-            setLoading(false);
-        }
+        await performSubmit(email, name);
     };
 
     const handleClose = () => {
@@ -90,6 +99,13 @@ export default function WaitlistModal({ isOpen, onClose }: WaitlistModalProps) {
                                     <h2 className={styles.title}>You're on the list.</h2>
                                     <p className={styles.description}>
                                         Thank you for your interest. You will be among the first to know when our new standard of luxury is unveiled.
+                                    </p>
+                                </div>
+                            ) : user ? (
+                                <div className={styles.successContent}>
+                                    <h2 className={styles.title}>Securing your spot...</h2>
+                                    <p className={styles.description}>
+                                        Please wait a moment.
                                     </p>
                                 </div>
                             ) : (

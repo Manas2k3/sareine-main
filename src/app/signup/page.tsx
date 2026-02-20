@@ -2,6 +2,7 @@
 
 import { useAuth } from '@/context/AuthContext';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from './SignUp.module.css';
 import { useRouteTransition } from '@/components/motion/RouteTransitionProvider';
@@ -9,6 +10,8 @@ import { useRouteTransition } from '@/components/motion/RouteTransitionProvider'
 export default function SignUp() {
     const { user, signInWithGoogle, signUpWithEmail } = useAuth();
     const { navigate } = useRouteTransition();
+    const searchParams = useSearchParams();
+    const redirectParam = searchParams.get('redirect');
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -21,9 +24,13 @@ export default function SignUp() {
 
     useEffect(() => {
         if (user) {
-            navigate('/');
+            if (redirectParam === 'notify') {
+                navigate('/?notify=true');
+            } else {
+                navigate('/');
+            }
         }
-    }, [user, navigate]);
+    }, [user, navigate, redirectParam]);
 
     const toFriendlyError = (err: unknown) => {
         if (err instanceof Error) return err.message.replace('Firebase: ', '');

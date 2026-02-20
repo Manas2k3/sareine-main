@@ -2,6 +2,7 @@
 
 import { useAuth } from '@/context/AuthContext';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import styles from './SignIn.module.css';
 import { useRouteTransition } from '@/components/motion/RouteTransitionProvider';
@@ -9,6 +10,8 @@ import { useRouteTransition } from '@/components/motion/RouteTransitionProvider'
 export default function SignIn() {
     const { user, signInWithGoogle, signInWithEmail } = useAuth();
     const { navigate } = useRouteTransition();
+    const searchParams = useSearchParams();
+    const redirectParam = searchParams.get('redirect');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -18,9 +21,13 @@ export default function SignIn() {
 
     useEffect(() => {
         if (user) {
-            navigate('/');
+            if (redirectParam === 'notify') {
+                navigate('/?notify=true');
+            } else {
+                navigate('/');
+            }
         }
-    }, [user, navigate]);
+    }, [user, navigate, redirectParam]);
 
     const toFriendlyError = (err: unknown) => {
         if (err instanceof Error) return err.message.replace('Firebase: ', '');
@@ -145,7 +152,7 @@ export default function SignIn() {
 
                 <div className={styles.footer}>
                     New to Sareine?
-                    <Link href="/signup" className={styles.link}>Create an account</Link>
+                    <Link href={redirectParam ? `/signup?redirect=${redirectParam}` : "/signup"} className={styles.link}>Create an account</Link>
                 </div>
             </div>
         </div>
