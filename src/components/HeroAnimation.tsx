@@ -12,7 +12,8 @@ import WaitlistModal from '@/components/WaitlistModal';
 export default function HeroAnimation() {
   const vaultRef = useRef<HTMLDivElement>(null);
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
-  const { user } = useAuth();
+  const { user, loading: authLoading } = useAuth();
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -22,6 +23,17 @@ export default function HeroAnimation() {
       setIsWaitlistOpen(true);
     }
   }, [user, searchParams]);
+
+  useEffect(() => {
+    if (isButtonLoading && !authLoading) {
+      setIsButtonLoading(false);
+      if (!user) {
+        router.push('/signin?redirect=notify');
+      } else {
+        setIsWaitlistOpen(true);
+      }
+    }
+  }, [authLoading, isButtonLoading, user, router]);
 
   const handlePointerMove = (clientX: number, clientY: number, currentTarget: EventTarget & HTMLDivElement) => {
     if (!vaultRef.current) return;
@@ -43,6 +55,10 @@ export default function HeroAnimation() {
   };
 
   const handleNotifyClick = () => {
+    if (authLoading) {
+      setIsButtonLoading(true);
+      return;
+    }
     if (!user) {
       router.push('/signin?redirect=notify');
     } else {
@@ -92,9 +108,10 @@ export default function HeroAnimation() {
             type="button"
             className={styles.ctaButton}
             onClick={handleNotifyClick}
+            disabled={isButtonLoading}
             aria-label="Notify Me"
           >
-            Notify Me
+            {isButtonLoading ? 'Please Wait...' : 'Notify Me'}
           </button>
         </div>
       </div>
