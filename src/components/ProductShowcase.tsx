@@ -181,65 +181,68 @@ export default function ProductShowcase() {
   return (
     <Reveal as="section" variant="section" className={styles.section} aria-label="Featured limited edition lip balm">
       <div className={styles.container}>
-        {/* SECTION 1: HERO (two-column responsive) */}
-        <Reveal
-          as="div"
-          variant="section"
-          className={styles.heroRow}
-          onTouchStart={(e) => onPointerStart(e.touches[0]?.clientX ?? 0)}
-          onTouchEnd={(e) => onPointerEnd(e.changedTouches[0]?.clientX ?? 0)}
-          onMouseDown={(e) => onPointerStart(e.clientX)}
-          onMouseUp={(e) => onPointerEnd(e.clientX)}
-        >
-          {/* Left: carousel (full width on mobile, ~60% on desktop) */}
-          <div className={styles.heroCarouselCol}>
-            <Reveal as="div" variant="image" className={`${styles.carousel} ${styles.imageCard}`}>
-              {/* Use explicit width/height so Next/Image serves correctly from /public */}
-              <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-                <Image
-                  src={slide}
-                  alt={`${product.name} image ${index + 1}`}
-                  width={1200}
-                  height={1200}
-                  className={styles.productImage}
-                  priority
-                  sizes="(min-width: 1024px) 60vw, 90vw"
-                  style={{ objectFit: 'cover', width: '100%', height: '100%' }}
-                />
+        {/* TEASER WRAPPER */}
+        <div className={styles.teaserWrapper}>
+
+          <Reveal
+            as="div"
+            variant="section"
+            className={styles.heroRow}
+            onTouchStart={(e) => onPointerStart(e.touches[0]?.clientX ?? 0)}
+            onTouchEnd={(e) => onPointerEnd(e.changedTouches[0]?.clientX ?? 0)}
+            onMouseDown={(e) => onPointerStart(e.clientX)}
+            onMouseUp={(e) => onPointerEnd(e.clientX)}
+          >
+            {/* Left: carousel (full width on mobile, ~60% on desktop) */}
+            <div className={`${styles.heroCarouselCol} ${styles.teaserBlurredImage}`}>
+              <Reveal as="div" variant="image" className={`${styles.carousel} ${styles.imageCard}`}>
+                {/* Use explicit width/height so Next/Image serves correctly from /public */}
+                <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+                  <Image
+                    src={slide}
+                    alt={`${product.name} image ${index + 1}`}
+                    width={1200}
+                    height={1200}
+                    className={styles.productImage}
+                    priority
+                    sizes="(min-width: 1024px) 60vw, 90vw"
+                    style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                  />
+                </div>
+              </Reveal>
+
+              <div className={styles.dots} role="tablist" aria-label="Product slides">
+                {IMAGES.map((src, i) => (
+                  <button
+                    key={src}
+                    className={`${styles.dot} ${i === index ? styles.dotActive : ''}`.trim()}
+                    onClick={() => setIndex(i)}
+                    aria-label={`Show image ${i + 1}`}
+                    aria-selected={i === index}
+                  />
+                ))}
               </div>
-            </Reveal>
-
-            <div className={styles.dots} role="tablist" aria-label="Product slides">
-              {IMAGES.map((src, i) => (
-                <button
-                  key={src}
-                  className={`${styles.dot} ${i === index ? styles.dotActive : ''}`.trim()}
-                  onClick={() => setIndex(i)}
-                  aria-label={`Show image ${i + 1}`}
-                  aria-selected={i === index}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Right: product content (full width on mobile, ~40% on desktop) */}
-          <div className={`${styles.content} ${styles.heroContent}`}>
-            <span className={styles.subtitle}>Featured</span>
-            <EditorialHeading
-              as="h1"
-              className={styles.title}
-              lines={[product.name]}
-            />
-
-            <div className={styles.priceRow}>
-              <span className={styles.price} aria-hidden>₹{product.price}</span>
             </div>
 
-            <p className={styles.tagline}>{product.tagline}</p>
+            {/* Right: product content (full width on mobile, ~40% on desktop) */}
+            <div className={`${styles.content} ${styles.heroContent} ${styles.teaserBlurredContent}`}>
+              <span className={styles.subtitle}>Featured</span>
+              <EditorialHeading
+                as="h1"
+                className={styles.title}
+                lines={[product.name]}
+              />
 
-            <p className={styles.desc}>{product.short}</p>
+              <div className={styles.priceRow}>
+                <span className={styles.price} aria-hidden>₹{product.price}</span>
+              </div>
 
-            <div className={styles.ctaWrap}>
+              <p className={styles.tagline}>{product.tagline}</p>
+
+              <p className={styles.desc}>{product.short}</p>
+
+              <div className={styles.ctaWrap}>
+                {/* BUTTON HIDDEN FOR TEASER 
               <button
                 type="button"
                 className={styles.primaryBtn}
@@ -259,9 +262,11 @@ export default function ProductShowcase() {
               >
                 {IS_PREORDER ? 'Pre-order Now' : (product.inStock ? 'Add to Cart' : 'Out of Stock')}
               </button>
-            </div>
+              */}
+              </div>
 
-            {/* Preorder Modal */}
+              {/* Preorder Modal */}
+              {/* HIDDEN IN TEASER MODE: 
             {IS_PREORDER && product && (
               <PreorderModal
                 product={{ id: product.id, name: product.name, price: product.price, slug: product.slug }}
@@ -269,8 +274,20 @@ export default function ProductShowcase() {
                 onClose={() => setPreorderOpen(false)}
               />
             )}
+            */}
+            </div>
+          </Reveal>
+
+          {/* TEASER OVERLAY */}
+          <div className={styles.teaserOverlay}>
+            <div className={styles.teaserOverlayContent}>
+              <h2 className={styles.teaserOverlayTitle}>Upcoming Limited Edition Lip Balm</h2>
+              <p className={styles.teaserOverlaySubtitle}>Launching Soon</p>
+              <p className={styles.teaserOverlayText}>A rare luxury experience is arriving soon.</p>
+            </div>
           </div>
-        </Reveal>
+
+        </div> {/* END TEASER WRAPPER */}
 
         {/* SECTION 2: BENEFITS */}
         <Reveal as="section" variant="section" aria-labelledby="benefits-heading" className={styles.benefitsSection}>
