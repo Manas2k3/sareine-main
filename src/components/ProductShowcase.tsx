@@ -75,7 +75,43 @@ export default function ProductShowcase() {
       q,
       (querySnapshot) => {
         if (querySnapshot.empty) {
-          setError('Product not found.');
+          console.warn(`Product slug '${productSlug}' not found in Firestore. Using fallback static data.`);
+          // Fallback static data if product not in DB
+          setProduct({
+            id: 'static-fallback-id',
+            name: 'Lip Glow Balm',
+            price: 1899,
+            image: IMAGES[0],
+            slug: productSlug,
+            tagline: 'A Bloom of Luxury for Your Lips.',
+            short: 'Experience the perfect harmony of nature and luxury. Our Limited Edition Lip Glow Balm is a mastercrafted blend of pristine botanical extracts, designed to deeply nourish while delivering a delicate, universally flattering tint.',
+            features: [
+              'Exotic Floral Infusion: Damask Rose, Himalayan Hibiscus, Night‑Blooming Jasmine, Orchid extracts',
+              'Glossy, Nourishing Formula: Shea butter, cocoa butter, coconut oil',
+              'Single Signature Tint: A delicate, luxurious shade',
+              'Vegan & Cruelty‑Free',
+              'Limited Edition Packaging with iridescent finish and gold floral accents',
+            ],
+            ingredients: [
+              'Damask Rose Extract', 'Himalayan Hibiscus', 'Night-Blooming Jasmine', 'Orchid Extract', 'Shea Butter', 'Cocoa Butter', 'Coconut Oil', 'Vitamin E'
+            ],
+            benefits: [
+              'Deeply hydrates and softens lips',
+              'Provides a soft, radiant, signature tint',
+              'Leaves lips glossy, plump, and luxurious',
+              'Protects against dryness and environmental stress',
+              'Exclusive, limited edition',
+            ],
+            howToUse: [
+              'Apply on clean lips for instant nourishment and radiant glow.',
+              'Reapply as needed or after meals for continuous hydration.',
+              'Layer under lipstick for subtle shine and luxurious finish.',
+              'Treat as a daily ritual — let exotic botanicals enhance your lips’ natural beauty.',
+            ],
+            packaging: '15g Glass Jar with Gold Lid',
+            weight: '15g',
+            inStock: true,
+          });
           setLoading(false);
           return;
         }
