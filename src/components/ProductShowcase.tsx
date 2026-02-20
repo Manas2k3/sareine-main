@@ -10,6 +10,7 @@ import Reveal from '@/components/motion/Reveal';
 import EditorialHeading from '@/components/motion/EditorialHeading';
 import PreorderModal from '@/components/PreorderModal';
 import { useSiteSettings } from '@/context/SiteSettingsContext';
+import ShimmerLoader from '@/components/ShimmerLoader';
 
 
 
@@ -157,8 +158,8 @@ export default function ProductShowcase() {
     return (
       <section className={styles.section} aria-label="Featured limited edition lip balm">
         <div className={styles.container}>
-          <div style={{ textAlign: 'center', padding: '4rem 1rem' }}>
-            <p>Loading product...</p>
+          <div style={{ padding: '4rem 1rem' }}>
+            <ShimmerLoader variant="hero-section" />
           </div>
         </div>
       </section>

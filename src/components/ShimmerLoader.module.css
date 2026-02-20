@@ -1,0 +1,159 @@
+/* ============================================
+   LUXURY SHIMMER ANIMATION
+   ============================================ */
+
+.shimmer {
+    position: relative;
+    overflow: hidden;
+    background: var(--glass-champagne-soft, #f7f5f2);
+    /* Soft champagne base */
+    border-radius: var(--radius-md, 8px);
+}
+
+.shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background-image: linear-gradient(90deg,
+            rgba(200, 178, 137, 0) 0%,
+            /* Gold tint fading in */
+            rgba(200, 178, 137, 0.15) 20%,
+            rgba(200, 178, 137, 0.35) 50%,
+            /* Gold tint peak */
+            rgba(200, 178, 137, 0.15) 80%,
+            rgba(200, 178, 137, 0) 100%
+            /* Gold tint fading out */
+        );
+    animation: shimmer-anim 2s infinite ease-in-out;
+}
+
+@keyframes shimmer-anim {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* ============================================
+   VARIANTS
+   ============================================ */
+
+/* Generic Layout Variants */
+
+.shimmerBox {
+    width: 100%;
+    height: 100%;
+}
+
+.shimmerTextLine {
+    height: 1.2rem;
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.shimmerTextLine:last-child {
+    margin-bottom: 0;
+}
+
+.shimmerTitle {
+    height: 2.5rem;
+    width: 70%;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+}
+
+.shimmerButton {
+    height: 3rem;
+    width: 140px;
+    border-radius: 999px;
+    /* Pill shape */
+}
+
+/* Pre-composed Complex Variants */
+
+/* Product Showcase Hero Skeleton */
+.heroSection {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6, 1.5rem);
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .heroSection {
+        grid-template-columns: 3fr 2fr;
+        gap: var(--space-8, 2rem);
+        align-items: center;
+    }
+}
+
+.heroImage {
+    width: 100%;
+    max-width: 520px;
+    aspect-ratio: 1/1;
+    border-radius: 12px;
+    margin: 0 auto;
+}
+
+.heroContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .heroContent {
+        align-items: center;
+    }
+
+    .heroContent .shimmerTitle {
+        width: 80%;
+    }
+
+    .heroContent .shimmerTextLine {
+        width: 100%;
+        max-width: 400px;
+    }
+}
+
+/* Product Card Skeleton (for Variants grid) */
+.productCard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4, 1rem);
+    width: 100%;
+}
+
+.cardImage {
+    width: 100%;
+    aspect-ratio: 4/5;
+    /* Matching typical portrait product shots */
+    border-radius: 12px;
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+/* Inline Spinner (for buttons like JarHero) */
+.spinner {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin-anim 1s ease-in-out infinite;
+}
+
+@keyframes spin-anim {
+    to {
+        transform: rotate(360deg);
+    }
+}

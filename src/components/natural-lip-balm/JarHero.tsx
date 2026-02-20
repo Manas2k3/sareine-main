@@ -9,6 +9,7 @@ import { db } from '@/lib/firebase/firebase';
 import { collection, query, where, onSnapshot } from 'firebase/firestore';
 import PreorderModal from '@/components/PreorderModal';
 import { useSiteSettings } from '@/context/SiteSettingsContext';
+import ShimmerLoader from '@/components/ShimmerLoader';
 
 
 
@@ -105,7 +106,7 @@ export default function JarHero() {
                 style={!IS_PREORDER && allOutOfStock ? { cursor: 'not-allowed', opacity: 0.6 } : { cursor: 'pointer' }}
                 onClick={handleCtaClick}
               >
-                {loading ? 'Loading...' : (IS_PREORDER ? 'Pre-order Now' : (allOutOfStock ? 'Out of Stock' : 'Add to Cart'))}
+                {loading ? <ShimmerLoader variant="spinner" /> : (IS_PREORDER ? 'Pre-order Now' : (allOutOfStock ? 'Out of Stock' : 'Add to Cart'))}
               </a>
             </Reveal>
           </div>

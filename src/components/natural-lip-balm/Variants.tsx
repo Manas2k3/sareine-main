@@ -10,7 +10,7 @@ import Reveal from '@/components/motion/Reveal';
 import EditorialHeading from '@/components/motion/EditorialHeading';
 import PreorderModal from '@/components/PreorderModal';
 import { useSiteSettings } from '@/context/SiteSettingsContext';
-
+import ShimmerLoader from '@/components/ShimmerLoader';
 
 
 interface Product {
@@ -74,7 +74,18 @@ export default function Variants() {
         <Reveal as="section" id="variants" className={styles.section} aria-label="Luxury lip care collection variants" variant="section">
             {loading ? (
                 <div className={styles.container}>
-                    <p className={styles.loadingMessage}>Loading collection...</p>
+                    <header className={styles.header}>
+                        <span className={styles.subtitle}>Our Collection</span>
+                        <div className={styles.title}>
+                            <ShimmerLoader variant="title" />
+                        </div>
+                    </header>
+                    <div className={styles.productRow}>
+                        {/* Render 3 skeleton cards to match the 3 variants */}
+                        {Array.from({ length: 3 }).map((_, i) => (
+                            <ShimmerLoader key={i} variant="product-card" />
+                        ))}
+                    </div>
                 </div>
             ) : (
                 <div className={styles.container}>
