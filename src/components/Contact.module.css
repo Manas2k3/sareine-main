@@ -82,6 +82,13 @@
     color: var(--color-gold-muted);
 }
 
+.contactNumber {
+    font-family: var(--font-sans);
+    font-size: 0.94rem;
+    color: var(--color-text);
+    margin-top: 0.8rem;
+}
+
 .footer {
     margin-top: 2.6rem;
     padding-top: 1.15rem;

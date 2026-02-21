@@ -41,6 +41,10 @@ export default function Contact() {
                         hello@sareine.com
                     </a>
 
+                    <div className={styles.contactNumber}>
+                        Contact - +91 8456958268
+                    </div>
+
                     <footer className={styles.footer}>
                         <p className={styles.footerText}>
                             © {currentYear} <span className={styles.footerBrand}>Sareine</span>. All rights reserved.
