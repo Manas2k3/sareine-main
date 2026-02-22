@@ -3,7 +3,7 @@ import styles from './Hero.module.css';
 
 export default function Hero() {
     return (
-        <section id="hero-wrapper" className={styles.heroWrapper}>
+        <header id="hero-wrapper" className={styles.heroWrapper}>
             <div className={styles.stickyContainer}>
                 {/* 
             All logic, including text overlays and animations, 
@@ -11,6 +11,6 @@ export default function Hero() {
         */}
                 <HeroAnimation />
             </div>
-        </section>
+        </header>
     );
 }

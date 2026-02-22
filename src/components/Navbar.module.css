@@ -14,11 +14,17 @@
     align-items: center;
     justify-content: space-between;
     background: transparent;
+    transform: translateY(0);
     transition:
+        transform 0.5s var(--ease-luxury),
         background 0.4s var(--ease-luxury),
         padding 0.4s var(--ease-luxury),
         box-shadow 0.4s var(--ease-luxury),
         backdrop-filter 0.4s ease;
+}
+
+.hidden {
+    transform: translateY(-100%);
 }
 
 .scrolled {

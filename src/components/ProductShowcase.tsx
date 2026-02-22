@@ -222,7 +222,7 @@ export default function ProductShowcase() {
         <div className={styles.teaserWrapper}>
 
           <Reveal
-            as="div"
+            as="article"
             variant="section"
             className={styles.heroRow}
             onTouchStart={(e) => onPointerStart(e.touches[0]?.clientX ?? 0)}

@@ -18,6 +18,7 @@ import { useSiteSettings } from '@/context/SiteSettingsContext';
 export default function Navbar() {
     const { preorderEnabled: IS_PREORDER } = useSiteSettings();
     const [scrolled, setScrolled] = useState(false);
+    const [hidden, setHidden] = useState(false);
     const { toggleCart, cartCount } = useCart();
     const { user, signOut } = useAuth();
     const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -77,8 +78,21 @@ export default function Navbar() {
     };
 
     useEffect(() => {
+        let lastScrollY = window.scrollY;
+
         const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
+            const currentScrollY = window.scrollY;
+            setScrolled(currentScrollY > 50);
+
+            if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                // Scrolling down -> hide navbar
+                setHidden(true);
+            } else if (currentScrollY < lastScrollY) {
+                // Scrolling up -> show navbar
+                setHidden(false);
+            }
+
+            lastScrollY = currentScrollY;
         };
 
         const handleClickOutside = (event: MouseEvent) => {
@@ -87,7 +101,7 @@ export default function Navbar() {
             }
         };
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         document.addEventListener('mousedown', handleClickOutside);
 
         return () => {
@@ -107,7 +121,7 @@ export default function Navbar() {
     };
 
     return (
-        <nav className={`${styles.navbar} ${scrolled ? styles.scrolled : ''}`}>
+        <header className={`${styles.navbar} ${scrolled ? styles.scrolled : ''} ${hidden ? styles.hidden : ''}`}>
             {/* Mobile menu button - LEFT SIDE */}
             <button
                 onClick={() => setShowMobileNav(!showMobileNav)}
@@ -426,6 +440,6 @@ export default function Navbar() {
             {showMobileSearch && (
                 <SearchBar isMobile onClose={() => setShowMobileSearch(false)} />
             )}
-        </nav>
+        </header>
     );
 }

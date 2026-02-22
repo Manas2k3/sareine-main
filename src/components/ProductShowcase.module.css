@@ -113,6 +113,17 @@
 
 .productImage {
     object-fit: cover;
+    transition: transform 0.8s var(--ease-luxury);
+}
+
+.imageCard:hover .productImage {
+    transform: scale(1.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .imageCard:hover .productImage {
+        transform: none;
+    }
 }
 
 .content {

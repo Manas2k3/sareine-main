@@ -98,11 +98,11 @@ export default function HeroAnimation() {
 
         <div className={styles.overlayContainer}>
           <Reveal as="div" variant="section" delay={90} className={styles.textGroup}>
-            <p className={styles.tagline}>UNVEILING SOON</p>
+            <p className={styles.tagline}>Unveling Soon</p>
             <EditorialHeading
               as="h1"
               className={styles.headline}
-              lines={["A New Standard", "of Luxury."]}
+              lines={["Crafted with", "exotic botanicals."]}
               baseDelayMs={90}
               stepDelayMs={90}
             />
