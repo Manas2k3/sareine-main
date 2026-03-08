@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     template: "%s | Sareine",
   },
   description:
-    "Experience the pinnacle of luxury lip care. Sareine — crafted with exotic botanicals for effortlessly soft, nourished lips.",
+    "Experience the pinnacle of luxury lip care. Sareine - crafted with exotic botanicals for effortlessly soft, nourished lips.",
   keywords: [
     "luxury lip balm",
     "natural lip care",
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/jar-portrait.png",
+        url: "/google-thumbnail.jpeg?v=2",
         width: 1200,
         height: 630,
         alt: "Sareine – Luxury Natural Lip Care",
@@ -86,24 +86,36 @@ export const metadata: Metadata = {
     title: "Sareine",
     description:
       "Crafted with exotic botanicals for effortlessly soft, nourished lips.",
-    images: ["/jar-portrait.png"],
+    images: ["/google-thumbnail.jpeg?v=2"],
   },
 };
 
 /* Organization JSON-LD — brand identity across the entire site */
-const organizationSchema = {
+const schemaData = {
   "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Sareine",
-  url: "https://sareine.in",
-  logo: "https://sareine.in/logo-image.png",
-  description:
-    "Luxury e-commerce brand specializing in natural lip balms crafted with exotic botanicals.",
-  contactPoint: {
-    "@type": "ContactPoint",
-    email: "hello@sareine.in",
-    contactType: "customer service",
-  },
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://sareine.in/#organization",
+      "name": "Sareine",
+      "url": "https://sareine.in",
+      "logo": "https://sareine.in/logo-image.png",
+      "image": "https://sareine.in/google-thumbnail.jpeg",
+      "description": "Luxury e-commerce brand specializing in natural lip balms crafted with exotic botanicals.",
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "email": "hello@sareine.in",
+        "contactType": "customer service"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://sareine.in/#website",
+      "url": "https://sareine.in",
+      "name": "Sareine",
+      "image": "https://sareine.in/google-thumbnail.jpeg"
+    }
+  ]
 };
 
 export default function RootLayout({
@@ -114,7 +126,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${cormorant.variable} ${manrope.variable}`}>
-        <JsonLd data={organizationSchema} />
+        <JsonLd data={schemaData} />
         <SiteSettingsProvider>
           <AuthProvider>
             <CartProvider>
