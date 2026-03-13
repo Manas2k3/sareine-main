@@ -37,6 +37,7 @@ const manrope = Manrope({
  * Global Metadata — serves as the site-wide default.
  * Individual routes override via their own Metadata exports.
  * ────────────────────────────────────────────── */
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://sareine.in"),
 
@@ -73,10 +74,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/google-thumbnail.jpeg?v=2",
+        url: "/google-thumbnail.jpeg",
         width: 1200,
         height: 630,
-        alt: "Sareine – Luxury Natural Lip Care",
+        alt: "Sareine - Luxury Lip Care",
       },
     ],
   },
@@ -86,7 +87,7 @@ export const metadata: Metadata = {
     title: "Sareine",
     description:
       "Crafted with exotic botanicals for effortlessly soft, nourished lips.",
-    images: ["/google-thumbnail.jpeg?v=2"],
+    images: ["/google-thumbnail.jpeg"],
   },
 };
 
